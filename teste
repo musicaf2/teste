@@ -1,33 +1,3 @@
-import java.util.Random;
-import java.text.DecimalFormat;
-
-Random rand = new Random();
-int quantidade = rand.nextInt(9901) + 100;
-double preco = rand.nextDouble() * 899.99 + 100;
-DecimalFormat dfPreco = new DecimalFormat("0.00");
-DecimalFormat dfValor = new DecimalFormat("0.00");
-
-String precoFormatado = dfPreco.format(preco);
-
-double valor_trade = quantidade * preco;
-
-String valor_tradeFormatado = dfValor.format(valor_trade);
-
-double valor_trade_menor = valor_trade - 1;
-
-String valor_trade_menorFormatado = dfValor.format(valor_trade_menor);
-
-int qt1 = (int) (quantidade * 0.6);
-int qt2 = quantidade - qt1;
-
-vars.put("quantidade", Integer.toString(quantidade));
-vars.put("preco", precoFormatado);
-vars.put("valor_trade", valor_tradeFormatado);
-vars.put("valor_trade_menor", valor_trade_menorFormatado);
-vars.put("qt1", Integer.toString(qt1));
-vars.put("qt2", Integer.toString(qt2));
-
-
 import java.text.DecimalFormat;
 import java.util.Random;
 
@@ -48,14 +18,18 @@ double valor_trade = quantidade * preco;
 String valor_tradeFormatado = dfValorTrade.format(valor_trade);
 
 // calcular qt1 e qt2
-double qt1 = quantidade * 0.6;
-double qt2 = quantidade * 0.4;
-String qt1Formatado = dfValorTrade.format(qt1);
-String qt2Formatado = dfValorTrade.format(qt2);
+int qt1 = (int) (quantidade * 0.6);
+int qt2 = quantidade - qt1;
+String qt1Formatado = Integer.toString(qt1);
+String qt2Formatado = Integer.toString(qt2);
 
 // calcular preco_menor
 double preco_menor = preco - 1;
 String preco_menorFormatado = dfPreco.format(preco_menor);
+
+// calcular valor_trade_menor
+double valor_trade_menor = quantidade * preco_menor;
+String valor_trade_menorFormatado = dfValorTrade.format(valor_trade_menor);
 
 // armazenar os valores em variáveis de usuário
 vars.put("quantidade", Integer.toString(quantidade));
@@ -64,3 +38,4 @@ vars.put("valor_trade", valor_tradeFormatado);
 vars.put("qt1", qt1Formatado);
 vars.put("qt2", qt2Formatado);
 vars.put("preco_menor", preco_menorFormatado);
+vars.put("valor_trade_menor", valor_trade_menorFormatado);
