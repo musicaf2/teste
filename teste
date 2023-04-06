@@ -1,0 +1,28 @@
+import java.util.Random;
+import java.text.DecimalFormat;
+
+Random rand = new Random();
+int quantidade = rand.nextInt(9901) + 100;
+double preco = rand.nextDouble() * 899.99 + 100;
+DecimalFormat dfPreco = new DecimalFormat("0.00");
+DecimalFormat dfValor = new DecimalFormat("0.00");
+
+String precoFormatado = dfPreco.format(preco);
+
+double valor_trade = quantidade * preco;
+
+String valor_tradeFormatado = dfValor.format(valor_trade);
+
+double valor_trade_menor = valor_trade - 1;
+
+String valor_trade_menorFormatado = dfValor.format(valor_trade_menor);
+
+int qt1 = (int) (quantidade * 0.6);
+int qt2 = quantidade - qt1;
+
+vars.put("quantidade", Integer.toString(quantidade));
+vars.put("preco", precoFormatado);
+vars.put("valor_trade", valor_tradeFormatado);
+vars.put("valor_trade_menor", valor_trade_menorFormatado);
+vars.put("qt1", Integer.toString(qt1));
+vars.put("qt2", Integer.toString(qt2));
