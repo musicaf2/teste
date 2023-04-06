@@ -39,3 +39,43 @@ vars.put("qt1", qt1Formatado);
 vars.put("qt2", qt2Formatado);
 vars.put("preco_menor", preco_menorFormatado);
 vars.put("valor_trade_menor", valor_trade_menorFormatado);
+
+
+
+import java.util.Random;
+import java.text.DecimalFormat;
+
+// gerar valores aleatórios para quantidade e preço
+Random rand = new Random();
+int quantidade = rand.nextInt(9901) + 100; // gerar um valor entre 100 e 10000
+double preco = rand.nextDouble() * 899.99 + 100; // gerar um valor entre 100.00 e 999.99
+DecimalFormat dfPreco = new DecimalFormat("0.00"); // criar o formato para o preço com 2 casas decimais
+DecimalFormat dfValor = new DecimalFormat("0.00"); // criar o formato para o valor com 2 casas decimais
+
+// formatar o preço com duas casas decimais
+String precoFormatado = dfPreco.format(preco);
+
+// calcular o valor_trade
+double valor_trade = quantidade * preco;
+
+// formatar o valor_trade com duas casas decimais
+String valor_tradeFormatado = dfValor.format(valor_trade);
+
+// subtrair 1 do valor_trade
+double valor_trade_menor = valor_trade - 1;
+
+// formatar o valor_trade_menor com duas casas decimais
+String valor_trade_menorFormatado = dfValor.format(valor_trade_menor);
+
+// calcular qt1 e qt2
+int qt1 = (int) (quantidade * 0.6);
+int qt2 = quantidade - qt1;
+
+// armazenar valores em variáveis ​​de usuário
+vars.put("quantidade", Integer.toString(quantidade));
+vars.put("preco", precoFormatado);
+vars.put("valor_trade", valor_tradeFormatado);
+vars.put("valor_trade_menor", valor_trade_menorFormatado);
+vars.put("qt1", Integer.toString(qt1));
+vars.put("qt2", Integer.toString(qt2));
+
