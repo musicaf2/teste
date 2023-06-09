@@ -18,7 +18,7 @@ zip_files = [file for file in os.listdir(root_folder) if file.endswith(".zip")]
 csv_files = []
 for i, zip_file in enumerate(zip_files):
     zip_path = os.path.join(root_folder, zip_file)
-    temp_path = os.path.join(temp_folder, f"{i+1}.zip")
+    temp_path = os.path.join(temp_folder, f"{i+1}")
 
     # Extract the .zip file to the 'temp' folder
     with zipfile.ZipFile(zip_path, 'r') as zip_ref:
