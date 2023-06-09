@@ -1,43 +1,52 @@
 import os
-import shutil
 import zipfile
-import glob
+import shutil
+import csv
+
+# Define the root folder where the executable .py files are located
+root_folder = "./"
 
 # Create a 'temp' folder if it doesn't exist
-temp_folder = 'temp'
+temp_folder = os.path.join(root_folder, "temp")
 if not os.path.exists(temp_folder):
     os.makedirs(temp_folder)
 
-# Find .zip files in the root folder
-root_folder = os.getcwd()  # Assumes the script is in the root folder
-zip_files = glob.glob('*.zip')
+# Find all .zip files in the root folder
+zip_files = [file for file in os.listdir(root_folder) if file.endswith(".zip")]
 
-# Extract .zip files to the 'temp' folder
-for zip_file in zip_files:
-    with zipfile.ZipFile(zip_file, 'r') as zip_ref:
-        zip_ref.extractall(temp_folder)
+# Extract and process the .csv files from each .zip file
+csv_files = []
+for i, zip_file in enumerate(zip_files):
+    zip_path = os.path.join(root_folder, zip_file)
+    temp_path = os.path.join(temp_folder, f"{i+1}.zip")
 
-# Remove all non-.csv files and rename them in order
-csv_files = glob.glob(os.path.join(temp_folder, '*.csv'))
-csv_files.sort()  # Sort the files in ascending order
+    # Extract the .zip file to the 'temp' folder
+    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+        zip_ref.extractall(temp_path)
 
-for i, csv_file in enumerate(csv_files, start=1):
-    new_name = str(i) + '.csv'
-    os.rename(csv_file, os.path.join(temp_folder, new_name))
+    # Find .csv files in the extracted folder
+    csv_files += [os.path.join(temp_path, file) for file in os.listdir(temp_path) if file.endswith(".csv")]
 
-# Remove the first line from all but the first file
-for i, csv_file in enumerate(csv_files[1:], start=2):
-    with open(csv_file, 'r') as file:
-        lines = file.readlines()
-    with open(csv_file, 'w') as file:
-        file.writelines(lines[1:])
+# Remove all files in the 'temp' folder except .csv files
+for file in os.listdir(temp_folder):
+    file_path = os.path.join(temp_folder, file)
+    if file.endswith(".csv"):
+        continue
+    elif os.path.isfile(file_path):
+        os.remove(file_path)
+    elif os.path.isdir(file_path):
+        shutil.rmtree(file_path)
 
-# Copy all .csv files to 'report_final'
-report_final = 'report_final.csv'
-with open(report_final, 'w') as outfile:
-    for csv_file in csv_files:
-        with open(csv_file, 'r') as infile:
-            outfile.write(infile.read())
+# Sort the .csv files in order
+csv_files.sort()
 
-# Cleanup: Remove the 'temp' folder and its contents
-shutil.rmtree(temp_folder)
+# Process the .csv files, remove the first line (except for the first file) and copy to 'report_final.csv'
+with open('report_final.csv', 'w', newline='') as report_final:
+    writer = csv.writer(report_final)
+    for i, csv_file in enumerate(csv_files):
+        with open(csv_file, 'r') as file:
+            reader = csv.reader(file)
+            rows = list(reader)
+            if i != 0:
+                rows = rows[1:]  # Skip the first line
+            writer.writerows(rows)
