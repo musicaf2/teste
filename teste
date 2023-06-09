@@ -52,10 +52,15 @@ for i, csv_file in enumerate(csv_files):
             file.writelines(lines)
 
 # Join all the .csv files into the final report file
-with open(final_report_file, 'w') as final_report:
-    for i, csv_file in enumerate(csv_files):
+with open(final_report_file, 'w', newline='') as final_report:
+    writer = csv.writer(final_report)
+    for csv_file in csv_files:
         csv_path = os.path.join(temp_folder, csv_file)
         with open(csv_path, 'r') as csv_file:
-            if i != 0:  # Skip the header for files after the first one
-                next(csv_file)
-            final_report.write(csv_file.read())
+            reader = csv.reader(csv_file)
+            for i, row in enumerate(reader):
+                if i > 0 or csv_file == csv_files[0]:
+                    writer.writerow(row)
+
+# Remove the 'temp' folder
+os.rmdir(temp_folder)
