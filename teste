@@ -39,7 +39,7 @@ for i, csv_file in enumerate(csv_files):
 # Step 3: Join all .csv files into a new file called 'report_final' in the root folder
 report_path = os.path.join(root_folder, report_file)
 
-with open(report_path, 'w', newline='') as report:
+with open(report_path, 'a', newline='') as report:  # Changed 'w' to 'a' for append mode
     writer = csv.writer(report)
     for csv_file in csv_files:
         csv_path = os.path.join(temp_folder, csv_file)
