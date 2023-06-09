@@ -1,53 +1,53 @@
 import os
 import zipfile
 import csv
-import shutil
 
-root_folder = "."  # Set the root folder where the .py executable resides
-temp_folder = "temp"
-report_file = "report_final.csv"
+def extract_zip_files(root_folder):
+    temp_folder = os.path.join(root_folder, 'temp')
+    os.makedirs(temp_folder, exist_ok=True)
 
-# Step 1: Search for .zip files and extract them into the 'temp' folder
-zip_files = [file for file in os.listdir(root_folder) if file.endswith(".zip")]
+    zip_files = [file for file in os.listdir(root_folder) if file.endswith('.zip')]
+    for zip_file in zip_files:
+        zip_path = os.path.join(root_folder, zip_file)
+        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+            zip_ref.extractall(temp_folder)
 
-if not os.path.exists(temp_folder):
-    os.makedirs(temp_folder)
+def rename_csv_files(root_folder):
+    csv_files = [file for file in os.listdir(root_folder) if file.endswith('.csv')]
+    csv_files.sort()  # Sort the files in ascending order
 
-for zip_file in zip_files:
-    with zipfile.ZipFile(zip_file, 'r') as zip_ref:
-        zip_ref.extractall(temp_folder)
+    for index, csv_file in enumerate(csv_files, start=1):
+        csv_path = os.path.join(root_folder, csv_file)
+        new_csv_path = os.path.join(root_folder, f'{index}.csv')
+        os.rename(csv_path, new_csv_path)
 
-# Step 2: Search for .csv files, rename them, and remove the first line (except for the first file)
-csv_files = [file for file in os.listdir(temp_folder) if file.endswith(".csv")]
-csv_files.sort()
+        if index != 1:  # Skip the first file
+            remove_first_line(new_csv_path)
 
-for i, csv_file in enumerate(csv_files):
-    new_name = str(i + 1) + ".csv"
-    old_path = os.path.join(temp_folder, csv_file)
-    new_path = os.path.join(temp_folder, new_name)
+def remove_first_line(csv_file):
+    with open(csv_file, 'r') as file:
+        lines = file.readlines()
 
-    os.rename(old_path, new_path)
+    with open(csv_file, 'w') as file:
+        file.writelines(lines[1:])
 
-    if i > 0:
-        with open(new_path, 'r') as file:
-            lines = file.readlines()
+def join_csv_files(root_folder, output_file):
+    csv_files = [file for file in os.listdir(root_folder) if file.endswith('.csv')]
+    csv_files.sort()  # Sort the files in ascending order
 
-        with open(new_path, 'w', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerows([line.strip().split(',') for line in lines[1:]])
+    with open(output_file, 'w') as output:
+        for csv_file in csv_files:
+            csv_path = os.path.join(root_folder, csv_file)
+            with open(csv_path, 'r') as file:
+                output.write(file.read())
 
-# Step 3: Join all .csv files into a new file called 'report_final' in the root folder
-report_path = os.path.join(root_folder, report_file)
+root_folder = '.'  # Change this to the root folder where your .py files are located
 
-with open(report_path, 'a', newline='') as report:  # Changed 'w' to 'a' for append mode
-    writer = csv.writer(report)
-    for csv_file in csv_files:
-        csv_path = os.path.join(temp_folder, csv_file)
-        with open(csv_path, 'r') as file:
-            lines = file.readlines()
-            writer.writerows([line.strip().split(',') for line in lines])
+# Extract .zip files into 'temp' folder
+extract_zip_files(root_folder)
 
-# Cleanup: Remove the 'temp' folder
-shutil.rmtree(temp_folder)
+# Rename .csv files and remove the first line (except for the first file)
+rename_csv_files(root_folder)
 
-print("Report created successfully.")
+# Join all .csv files into 'report_final.csv'
+join_csv_files(root_folder, 'report_final.csv')
