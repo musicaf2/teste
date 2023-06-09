@@ -1,56 +1,37 @@
 import os
 import zipfile
-import csv
+import glob
 
-# Define the root folder where the executable .py file resides
-root_folder = os.path.dirname(os.path.abspath(__file__))
+root_folder = os.getcwd()
+zip_files = glob.glob(os.path.join(root_folder, '*.zip'))
 
-# Create a folder called 'temp' to extract the zip files
+# Create temp folder if it doesn't exist
 temp_folder = os.path.join(root_folder, 'temp')
-os.makedirs(temp_folder, exist_ok=True)
+if not os.path.exists(temp_folder):
+    os.makedirs(temp_folder)
 
-# Search for .zip files inside the root folder
-zip_files = [file for file in os.listdir(root_folder) if file.endswith('.zip')]
-
-# Extract the zip files into the 'temp' folder
+# Extract zip files to temp folder
 for zip_file in zip_files:
-    zip_path = os.path.join(root_folder, zip_file)
-    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+    with zipfile.ZipFile(zip_file, 'r') as zip_ref:
         zip_ref.extractall(temp_folder)
 
-# Find and rename the .csv files, removing the first line (except the first file)
-csv_files = []
-for foldername, _, filenames in os.walk(temp_folder):
-    for filename in filenames:
-        if filename.endswith('.csv'):
-            csv_file_path = os.path.join(foldername, filename)
-            csv_files.append(csv_file_path)
-
-new_csv_files = []
+# Rename csv files and remove first line
+csv_files = glob.glob(os.path.join(temp_folder, '*.csv'))
 for i, csv_file in enumerate(csv_files):
-    new_filename = f"{i+1}-{os.path.basename(csv_file)}"
-    new_filepath = os.path.join(temp_folder, new_filename)
-
-    with open(csv_file, 'r') as file:
-        lines = file.readlines()
-
-    with open(new_filepath, 'w', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerows(lines[1:])  # Write lines excluding the first line (header)
+    new_name = os.path.join(temp_folder, f"{i+1}-{os.path.basename(csv_file)}")
+    os.rename(csv_file, new_name)
     
-    new_csv_files.append(new_filepath)
+    with open(new_name, 'r') as f:
+        lines = f.readlines()
+    
+    with open(new_name, 'w') as f:
+        if i == 0:
+            f.writelines(lines)
+        else:
+            f.writelines(lines[1:])
 
-# Join all the .csv files into 'report_final.csv' in the root folder
-report_path = os.path.join(root_folder, 'report_final.csv')
-with open(report_path, 'w', newline='') as report_file:
-    writer = csv.writer(report_file)
-    for csv_file in new_csv_files:
-        with open(csv_file, 'r') as file:
-            lines = file.readlines()
-            writer.writerows(lines)
-
-# Remove the 'temp' folder and its contents
-for file in os.listdir(temp_folder):
-    file_path = os.path.join(temp_folder, file)
-    if os.path.isfile(file_path):
-print("Process completed successfully!")
+# Join all csv files into report_final.csv
+with open(os.path.join(root_folder, 'report_final.csv'), 'w') as report_file:
+    for csv_file in csv_files:
+        with open(csv_file, 'r') as f:
+            report_file.write(f.read())
