@@ -63,5 +63,8 @@ with open(final_report_file, 'w', newline='') as final_report:
                 if i > 0 or j > 0:
                     writer.writerow(row)
 
+# Move the final report file to the root folder
+shutil.move(final_report_file, os.path.join(root_folder, 'report_final.csv'))
+
 # Remove the 'temp' folder
 shutil.rmtree(temp_folder)
