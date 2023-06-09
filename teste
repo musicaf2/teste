@@ -38,4 +38,11 @@ with open(output_file, 'w') as outfile:
                 lines = lines[1:]  # Remove the first line (except for the first file)
             outfile.writelines(lines)
 
-print("Extraction and processing complete.")
+# Move the 'report_final.csv' file to the root folder
+final_report_path = os.path.join(root_folder, 'report_final.csv')
+shutil.move(output_file, final_report_path)
+
+# Clean up the 'temp' folder
+#shutil.rmtree(temp_folder)
+
+print("Extraction, processing, and file move complete.")
