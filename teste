@@ -1,58 +1,52 @@
 import os
 import zipfile
-import csv
 import shutil
+import csv
 
+# Get the root folder where the script is located
+root_folder = os.path.dirname(os.path.abspath(__file__))
 
-def extract_zip_files(source_dir, destination_dir):
-    """
-    Extracts all zip files in the source directory and its subdirectories
-    to the destination directory.
-    """
-    for root, dirs, files in os.walk(source_dir):
-        for file in files:
-            if file.endswith(".zip"):
-                zip_file_path = os.path.join(root, file)
-                common_prefix = os.path.commonprefix([source_dir, zip_file_path])
-                relative_path = os.path.relpath(zip_file_path, common_prefix)
-                folder_name = os.path.splitext(relative_path)[0]
-                extract_folder_path = os.path.join(destination_dir, folder_name)
-                os.makedirs(extract_folder_path, exist_ok=True)
-                
-                with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
-                    zip_ref.extractall(extract_folder_path)
+# Create the 'temp' folder if it doesn't exist
+temp_folder = os.path.join(root_folder, 'temp')
+if not os.path.exists(temp_folder):
+    os.makedirs(temp_folder)
 
+# Search for .zip files in the root folder
+zip_files = [file for file in os.listdir(root_folder) if file.endswith('.zip')]
 
-# The remaining functions (rename_csv_files, merge_csv_files, main) remain the same as before
+# Extract the .zip files into the 'temp' folder
+for zip_file in zip_files:
+    zip_path = os.path.join(root_folder, zip_file)
+    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+        zip_ref.extractall(temp_folder)
 
-# ...
+# Search for .csv files in the extracted folders
+csv_files = []
+for foldername, _, filenames in os.walk(temp_folder):
+    for filename in filenames:
+        if filename.endswith('.csv'):
+            csv_files.append(os.path.join(foldername, filename))
 
-# main function and other functions omitted for brevity
+# Move the .csv files to the root of the 'temp' folder
+for csv_file in csv_files:
+    shutil.move(csv_file, temp_folder)
 
-# ...
+# Remove the first line of each .csv file, except the first one
+combined_csv_path = os.path.join(temp_folder, 'combined.csv')
+first_file = True
 
-if __name__ == "__main__":
-    # Finding the directory where the script is located
-    script_dir = os.path.dirname(os.path.abspath(__file__))
+with open(combined_csv_path, 'w', newline='') as combined_csv:
+    writer = csv.writer(combined_csv)
+    
+    for csv_file in csv_files:
+        with open(csv_file, 'r') as file:
+            reader = csv.reader(file)
+            lines = list(reader)
+            
+            if first_file:
+                writer.writerows(lines)
+                first_file = False
+            else:
+                writer.writerows(lines[1:])
 
-    # Creating the temporary directory
-    temp_dir = os.path.join(script_dir, "temp")
-    os.makedirs(temp_dir, exist_ok=True)
-
-    # Extracting zip files
-    extract_zip_files(script_dir, temp_dir)
-
-    # Renaming CSV files
-    rename_csv_files(temp_dir)
-
-    # Merging CSV files into a final report
-    report_final_file_path = os.path.join(temp_dir, "report_final.csv")
-    merge_csv_files(temp_dir, report_final_file_path)
-
-    # Moving the final report file to the root directory
-    final_report_for_script_path = os.path.join(script_dir, "report_final.csv")
-
-    if os.path.exists(final_report_for_script_path):
-        os.remove(final_report_for_script_path)
-
-    shutil.move(report_final_file_path, script_dir)
+print('CSV files combined successfully.')
