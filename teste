@@ -1,48 +1,78 @@
 import os
 import zipfile
+import csv
 import shutil
 
-# Get the current working directory
-root_folder = os.getcwd()
+def extract_zip_files(root_folder):
+    zip_files = []
+    for dirpath, _, filenames in os.walk(root_folder):
+        for filename in filenames:
+            if filename.endswith(".zip"):
+                zip_file_path = os.path.join(dirpath, filename)
+                zip_files.append(zip_file_path)
+    return zip_files
 
-# Create the 'temp' folder if it doesn't exist
-temp_folder = os.path.join(root_folder, 'temp')
-os.makedirs(temp_folder, exist_ok=True)
+def extract_csv_from_zip(zip_file_path, target_folder):
+    with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
+        zip_ref.extractall(target_folder)
 
-# Search for .zip files in the root folder
-zip_files = [file for file in os.listdir(root_folder) if file.endswith('.zip')]
+def rename_csv_files(target_folder):
+    csv_files = []
+    for dirpath, _, filenames in os.walk(target_folder):
+        for filename in filenames:
+            if filename.endswith(".csv"):
+                csv_file_path = os.path.join(dirpath, filename)
+                csv_files.append(csv_file_path)
 
-# Extract .csv files from each .zip file and rename them
+    csv_files.sort()  # Sort the list of CSV files
+
+    for i, csv_file_path in enumerate(csv_files, start=1):
+        new_filename = f"{i}.csv"
+        new_filepath = os.path.join(target_folder, new_filename)
+        os.rename(csv_file_path, new_filepath)
+
+def remove_first_line_from_csv(csv_file_path):
+    with open(csv_file_path, 'r') as file:
+        lines = file.readlines()
+
+    with open(csv_file_path, 'w', newline='') as file:
+        file.writelines(lines[1:])
+
+def join_csv_files(csv_files, output_file):
+    with open(output_file, 'w', newline='') as outfile:
+        writer = csv.writer(outfile)
+        header_written = False
+        for csv_file in csv_files:
+            with open(csv_file, 'r') as infile:
+                reader = csv.reader(infile)
+                if not header_written:
+                    writer.writerows(reader)
+                    header_written = True
+                else:
+                    next(reader)  # Skip the header line
+                    writer.writerows(reader)
+
+root_folder = "."  # Set the root folder here, or provide an absolute path
+
+# Step 1: Extract .zip files into 'temp' folder
+zip_files = extract_zip_files(root_folder)
+target_folder = "temp"
+os.makedirs(target_folder, exist_ok=True)
 for zip_file in zip_files:
-    zip_path = os.path.join(root_folder, zip_file)
-    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-        zip_ref.extractall(temp_folder)
+    extract_csv_from_zip(zip_file, target_folder)
 
-    csv_files = [file for file in os.listdir(temp_folder) if file.endswith('.csv')]
-    for index, csv_file in enumerate(csv_files):
-        csv_path = os.path.join(temp_folder, csv_file)
-        new_csv_name = f"{index + 1}_{csv_file}"
-        new_csv_path = os.path.join(temp_folder, new_csv_name)
-        os.rename(csv_path, new_csv_path)
+# Step 2: Rename .csv files and remove first line
+rename_csv_files(target_folder)
+csv_files = [os.path.join(target_folder, filename) for filename in os.listdir(target_folder) if filename.endswith(".csv")]
+for csv_file in csv_files[1:]:
+    remove_first_line_from_csv(csv_file)
 
-# Read and modify the content of .csv files
-csv_files = [file for file in os.listdir(temp_folder) if file.endswith('.csv')]
-output_file = os.path.join(temp_folder, 'report_final.csv')
+# Step 3: Join all .csv files into 'report_final.csv'
+output_file = "report_final.csv"
+join_csv_files(csv_files, output_file)
 
-with open(output_file, 'w') as outfile:
-    for index, csv_file in enumerate(csv_files):
-        csv_path = os.path.join(temp_folder, csv_file)
-        with open(csv_path, 'r') as infile:
-            lines = infile.readlines()
-            if index != 0:
-                lines = lines[1:]  # Remove the first line (except for the first file)
-            outfile.writelines(lines)
+# Step 4: Copy the final report to the current working directory
+destination_folder = os.getcwd()  # Get the current working directory
+shutil.copy(output_file, destination_folder)
 
-# Move the 'report_final.csv' file to the root folder
-final_report_path = os.path.join(root_folder, 'report_final.csv')
-shutil.move(output_file, final_report_path)
-
-# Clean up the 'temp' folder
-#shutil.rmtree(temp_folder)
-
-print("Extraction, processing, and file move complete.")
+print("Process completed successfully!")
