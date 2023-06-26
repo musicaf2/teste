@@ -1,78 +1,35 @@
-import os
-import zipfile
-import csv
-import shutil
+${__groovy(props.get("time_waiting_token_"), tempo_limite)}
+${__groovy(log.info("--------->: Token expira em: " + props.get("tempo_limite_formatado")),)}
+${__groovy(log.info("First User: " + String.valueOf(ctx.getThreadNum() == 0)),)}
+${__groovy(
+	if(vars.get("tempo_limite") == ""){
+		log.info("O token é nulo!!")
+	} else {
+		log.info("Já expirou: " + String.valueOf(System.currentTimeMillis() > Long.valueOf(vars.get("tempo_limite"))))
+	}
+,)}
+${__groovy(
+	if(ctx.getThreadNum() == 0){
+		if(vars.get("tempo_limite") == ""){
+			true
+		} else {
+			System.currentTimeMillis() > Long.valueOf(vars.get("tempo_limite"))
+		}
+	} else {
+		false
+	}
+,)}
 
-def extract_zip_files(root_folder):
-    zip_files = []
-    for dirpath, _, filenames in os.walk(root_folder):
-        for filename in filenames:
-            if filename.endswith(".zip"):
-                zip_file_path = os.path.join(dirpath, filename)
-                zip_files.append(zip_file_path)
-    return zip_files
 
-def extract_csv_from_zip(zip_file_path, target_folder):
-    with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
-        zip_ref.extractall(target_folder)
+props.put('access_token', vars.get('access_token'))
+props.put('status_code', vars.get('status_code'))
 
-def rename_csv_files(target_folder):
-    csv_files = []
-    for dirpath, _, filenames in os.walk(target_folder):
-        for filename in filenames:
-            if filename.endswith(".csv"):
-                csv_file_path = os.path.join(dirpath, filename)
-                csv_files.append(csv_file_path)
+def tempo_limite = "${__timeShift(,,PT260s,,)}"
+def variavel = 'time_waiting_token_'
+props.put(variavel, tempo_limite)
 
-    csv_files.sort()  # Sort the list of CSV files
-
-    for i, csv_file_path in enumerate(csv_files, start=1):
-        new_filename = f"{i}.csv"
-        new_filepath = os.path.join(target_folder, new_filename)
-        os.rename(csv_file_path, new_filepath)
-
-def remove_first_line_from_csv(csv_file_path):
-    with open(csv_file_path, 'r') as file:
-        lines = file.readlines()
-
-    with open(csv_file_path, 'w', newline='') as file:
-        file.writelines(lines[1:])
-
-def join_csv_files(csv_files, output_file):
-    with open(output_file, 'w', newline='') as outfile:
-        writer = csv.writer(outfile)
-        header_written = False
-        for csv_file in csv_files:
-            with open(csv_file, 'r') as infile:
-                reader = csv.reader(infile)
-                if not header_written:
-                    writer.writerows(reader)
-                    header_written = True
-                else:
-                    next(reader)  # Skip the header line
-                    writer.writerows(reader)
-
-root_folder = "."  # Set the root folder here, or provide an absolute path
-
-# Step 1: Extract .zip files into 'temp' folder
-zip_files = extract_zip_files(root_folder)
-target_folder = "temp"
-os.makedirs(target_folder, exist_ok=True)
-for zip_file in zip_files:
-    extract_csv_from_zip(zip_file, target_folder)
-
-# Step 2: Rename .csv files and remove first line
-rename_csv_files(target_folder)
-csv_files = [os.path.join(target_folder, filename) for filename in os.listdir(target_folder) if filename.endswith(".csv")]
-for csv_file in csv_files[1:]:
-    remove_first_line_from_csv(csv_file)
-
-# Step 3: Join all .csv files into 'report_final.csv'
-output_file = "report_final.csv"
-join_csv_files(csv_files, output_file)
-
-# Step 4: Copy the final report to the current working directory
-destination_folder = os.getcwd()  # Get the current working directory
-shutil.copy(output_file, destination_folder)
-
-print("Process completed successfully!")
+def tmz = TimeZone.getTimeZone('UTC-3')
+def now = new Date(Long.parseLong(tempo_limite))
+def formatado = now.format("dd/MM/yyyy HH:mm:ss.SSS")
+props.put("tempo_limite_formatado", formatado)
+log.info('------->: Token ' + variavel + ' : Expira -> epoch: ' + props.get(variavel) + ' Data: ' + formatado, tmz)
