@@ -276,3 +276,47 @@
 </html>
 
 ${__BeanShell(import org.apache.jmeter.services.FileServer; FileServer.getFileServer().getBaseDir();)}/Resultados/Report${__time(yyyy-MM-dd-HHmm,)}.csv
+
+import org.apache.jmeter.services.FileServer;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+// Define the variables and their values that will be inserted into the CSV
+String intA = vars.get("intA");
+String intB = vars.get("intB");
+String scriptHome = FileServer.getFileServer().getBaseDir();
+// Transform all the variables into a single line to insert in the CSV header
+String linha = intA + ";" + intB;
+
+// Check if any field is null or empty, don't save in the CSV
+if(intA == null || intA.equals("")) {
+    return jsonOutput;
+}
+if(intB == null || intB.equals("")) {
+    return jsonOutput;
+}
+
+// Acquire a lock to ensure exclusive access to the file
+Lock lock = new ReentrantLock();
+lock.lock();
+
+try {
+    // Open or create the CSV file, true to append data to the file
+    FileOutputStream f = new FileOutputStream(scriptHome + "\\MassaCalculadora.csv", true);
+    PrintStream p = new PrintStream(f);
+
+    // Insert the variable values into the file
+    p.println(linha);
+
+    // Close the file
+    p.close();
+    f.close();
+} finally {
+    // Release the lock after writing the data
+    lock.unlock();
+}
+
+// Continue with the rest of your code
+return jsonOutput;
