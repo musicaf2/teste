@@ -298,3 +298,33 @@ synchronized (this) {
 }
 
 return jsonOutput;
+
+import org.apache.jmeter.services.FileServer;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
+String intA = vars.get("intA");
+
+String scriptHome = FileServer.getFileServer().getBaseDir();
+
+String linha = intA;
+
+if (intA == null || intA.equals("")) {
+    return jsonOutput;
+}
+
+String filePath = scriptHome + "\\MassaCalculadora.csv";
+
+synchronized (this) {
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
+        writer.write(linha);
+        writer.newLine();
+    } catch (IOException e) {
+        // Handle any exception that occurs during file writing
+        e.printStackTrace();
+    }
+}
+
+return jsonOutput;
+
