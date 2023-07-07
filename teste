@@ -274,3 +274,5 @@
 </body>
 
 </html>
+
+${__BeanShell(import org.apache.jmeter.services.FileServer; FileServer.getFileServer().getBaseDir();)}/Resultados/Report${__time(yyyy-MM-dd-HHmm,)}.csv
