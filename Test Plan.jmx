@@ -1,0 +1,992 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.5">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <kg.apc.jmeter.threads.SteppingThreadGroup guiclass="kg.apc.jmeter.threads.SteppingThreadGroupGui" testclass="kg.apc.jmeter.threads.SteppingThreadGroup" testname="1. Transacao" enabled="false">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <stringProp name="ThreadGroup.num_threads">300</stringProp>
+        <stringProp name="Threads initial delay">0</stringProp>
+        <stringProp name="Start users count">20</stringProp>
+        <stringProp name="Start users count burst">20</stringProp>
+        <stringProp name="Start users period">240</stringProp>
+        <stringProp name="Stop users count">5</stringProp>
+        <stringProp name="Stop users period">1</stringProp>
+        <stringProp name="flighttime">240</stringProp>
+        <stringProp name="rampUp">60</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <intProp name="LoopController.loops">-1</intProp>
+        </elementProp>
+      </kg.apc.jmeter.threads.SteppingThreadGroup>
+      <hashTree>
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="1. Jornada Cliente" enabled="true">
+          <boolProp name="TransactionController.parent">true</boolProp>
+        </TransactionController>
+        <hashTree>
+          <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="1.1 POST Cadastro" enabled="true">
+            <boolProp name="WAITING">true</boolProp>
+            <boolProp name="SUCCESFULL">true</boolProp>
+            <stringProp name="RESPONSE_CODE">200</stringProp>
+            <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
+            <stringProp name="REQUEST_DATA">POST https://petstore.swagger.io/v2/store/order
+
+POST data:
+{
+  &quot;id&quot;: ${ID},
+  &quot;petId&quot;: ${petId},
+  &quot;quantity&quot;: ${__Random(1,5,Qt)},
+  &quot;shipDate&quot;: &quot;${__time(yyyy-MM-dd&apos;T&apos;hh:mm:ss.SSS,timestamp)}Z&quot;,
+  &quot;status&quot;: &quot;placed&quot;,
+  &quot;complete&quot;: ${complete}
+}
+
+${__P(access_token)}
+[no cookies]</stringProp>
+            <stringProp name="RESPONSE_DATA">{&quot;id&quot;:${ID},&quot;petId&quot;:${petId},&quot;quantity&quot;:${Qt},&quot;shipDate&quot;:&quot;${timestamp}&quot;,&quot;status&quot;:&quot;placed&quot;,&quot;complete&quot;:${complete}}</stringProp>
+            <stringProp name="RESPONSE_TIME">${__Random(500,1024)}</stringProp>
+            <stringProp name="LATENCY">${__Random(500,1024)}</stringProp>
+            <stringProp name="CONNECT">${__Random(100,250)}</stringProp>
+            <stringProp name="URL">POST https://petstore.swagger.io/v2/store/order</stringProp>
+            <stringProp name="RESULT_CLASS">org.apache.jmeter.samplers.SampleResult</stringProp>
+            <stringProp name="TestPlan.comments">cenario positivo</stringProp>
+          </kg.apc.jmeter.samplers.DummySampler>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="Headers" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Authorization</stringProp>
+                  <stringProp name="Header.value">Bearer ${__P(Token)}</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Validar Status 200 Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+              <stringProp name="ConstantTimer.delay">300</stringProp>
+            </ConstantTimer>
+            <hashTree/>
+          </hashTree>
+          <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="1.2 POST Simulacao" enabled="true">
+            <boolProp name="WAITING">true</boolProp>
+            <boolProp name="SUCCESFULL">true</boolProp>
+            <stringProp name="RESPONSE_CODE">200</stringProp>
+            <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
+            <stringProp name="REQUEST_DATA">POST https://petstore.swagger.io/v2/store/order
+
+POST data:
+{
+  &quot;id&quot;: ${ID},
+  &quot;petId&quot;: ${petId},
+  &quot;quantity&quot;: ${__Random(1,5,Qt)},
+  &quot;shipDate&quot;: &quot;${__time(yyyy-MM-dd&apos;T&apos;hh:mm:ss.SSS,timestamp)}Z&quot;,
+  &quot;status&quot;: &quot;placed&quot;,
+  &quot;complete&quot;: ${complete}
+}
+
+${__P(access_token)}
+[no cookies]</stringProp>
+            <stringProp name="RESPONSE_DATA">{&quot;id&quot;:${ID},&quot;petId&quot;:${petId},&quot;quantity&quot;:${Qt},&quot;shipDate&quot;:&quot;${timestamp}&quot;,&quot;status&quot;:&quot;placed&quot;,&quot;complete&quot;:${complete}}</stringProp>
+            <stringProp name="RESPONSE_TIME">${__Random(1000,2000)}</stringProp>
+            <stringProp name="LATENCY">${__Random(1000,2000)}</stringProp>
+            <stringProp name="CONNECT">${__Random(0,0)}</stringProp>
+            <stringProp name="URL">POST https://petstore.swagger.io/v2/store/order</stringProp>
+            <stringProp name="RESULT_CLASS">org.apache.jmeter.samplers.SampleResult</stringProp>
+            <stringProp name="TestPlan.comments">cenario positivo</stringProp>
+          </kg.apc.jmeter.samplers.DummySampler>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="Headers" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Authorization</stringProp>
+                  <stringProp name="Header.value">Bearer ${__P(Token)}</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Validar Status 200 Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+          <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="1.3 POST Formalizacao" enabled="true">
+            <boolProp name="LoopController.continue_forever">true</boolProp>
+            <stringProp name="LoopController.loops">${__Random(1,10,number)}</stringProp>
+          </LoopController>
+          <hashTree>
+            <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="1.3 POST Criar Pedido 3" enabled="true">
+              <boolProp name="WAITING">true</boolProp>
+              <boolProp name="SUCCESFULL">true</boolProp>
+              <stringProp name="RESPONSE_CODE">200</stringProp>
+              <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
+              <stringProp name="REQUEST_DATA">POST https://petstore.swagger.io/v2/store/order
+
+POST data:
+{
+  &quot;id&quot;: ${ID},
+  &quot;petId&quot;: ${petId},
+  &quot;quantity&quot;: ${__Random(1,5,Qt)},
+  &quot;shipDate&quot;: &quot;${__time(yyyy-MM-dd&apos;T&apos;hh:mm:ss.SSS,timestamp)}Z&quot;,
+  &quot;status&quot;: &quot;placed&quot;,
+  &quot;complete&quot;: ${complete}
+}
+
+${__P(access_token)}
+[no cookies]</stringProp>
+              <stringProp name="RESPONSE_DATA">{&quot;id&quot;:${ID},&quot;petId&quot;:${petId},&quot;quantity&quot;:${Qt},&quot;shipDate&quot;:&quot;${timestamp}&quot;,&quot;status&quot;:&quot;placed&quot;,&quot;complete&quot;:${complete}}</stringProp>
+              <stringProp name="RESPONSE_TIME">${__Random(200,700)}</stringProp>
+              <stringProp name="LATENCY">${__Random(200,700)}</stringProp>
+              <stringProp name="CONNECT">${__Random(400,600)}</stringProp>
+              <stringProp name="URL">POST https://petstore.swagger.io/v2/store/order</stringProp>
+              <stringProp name="RESULT_CLASS">org.apache.jmeter.samplers.SampleResult</stringProp>
+              <stringProp name="TestPlan.comments">cenario positivo</stringProp>
+            </kg.apc.jmeter.samplers.DummySampler>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="Headers" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value">application/json</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Authorization</stringProp>
+                    <stringProp name="Header.value">Bearer ${__P(Token)}</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Validar Status 200 Response Assertion" enabled="true">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="49586">200</stringProp>
+                </collectionProp>
+                <stringProp name="Assertion.custom_message"></stringProp>
+                <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+                <boolProp name="Assertion.assume_success">false</boolProp>
+                <intProp name="Assertion.test_type">16</intProp>
+              </ResponseAssertion>
+              <hashTree/>
+              <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+                <stringProp name="ConstantTimer.delay">3000</stringProp>
+              </ConstantTimer>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="1.4 POST Averbacao" enabled="true">
+            <boolProp name="WAITING">true</boolProp>
+            <boolProp name="SUCCESFULL">true</boolProp>
+            <stringProp name="RESPONSE_CODE">200</stringProp>
+            <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
+            <stringProp name="REQUEST_DATA">POST https://petstore.swagger.io/v2/store/order
+
+POST data:
+{
+  &quot;id&quot;: ${ID},
+  &quot;petId&quot;: ${petId},
+  &quot;quantity&quot;: ${__Random(1,5,Qt)},
+  &quot;shipDate&quot;: &quot;${__time(yyyy-MM-dd&apos;T&apos;hh:mm:ss.SSS,timestamp)}Z&quot;,
+  &quot;status&quot;: &quot;placed&quot;,
+  &quot;complete&quot;: ${complete}
+}
+
+${__P(access_token)}
+[no cookies]</stringProp>
+            <stringProp name="RESPONSE_DATA">{&quot;id&quot;:${ID},&quot;petId&quot;:${petId},&quot;quantity&quot;:${Qt},&quot;shipDate&quot;:&quot;${timestamp}&quot;,&quot;status&quot;:&quot;placed&quot;,&quot;complete&quot;:${complete}}</stringProp>
+            <stringProp name="RESPONSE_TIME">${__Random(1000,2000)}</stringProp>
+            <stringProp name="LATENCY">${__Random(1000,2000)}</stringProp>
+            <stringProp name="CONNECT">${__Random(0,0)}</stringProp>
+            <stringProp name="URL">POST https://petstore.swagger.io/v2/store/order</stringProp>
+            <stringProp name="RESULT_CLASS">org.apache.jmeter.samplers.SampleResult</stringProp>
+            <stringProp name="TestPlan.comments">cenario positivo</stringProp>
+          </kg.apc.jmeter.samplers.DummySampler>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="Headers" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Authorization</stringProp>
+                  <stringProp name="Header.value">Bearer ${__P(Token)}</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Validar Status 200 Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="0. Token" enabled="false">
+        <stringProp name="ThreadGroup.on_sample_error">startnextloop</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <intProp name="LoopController.loops">-1</intProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time"></stringProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration">300</stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+      </ThreadGroup>
+      <hashTree>
+        <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="0.1 POST Token" enabled="true">
+          <boolProp name="WAITING">false</boolProp>
+          <boolProp name="SUCCESFULL">true</boolProp>
+          <stringProp name="RESPONSE_CODE">200</stringProp>
+          <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
+          <stringProp name="REQUEST_DATA">POST https://petstore.swagger.io/v2/store/order
+
+POST data:
+{
+  &quot;id&quot;: ${ID},
+  &quot;petId&quot;: ${petId},
+  &quot;quantity&quot;: ${__Random(1,5,Qt)},
+  &quot;shipDate&quot;: &quot;${__time(yyyy-MM-dd&apos;T&apos;hh:mm:ss.SSS,timestamp)}Z&quot;,
+  &quot;status&quot;: &quot;placed&quot;,
+  &quot;complete&quot;: ${complete}
+}
+
+${__P(access_token)}
+[no cookies]</stringProp>
+          <stringProp name="RESPONSE_DATA">{&quot;id&quot;:${ID},&quot;petId&quot;:${petId},&quot;quantity&quot;:${Qt},&quot;shipDate&quot;:&quot;${timestamp}&quot;,&quot;status&quot;:&quot;placed&quot;,&quot;complete&quot;:${complete}}</stringProp>
+          <stringProp name="RESPONSE_TIME">${__Random(500,1024)}</stringProp>
+          <stringProp name="LATENCY">${__Random(500,1024)}</stringProp>
+          <stringProp name="CONNECT">${__Random(100,250)}</stringProp>
+          <stringProp name="URL">POST https://petstore.swagger.io/v2/store/order</stringProp>
+          <stringProp name="RESULT_CLASS">org.apache.jmeter.samplers.SampleResult</stringProp>
+          <stringProp name="TestPlan.comments">cenario positivo</stringProp>
+        </kg.apc.jmeter.samplers.DummySampler>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="Headers" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">Bearer ${__P(Token)}</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <TestAction guiclass="TestActionGui" testclass="TestAction" testname="Flow Control Action" enabled="true">
+          <intProp name="ActionProcessor.action">1</intProp>
+          <intProp name="ActionProcessor.target">0</intProp>
+          <stringProp name="ActionProcessor.duration">280000</stringProp>
+        </TestAction>
+        <hashTree/>
+      </hashTree>
+      <kg.apc.jmeter.threads.SteppingThreadGroup guiclass="kg.apc.jmeter.threads.SteppingThreadGroupGui" testclass="kg.apc.jmeter.threads.SteppingThreadGroup" testname="jp@gc - Stepping Thread Group" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">startnextloop</stringProp>
+        <stringProp name="ThreadGroup.num_threads">60</stringProp>
+        <stringProp name="Threads initial delay">0</stringProp>
+        <stringProp name="Start users count">5</stringProp>
+        <stringProp name="Start users count burst">1</stringProp>
+        <stringProp name="Start users period">1</stringProp>
+        <stringProp name="Stop users count">5</stringProp>
+        <stringProp name="Stop users period">1</stringProp>
+        <stringProp name="flighttime">5</stringProp>
+        <stringProp name="rampUp">20</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <intProp name="LoopController.loops">-1</intProp>
+        </elementProp>
+      </kg.apc.jmeter.threads.SteppingThreadGroup>
+      <hashTree>
+        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="0. Token" enabled="true">
+          <stringProp name="IfController.condition">${__groovy(props.get(&quot;time_waiting_token_&quot;), tempo_limite)}
+${__groovy(log.info(&quot;---------&gt;: Token expira em: &quot; + props.get(&quot;tempo_limite_formatado&quot;)),)}
+${__groovy(log.info(&quot;First User: &quot; + String.valueOf(ctx.getThreadNum() == 0)),)}
+${__groovy(
+	if(vars.get(&quot;tempo_limite&quot;) == &quot;&quot;){
+		log.info(&quot;O token é nulo!!&quot;)
+	} else {
+		log.info(&quot;Já expirou: &quot; + String.valueOf(System.currentTimeMillis() &gt; Long.valueOf(vars.get(&quot;tempo_limite&quot;))))
+	}
+,)}
+${__groovy(
+	if(ctx.getThreadNum() == 0){
+		if(vars.get(&quot;tempo_limite&quot;) == &quot;&quot;){
+			true
+		} else {
+			System.currentTimeMillis() &gt; Long.valueOf(vars.get(&quot;tempo_limite&quot;))
+		}
+	} else {
+		false
+	}
+,)}</stringProp>
+          <boolProp name="IfController.evaluateAll">false</boolProp>
+          <stringProp name="TestPlan.comments">Esse modulo separa o token para ser chamado somente do thread 0 e o resto dos treads só consomem a variavel salva por ele</stringProp>
+        </IfController>
+        <hashTree>
+          <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="0.1 Token" enabled="true">
+            <boolProp name="WAITING">false</boolProp>
+            <boolProp name="SUCCESFULL">true</boolProp>
+            <stringProp name="RESPONSE_CODE">${transaction_status}</stringProp>
+            <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
+            <stringProp name="REQUEST_DATA">POST https://auth-exemplo.org/auth
+
+POST data:
+grant_type=client_credentials&amp;client_id=12fg544t-dg66-3445-76574567
+[no cookies]</stringProp>
+            <stringProp name="RESPONSE_DATA">{&quot;access_token&quot; : &quot;ey${random}JhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9CgeyJzdWIiOiAiMTIzNDU2Nzg5MCIsICJuYW1lIjogIkpvaG4gRG9lIiwgImlhdCI6IDE1MTYyMzkwMjJ9Cg&quot;,
+&quot;token_type&quot; : &quot; Bearer&quot; ,
+&quot;expires_in&quot; : 300,
+&quot;refresh_token&quot; : &quot;RGhr43fd${random}wIjogIkpXVCJ9CgeyJzdWIiOiAiMTIzNDU2Nzg5MCIsICJuYW1lIjogIkpvaG4gRG9lIiwgImlhdCI6IDE1MTYy&quot;,
+&quot;scope&quot; : &quot;teste-mock-jmeter&quot;,
+&quot;active&quot; : true
+}</stringProp>
+            <stringProp name="RESPONSE_TIME">${__Random(500,1024)}</stringProp>
+            <stringProp name="LATENCY">${__Random(500,700)}</stringProp>
+            <stringProp name="CONNECT">${__Random(400,600)}</stringProp>
+            <stringProp name="URL">POST https://petstore.swagger.io/v2/store/order</stringProp>
+            <stringProp name="RESULT_CLASS">org.apache.jmeter.protocol.http.sampler.HTTPSampleResult</stringProp>
+            <stringProp name="TestPlan.comments">status false pra validar modulos de IF</stringProp>
+          </kg.apc.jmeter.samplers.DummySampler>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="Headers" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">application/x-form-urlencoded</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name"></stringProp>
+                  <stringProp name="Header.value"></stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">access_token</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">access_token</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">nulo</stringProp>
+              <stringProp name="TestPlan.comments">Extrai o token</stringProp>
+              <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Validacao de Status" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">8</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="PreProcessor complete" enabled="true">
+              <stringProp name="cacheKey">false</stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="script">import java.util.Random;
+
+int count = new Random().nextInt(10) + 1;
+String complete = &quot;&quot;;
+
+if (count == 10) {
+    vars.put(&quot;transaction_status&quot;, &quot;404&quot;);
+} else {
+    vars.put(&quot;transaction_status&quot;, &quot;200&quot;);
+}
+
+vars.put(&quot;count&quot;, String.valueOf(count));
+</stringProp>
+              <stringProp name="scriptLanguage">groovy</stringProp>
+            </JSR223PreProcessor>
+            <hashTree/>
+            <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+              <stringProp name="scriptLanguage">groovy</stringProp>
+              <stringProp name="parameters">${__RandomString(22,ABDFHlkjggRTioo1234567890,)}</stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="cacheKey">false</stringProp>
+              <stringProp name="script">vars.put(&quot;random&quot;,Parameters);</stringProp>
+            </JSR223PreProcessor>
+            <hashTree/>
+            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor" enabled="true">
+              <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+              <stringProp name="RegexExtractor.refname">status_code</stringProp>
+              <stringProp name="RegexExtractor.regex">(.*)</stringProp>
+              <stringProp name="RegexExtractor.template">$1$</stringProp>
+              <stringProp name="RegexExtractor.default"></stringProp>
+              <stringProp name="RegexExtractor.match_number">1</stringProp>
+            </RegexExtractor>
+            <hashTree/>
+            <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor" enabled="true">
+              <stringProp name="scriptLanguage">groovy</stringProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="cacheKey">false</stringProp>
+              <stringProp name="script">props.put(&apos;access_token&apos;, vars.get(&apos;access_token&apos;))
+props.put(&apos;status_code&apos;, vars.get(&apos;status_code&apos;))
+
+def tempo_limite = &quot;${__timeShift(,,PT260s,,)}&quot;
+def variavel = &apos;time_waiting_token_&apos;
+props.put(variavel, tempo_limite)
+
+def tmz = TimeZone.getTimeZone(&apos;UTC-3&apos;)
+def now = new Date(Long.parseLong(tempo_limite))
+def formatado = now.format(&quot;dd/MM/yyyy HH:mm:ss.SSS&quot;)
+props.put(&quot;tempo_limite_formatado&quot;, formatado)
+log.info(&apos;-------&gt;: Token &apos; + variavel + &apos; : Expira -&gt; epoch: &apos; + props.get(variavel) + &apos; Data: &apos; + formatado, tmz)</stringProp>
+              <stringProp name="TestPlan.comments">armazena o token em uma variavel global</stringProp>
+            </JSR223PostProcessor>
+            <hashTree/>
+          </hashTree>
+          <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="Retry token" enabled="true">
+            <stringProp name="TestPlan.comments">esse modulo vai fazendo retentativas no token quando ele da erro até dar sucesso</stringProp>
+            <stringProp name="WhileController.condition">${__javaScript(&quot;${__P(status_code)}&quot; != &quot;200&quot;)}</stringProp>
+          </WhileController>
+          <hashTree>
+            <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="0.1 Token" enabled="true">
+              <boolProp name="WAITING">false</boolProp>
+              <boolProp name="SUCCESFULL">true</boolProp>
+              <stringProp name="RESPONSE_CODE">${transaction_status}</stringProp>
+              <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
+              <stringProp name="REQUEST_DATA">POST https://auth-exemplo.org/auth
+
+POST data:
+grant_type=client_credentials&amp;client_id=12fg544t-dg66-3445-76574567
+[no cookies]</stringProp>
+              <stringProp name="RESPONSE_DATA">{&quot;access_token&quot; : &quot;ey${random}JhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9CgeyJzdWIiOiAiMTIzNDU2Nzg5MCIsICJuYW1lIjogIkpvaG4gRG9lIiwgImlhdCI6IDE1MTYyMzkwMjJ9Cg&quot;,
+&quot;token_type&quot; : &quot; Bearer&quot; ,
+&quot;expires_in&quot; : 300,
+&quot;refresh_token&quot; : &quot;RGhr43fd${random}wIjogIkpXVCJ9CgeyJzdWIiOiAiMTIzNDU2Nzg5MCIsICJuYW1lIjogIkpvaG4gRG9lIiwgImlhdCI6IDE1MTYy&quot;,
+&quot;scope&quot; : &quot;teste-mock-jmeter&quot;,
+&quot;active&quot; : true
+}</stringProp>
+              <stringProp name="RESPONSE_TIME">${__Random(500,1024)}</stringProp>
+              <stringProp name="LATENCY">${__Random(500,700)}</stringProp>
+              <stringProp name="CONNECT">${__Random(400,600)}</stringProp>
+              <stringProp name="URL">POST https://petstore.swagger.io/v2/store/order</stringProp>
+              <stringProp name="RESULT_CLASS">org.apache.jmeter.protocol.http.sampler.HTTPSampleResult</stringProp>
+              <stringProp name="TestPlan.comments">status false pra validar modulos de IF</stringProp>
+            </kg.apc.jmeter.samplers.DummySampler>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="Headers" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value">application/x-form-urlencoded</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name"></stringProp>
+                    <stringProp name="Header.value"></stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+                <stringProp name="JSONPostProcessor.referenceNames">access_token</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">access_token</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+                <stringProp name="JSONPostProcessor.defaultValues">nulo</stringProp>
+                <stringProp name="TestPlan.comments">Extrai o token</stringProp>
+                <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
+              </JSONPostProcessor>
+              <hashTree/>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Validacao de Status" enabled="true">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="49586">200</stringProp>
+                </collectionProp>
+                <stringProp name="Assertion.custom_message"></stringProp>
+                <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+                <boolProp name="Assertion.assume_success">false</boolProp>
+                <intProp name="Assertion.test_type">8</intProp>
+              </ResponseAssertion>
+              <hashTree/>
+              <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="PreProcessor complete" enabled="true">
+                <stringProp name="cacheKey">false</stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="script">import java.util.Random;
+
+int count = new Random().nextInt(10) + 1;
+String complete = &quot;&quot;;
+
+if (count == 10) {
+    vars.put(&quot;transaction_status&quot;, &quot;404&quot;);
+} else {
+    vars.put(&quot;transaction_status&quot;, &quot;200&quot;);
+}
+
+vars.put(&quot;count&quot;, String.valueOf(count));
+</stringProp>
+                <stringProp name="scriptLanguage">groovy</stringProp>
+              </JSR223PreProcessor>
+              <hashTree/>
+              <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+                <stringProp name="scriptLanguage">groovy</stringProp>
+                <stringProp name="parameters">${__RandomString(22,ABDFHlkjggRTioo1234567890,)}</stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="cacheKey">false</stringProp>
+                <stringProp name="script">vars.put(&quot;random&quot;,Parameters);</stringProp>
+              </JSR223PreProcessor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+                <stringProp name="RegexExtractor.refname">status_code</stringProp>
+                <stringProp name="RegexExtractor.regex">(.*)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number">1</stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor" enabled="true">
+                <stringProp name="scriptLanguage">groovy</stringProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="cacheKey">false</stringProp>
+                <stringProp name="script">props.put(&apos;access_token&apos;, vars.get(&apos;access_token&apos;))
+props.put(&apos;status_code&apos;, vars.get(&apos;status_code&apos;))
+
+def tempo_limite = &quot;${__timeShift(,,PT260s,,)}&quot;
+def variavel = &apos;time_waiting_token_&apos;
+props.put(variavel, tempo_limite)
+
+def tmz = TimeZone.getTimeZone(&apos;UTC-3&apos;)
+def now = new Date(Long.parseLong(tempo_limite))
+def formatado = now.format(&quot;dd/MM/yyyy HH:mm:ss.SSS&quot;)
+props.put(&quot;tempo_limite_formatado&quot;, formatado)
+log.info(&apos;-------&gt;: Token &apos; + variavel + &apos; : Expira -&gt; epoch: &apos; + props.get(variavel) + &apos; Data: &apos; + formatado, tmz)</stringProp>
+                <stringProp name="TestPlan.comments">armazena o token em uma variavel global</stringProp>
+              </JSR223PostProcessor>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+        </hashTree>
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="1. Jornada Cliente" enabled="true">
+          <boolProp name="TransactionController.parent">true</boolProp>
+        </TransactionController>
+        <hashTree>
+          <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="1.1 POST Cadastro" enabled="true">
+            <boolProp name="WAITING">true</boolProp>
+            <boolProp name="SUCCESFULL">true</boolProp>
+            <stringProp name="RESPONSE_CODE">200</stringProp>
+            <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
+            <stringProp name="REQUEST_DATA">POST https://petstore.swagger.io/v2/store/order
+
+POST data:
+{
+  &quot;id&quot;: ${ID},
+  &quot;petId&quot;: ${petId},
+  &quot;quantity&quot;: ${__Random(1,5,Qt)},
+  &quot;shipDate&quot;: &quot;${__time(yyyy-MM-dd&apos;T&apos;hh:mm:ss.SSS,timestamp)}Z&quot;,
+  &quot;status&quot;: &quot;placed&quot;,
+  &quot;complete&quot;: ${complete}
+}
+
+${__P(access_token)}
+[no cookies]</stringProp>
+            <stringProp name="RESPONSE_DATA">{&quot;id&quot;:${ID},&quot;petId&quot;:${petId},&quot;quantity&quot;:${Qt},&quot;shipDate&quot;:&quot;${timestamp}&quot;,&quot;status&quot;:&quot;placed&quot;,&quot;complete&quot;:${complete}}</stringProp>
+            <stringProp name="RESPONSE_TIME">${__Random(500,1024)}</stringProp>
+            <stringProp name="LATENCY">${__Random(500,1024)}</stringProp>
+            <stringProp name="CONNECT">${__Random(100,250)}</stringProp>
+            <stringProp name="URL">POST https://petstore.swagger.io/v2/store/order</stringProp>
+            <stringProp name="RESULT_CLASS">org.apache.jmeter.samplers.SampleResult</stringProp>
+            <stringProp name="TestPlan.comments">cenario positivo</stringProp>
+          </kg.apc.jmeter.samplers.DummySampler>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="Headers" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Authorization</stringProp>
+                  <stringProp name="Header.value">Bearer ${__P(Token)}</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Validar Status 200 Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+              <stringProp name="ConstantTimer.delay">300</stringProp>
+            </ConstantTimer>
+            <hashTree/>
+          </hashTree>
+          <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="1.2 POST Simulacao" enabled="true">
+            <boolProp name="WAITING">true</boolProp>
+            <boolProp name="SUCCESFULL">true</boolProp>
+            <stringProp name="RESPONSE_CODE">200</stringProp>
+            <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
+            <stringProp name="REQUEST_DATA">POST https://petstore.swagger.io/v2/store/order
+
+POST data:
+{
+  &quot;id&quot;: ${ID},
+  &quot;petId&quot;: ${petId},
+  &quot;quantity&quot;: ${__Random(1,5,Qt)},
+  &quot;shipDate&quot;: &quot;${__time(yyyy-MM-dd&apos;T&apos;hh:mm:ss.SSS,timestamp)}Z&quot;,
+  &quot;status&quot;: &quot;placed&quot;,
+  &quot;complete&quot;: ${complete}
+}
+
+${__P(access_token)}
+[no cookies]</stringProp>
+            <stringProp name="RESPONSE_DATA">{&quot;id&quot;:${ID},&quot;petId&quot;:${petId},&quot;quantity&quot;:${Qt},&quot;shipDate&quot;:&quot;${timestamp}&quot;,&quot;status&quot;:&quot;placed&quot;,&quot;complete&quot;:${complete}}</stringProp>
+            <stringProp name="RESPONSE_TIME">${__Random(1000,2000)}</stringProp>
+            <stringProp name="LATENCY">${__Random(1000,2000)}</stringProp>
+            <stringProp name="CONNECT">${__Random(0,0)}</stringProp>
+            <stringProp name="URL">POST https://petstore.swagger.io/v2/store/order</stringProp>
+            <stringProp name="RESULT_CLASS">org.apache.jmeter.samplers.SampleResult</stringProp>
+            <stringProp name="TestPlan.comments">cenario positivo</stringProp>
+          </kg.apc.jmeter.samplers.DummySampler>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="Headers" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Authorization</stringProp>
+                  <stringProp name="Header.value">Bearer ${__P(Token)}</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Validar Status 200 Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+          <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="1.3 POST Formalizacao" enabled="true">
+            <boolProp name="LoopController.continue_forever">true</boolProp>
+            <stringProp name="LoopController.loops">${__Random(1,10,number)}</stringProp>
+          </LoopController>
+          <hashTree>
+            <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="1.3 POST Criar Pedido 3" enabled="true">
+              <boolProp name="WAITING">true</boolProp>
+              <boolProp name="SUCCESFULL">true</boolProp>
+              <stringProp name="RESPONSE_CODE">200</stringProp>
+              <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
+              <stringProp name="REQUEST_DATA">POST https://petstore.swagger.io/v2/store/order
+
+POST data:
+{
+  &quot;id&quot;: ${ID},
+  &quot;petId&quot;: ${petId},
+  &quot;quantity&quot;: ${__Random(1,5,Qt)},
+  &quot;shipDate&quot;: &quot;${__time(yyyy-MM-dd&apos;T&apos;hh:mm:ss.SSS,timestamp)}Z&quot;,
+  &quot;status&quot;: &quot;placed&quot;,
+  &quot;complete&quot;: ${complete}
+}
+
+${__P(access_token)}
+[no cookies]</stringProp>
+              <stringProp name="RESPONSE_DATA">{&quot;id&quot;:${ID},&quot;petId&quot;:${petId},&quot;quantity&quot;:${Qt},&quot;shipDate&quot;:&quot;${timestamp}&quot;,&quot;status&quot;:&quot;placed&quot;,&quot;complete&quot;:${complete}}</stringProp>
+              <stringProp name="RESPONSE_TIME">${__Random(200,700)}</stringProp>
+              <stringProp name="LATENCY">${__Random(200,700)}</stringProp>
+              <stringProp name="CONNECT">${__Random(400,600)}</stringProp>
+              <stringProp name="URL">POST https://petstore.swagger.io/v2/store/order</stringProp>
+              <stringProp name="RESULT_CLASS">org.apache.jmeter.samplers.SampleResult</stringProp>
+              <stringProp name="TestPlan.comments">cenario positivo</stringProp>
+            </kg.apc.jmeter.samplers.DummySampler>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="Headers" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value">application/json</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Authorization</stringProp>
+                    <stringProp name="Header.value">Bearer ${__P(Token)}</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Validar Status 200 Response Assertion" enabled="true">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="49586">200</stringProp>
+                </collectionProp>
+                <stringProp name="Assertion.custom_message"></stringProp>
+                <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+                <boolProp name="Assertion.assume_success">false</boolProp>
+                <intProp name="Assertion.test_type">16</intProp>
+              </ResponseAssertion>
+              <hashTree/>
+              <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+                <stringProp name="ConstantTimer.delay">3000</stringProp>
+              </ConstantTimer>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="1.4 POST Averbacao" enabled="true">
+            <boolProp name="WAITING">true</boolProp>
+            <boolProp name="SUCCESFULL">true</boolProp>
+            <stringProp name="RESPONSE_CODE">200</stringProp>
+            <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
+            <stringProp name="REQUEST_DATA">POST https://petstore.swagger.io/v2/store/order
+
+POST data:
+{
+  &quot;id&quot;: ${ID},
+  &quot;petId&quot;: ${petId},
+  &quot;quantity&quot;: ${__Random(1,5,Qt)},
+  &quot;shipDate&quot;: &quot;${__time(yyyy-MM-dd&apos;T&apos;hh:mm:ss.SSS,timestamp)}Z&quot;,
+  &quot;status&quot;: &quot;placed&quot;,
+  &quot;complete&quot;: ${complete}
+}
+
+${__P(access_token)}
+[no cookies]</stringProp>
+            <stringProp name="RESPONSE_DATA">{&quot;id&quot;:${ID},&quot;petId&quot;:${petId},&quot;quantity&quot;:${Qt},&quot;shipDate&quot;:&quot;${timestamp}&quot;,&quot;status&quot;:&quot;placed&quot;,&quot;complete&quot;:${complete}}</stringProp>
+            <stringProp name="RESPONSE_TIME">${__Random(1000,2000)}</stringProp>
+            <stringProp name="LATENCY">${__Random(1000,2000)}</stringProp>
+            <stringProp name="CONNECT">${__Random(0,0)}</stringProp>
+            <stringProp name="URL">POST https://petstore.swagger.io/v2/store/order</stringProp>
+            <stringProp name="RESULT_CLASS">org.apache.jmeter.samplers.SampleResult</stringProp>
+            <stringProp name="TestPlan.comments">cenario positivo</stringProp>
+          </kg.apc.jmeter.samplers.DummySampler>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="Headers" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Authorization</stringProp>
+                  <stringProp name="Header.value">Bearer ${__P(Token)}</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Validar Status 200 Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+      </hashTree>
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <kg.apc.jmeter.vizualizers.CorrectedResultCollector guiclass="kg.apc.jmeter.vizualizers.TransactionsPerSecondGui" testclass="kg.apc.jmeter.vizualizers.CorrectedResultCollector" testname="jp@gc - Transactions per Second" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+        <longProp name="interval_grouping">1000</longProp>
+        <boolProp name="graph_aggregated">false</boolProp>
+        <stringProp name="include_sample_labels"></stringProp>
+        <stringProp name="exclude_sample_labels"></stringProp>
+        <stringProp name="start_offset"></stringProp>
+        <stringProp name="end_offset"></stringProp>
+        <boolProp name="include_checkbox_state">false</boolProp>
+        <boolProp name="exclude_checkbox_state">false</boolProp>
+      </kg.apc.jmeter.vizualizers.CorrectedResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report" enabled="false">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename">${__BeanShell(import org.apache.jmeter.services.FileServer; FileServer.getFileServer().getBaseDir();)}/Resultados/Report${__time(yyyy-MM-dd-HHmm,)}.csv</stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>true</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>true</responseData>
+            <samplerData>true</samplerData>
+            <xml>true</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>true</responseHeaders>
+            <requestHeaders>true</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <fileName>true</fileName>
+            <hostname>true</hostname>
+            <threadCounts>true</threadCounts>
+            <sampleCount>true</sampleCount>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename">${__BeanShell(import org.apache.jmeter.services.FileServer; FileServer.getFileServer().getBaseDir();)}/Resultados/Report${__time(yyyy-MM-dd-HHmm,)}.csv</stringProp>
+      </ResultCollector>
+      <hashTree/>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
