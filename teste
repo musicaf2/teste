@@ -328,3 +328,17 @@ synchronized (this) {
 
 return jsonOutput;
 
+
+
+Para calcular a porcentagem que o subproduto representa em relação às 100 transações totais do produto, você precisa dividir o número de transações do subproduto pelo número total de transações do produto e, em seguida, multiplicar o resultado por 100.
+
+Nesse caso, o subproduto tem 82.374.463 transações, e o produto tem um total de 126.000.000 transações por dia. A fórmula para calcular a porcentagem é:
+
+Porcentagem = (Número de transações do subproduto / Número total de transações do produto) * 100
+
+Aplicando os valores:
+
+Porcentagem = (82.374.463 / 126.000.000) * 100 ≈ 65,37%
+
+Portanto, o subproduto representa aproximadamente 65,37% das 100 transações totais do produto.
+
