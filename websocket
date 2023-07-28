@@ -37,3 +37,14 @@ Você pode então usar o objeto messages para exibir as mensagens ou fazer outra
 for (const message of messages) {
   console.log(message);
 }
+
+function onMessage(message) {
+  // Converte a mensagem JSON em objeto JavaScript
+  const data = JSON.parse(message);
+
+  // Verifica se a mensagem contém o evento ou método específico que você deseja capturar
+  if (data.event === "evento_especifico" || data.metodo === "metodo_especifico") {
+    // Faça o que você precisa fazer com os dados capturados
+    console.log(data);
+  }
+}
