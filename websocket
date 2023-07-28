@@ -1,4 +1,5 @@
 se você quiser enviar uma mensagem para o servidor que chame o evento myEvent e, em seguida, ouça a resposta do evento, você pode usar o seguinte código:
+
 send({
   type: "myEvent",
   data: {
@@ -11,8 +12,10 @@ onMessage((event) => {
     // Process the response from the event
   }
 });
+
 Depois de adicionar esse código ao Insomnia, você pode clicar no botão Send para enviar a mensagem para o servidor. O servidor então enviará uma resposta ao evento e o código na função onMessage será executado.
 Você também pode usar a função onClose para ouvir quando a conexão WebSocket for fechada. Por exemplo, o seguinte código ouvirá quando a conexão WebSocket for fechada e exibirá uma mensagem de erro:
+
 onClose((event) => {
   console.log("Connection closed with error:", event.reason);
 });
@@ -21,13 +24,16 @@ onClose((event) => {
 
 Se o servidor só envia mensagens e não aceita receber mensagens, você pode usar a função onMessage para ouvir as mensagens recebidas do servidor e armazená-las em um objeto. Em seguida, você pode usar o objeto para exibir as mensagens ou fazer outra coisa com elas.
 Por exemplo, o seguinte código ouvirá as mensagens recebidas do servidor e as armazenará em um objeto:
+
 const messages = [];
 
 onMessage((event) => {
   messages.push(event.data);
 });
+
 Depois de adicionar esse código ao Insomnia, você pode clicar no botão Send para enviar uma mensagem para o servidor. O servidor então enviará uma resposta ao evento e o código na função onMessage será executado. O objeto messages será então preenchido com as mensagens recebidas do servidor.
 Você pode então usar o objeto messages para exibir as mensagens ou fazer outra coisa com elas. Por exemplo, o seguinte código exibirá as mensagens recebidas do servidor:
+
 for (const message of messages) {
   console.log(message);
 }
