@@ -365,3 +365,10 @@ public void process() {
         getSampler().setRunning(false);
     }
 }
+
+
+if (vars.get("message").equals("Não foram encontrados resultados.")) {
+    vars.put("retry", "true")
+} else {
+    vars.put("retry", "false")
+}
