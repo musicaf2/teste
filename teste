@@ -349,4 +349,7 @@ https://medium.com/weekly-webtips/intro-to-the-web-socket-testing-39a342d0be5e
 
 ${__groovy(("nao encontrado".equals(vars.get("status")) && Integer.parseInt(vars.get("retryCount")) <= 10) || !"nao encontrado".equals(vars.get("status")),)}
 ${__groovy(("nao encontrado".equals(vars.get("status")) && Integer.parseInt(vars.get("retryCount")) <= 10),)}
+${__groovy(("nao encontrado".equals(vars.get("status")) && (vars.get("retryCount") as int) <= 10) || !"nao encontrado".equals(vars.get("status")),)}
+
+
 
