@@ -346,3 +346,6 @@ Portanto, o subproduto representa aproximadamente 65,37% das 100 transações to
 
 
 https://medium.com/weekly-webtips/intro-to-the-web-socket-testing-39a342d0be5e
+
+${__groovy(("nao encontrado".equals(vars.get("status")) && Integer.parseInt(vars.get("retryCount")) <= 10) || !"nao encontrado".equals(vars.get("status")),)}
+
