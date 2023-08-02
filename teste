@@ -353,3 +353,15 @@ ${__groovy(("nao encontrado".equals(vars.get("status")) && (vars.get("retryCount
 
 
 
+import org.apache.jmeter.engine.util.JMeterUtils;
+
+public class RetryPostProcessor extends org.apache.jmeter.postprocessor.jsr223.AbstractJSR223PostProcessor {
+
+@Override
+public void process() {
+    String status = JMeterUtils.getJMeterVariables().get("status");
+    if (status.equals("Não foram encontrados resultados.")) {
+        // Retry the request
+        getSampler().setRunning(false);
+    }
+}
