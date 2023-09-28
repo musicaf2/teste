@@ -1,0 +1,51 @@
+{
+    "request": {
+        "method": "POST",
+        "urlPathPattern": "/hom/qrcode/pix",
+        "headers": {
+            "Authorization": {
+                "matches": "(.*)"
+            },
+            "Content-Type": {
+                "matches": "application/json"
+            },
+            "api-id": {
+                "matches": "456v99vppt"
+            },
+            "api-key": {
+                "matches": "6759eb24-2449-44f4-8b58-f806f58"
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": {
+                    "informacoes": "${json-unit.any-string}",
+                    "valor": "${json-unit.any-string}",
+                    "recebedor": [
+                        {
+                            "chave": "${json-unit.any-string}"
+                        }
+                    ],
+                    "pagador": [
+                        {
+                            "numero_documento": "${json-unit.any-string}"
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "fixedDelayMilliseconds": 112,
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "jsonBody": {
+            "id_transacao": "P75900056{{now timezone='America/Sao_Paulo' format='yyyyMMddHHmmss'}}002{{randomValue length=8 type='ALPHANUMERIC' uppercase=true}}",
+            "data_transferencia": "{{now format='yyyy-MM-dd'}}T{{now timezone='America/Sao_Paulo' format='HH:mm:ss.SSS'}}-3:00",
+            "valor": "{{jsonPath request.body '$.valor'}}",
+            "qrcode": "000{{randomValue length=16 type='NUMERIC'}}BR.GOV.BCB.PIX2333spi-h.banco.com.br/pix/qr/v3/{{randomValue type='UUID'}}{{randomValue length=4 type='NUMERIC'}}***{{randomValue length=6 type='ALPHANUMERIC'}}"
+        }
+    }
+}
