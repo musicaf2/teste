@@ -1,0 +1,44 @@
+{
+    "tipo_transferencia": "pix",
+    "informacoes": "Pix com chave",
+    "id_transacao": "P7590005620230922080414002f58de0f3",
+    "data_transferencia": "2023-09-22T08:04:14.002-3:00",
+    "valor": "10.23",
+    "recebedor": [
+        {
+            "meio_pagamento": {
+                "tipo": "conta_corrente",
+                "dados": {
+                    "chave": "033987233222",
+                    "dados_conta": {
+                        "agencia": "3200",
+                        "conta": "00919399"
+                    }
+                }
+            },
+            "identificacao": {
+                "tipo_pessoa": "F",
+                "nome": "Joao Avelar",
+                "numero_documento": "033987233222"
+            }
+        }
+    ],
+    "pagador": [
+        {
+            "meio_pagamento": {
+                "tipo": "conta_corrente",
+                "dados": {
+                    "dados_conta": {
+                        "agencia": "1200",
+                        "conta": "00229399"
+                    }
+                }
+            },
+            "identificacao": {
+                "tipo_pessoa": "F",
+                "nome": "Marina Barbosa",
+                "numero_documento": "033987233222"
+            }
+        }
+    ]
+}

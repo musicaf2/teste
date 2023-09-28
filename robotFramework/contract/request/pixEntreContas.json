@@ -1,0 +1,43 @@
+{
+    "tipo_transferencia": "pix",
+    "informacoes": "Pix entre contas",
+    "id_transacao": "P7590005620230922080414002f58de0f3",
+    "data_transferencia": "2023-09-22T08:04:14.002-3:00",
+    "valor": "${reais}.${centavos}",
+    "recebedor": [
+        {
+            "meio_pagamento": {
+                "tipo": "conta_corrente",
+                "dados": {
+                    "dados_conta": {
+                        "agencia": "${ag_rec}",
+                        "conta": "${conta_rec}"
+                    }
+                }
+            },
+            "identificacao": {
+                "tipo_pessoa": "F",
+                "nome": "${nome_rec} ${sobrenome_rec}",
+                "numero_documento": "${doc_rec}"
+            }
+        }
+    ],
+    "pagador": [
+        {
+            "meio_pagamento": {
+                "tipo": "conta_corrente",
+                "dados": {
+                    "dados_conta": {
+                        "agencia": "${ag_pag}",
+                        "conta": "${conta_pag}"
+                    }
+                }
+            },
+            "identificacao": {
+                "tipo_pessoa": "F",
+                "nome": "${nome_pag} ${sobrenome_pag}",
+                "numero_documento": "${doc_pag}"
+            }
+        }
+    ]
+}

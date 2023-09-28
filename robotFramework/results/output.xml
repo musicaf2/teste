@@ -1,0 +1,786 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.1.1 (Python 3.11.5 on win32)" generated="20230928 11:17:23.994" rpa="false" schemaversion="4">
+<suite id="s1" name="Log Cenarios de teste automatizados" source="c:\Users\musicaf2\IdeaProjects\PerformanceRepo\robotFramework\tests\BDD.robot">
+<kw name="Bearer token" library="authentication" type="SETUP">
+<kw name="Convert To Boolean" library="BuiltIn">
+<var>${false}</var>
+<arg>False</arg>
+<doc>Converts the given item to Boolean true or false.</doc>
+<msg timestamp="20230928 11:17:25.433" level="INFO">${false} = False</msg>
+<status status="PASS" starttime="20230928 11:17:25.433" endtime="20230928 11:17:25.433"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${HEADERS}</var>
+<arg>Content-Type=${Ambiente.token_Content_Type}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230928 11:17:25.434" level="INFO">${HEADERS} = {'Content-Type': 'application/x-www-form-urlencoded'}</msg>
+<status status="PASS" starttime="20230928 11:17:25.433" endtime="20230928 11:17:25.434"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${BODY}</var>
+<arg>grant_type=${Ambiente.token_grant_type}</arg>
+<arg>client_id=${Ambiente.token_client_id}</arg>
+<arg>client_secret=${Ambiente.token_client_secret}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230928 11:17:25.436" level="INFO">${BODY} = {'grant_type': 'client_credentials', 'client_id': '9x48f5da-63c6-4793-8570-3d0b3a6d0822', 'client_secret': '2a48f5da-63c6-4793-8570-3d0b3a6d0825'}</msg>
+<status status="PASS" starttime="20230928 11:17:25.435" endtime="20230928 11:17:25.436"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>oauth</arg>
+<arg>${Ambiente.token_url}</arg>
+<arg>disable_warnings=1</arg>
+<arg>verify=${false}</arg>
+<arg>headers=${HEADERS}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230928 11:17:25.437" level="INFO">Creating Session using : alias=oauth, url=http://localhost:8080/hom/api/oauth, headers={'Content-Type': 'application/x-www-form-urlencoded'},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230928 11:17:25.436" endtime="20230928 11:17:25.437"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${RESPOSTA}</var>
+<arg>oauth</arg>
+<arg>${Ambiente.token_url}/token</arg>
+<arg>data=${BODY}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20230928 11:17:25.512" level="INFO">POST Request : url=http://localhost:8080/hom/api/oauth/token 
+ path_url=/hom/api/oauth/token 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/x-www-form-urlencoded', 'Content-Length': '127'} 
+ body=grant_type=client_credentials&amp;client_id=9x48f5da-63c6-4793-8570-3d0b3a6d0822&amp;client_secret=2a48f5da-63c6-4793-8570-3d0b3a6d0825 
+ </msg>
+<msg timestamp="20230928 11:17:25.514" level="INFO">POST Response : url=http://localhost:8080/hom/api/oauth/token 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/x-www-form-urlencoded', 'Matched-Stub-Id': '8b48d81a-adfa-44ef-9ca2-de328bda8d48', 'Content-Encoding': 'gzip', 'Transfer-Encoding': 'chunked'} 
+ body={"access_token":"93ddgubk39zdhmscd4co58bzzl8fvbrn85yyn75p4owlswrmwtnrqquukju2hdxjxpglwbwly3u2pjoxzvczdovhnhfupq2zpib67kilbjfwmifi9zhfyovumobs5k1ggjqwoeuhqoemanmvaeyc1g6a7wieazbbzco6jfx29gucg2vhg0xbbss8lzwtce7nvx1kl41ppig1a1z5zwuasvjqyodjhyd6mbqwdubymrwwtnl0rnlqi8kuqrdurfvzhhvnlesms4dfj4qlupukzcsu9on0ooqbvm814er13nyrkugwdlh7ilznrmcobxyrjqgnpsri4c9aagvzf0axrnglamdsbmhyi5wrlormeesnh5a98i4mjt4uiaodhpasz8moidcfbwmr1w3x5yvzezjeegvxxyaopxb9f8r3hk0goxsuxx29lygskiewpihqjwgmez7t231nvcdwnm6kfndnjxuvai2yr6n4y6e3mt8w44qureg6nexf9yvomfbo7vgnzng30fmfi38prgsxnbfa6jdqfn0kj1sm2jaat3dkev5kmtelq79oegac53e1qebda7gv4bkmtoglsjgmrofvuzs5iqalnhvnnd2e9dsasvy5n7ilrfxmj4bhpbuwaqedxadfchbozgzi2m7nuukfin7jmwkwvc5xno4ftpzghcd7xdr7n2ry2t8c5ep3kgqmqtpvd1dnm1zhiibl3qfhgvtmi0ebvryax17q8vvn4oxorandqvucaeukpkstte8es4fugo0mrjolvcx9cszkpqimxtnzmqxyiehxy1pvxvwtov4apjj3epeutqxg3ilkaq7wn4clyzyucaox8lmghvu0kjrnzc2h2c3j2rixefumx2as0urzqwcnn5qb8itv5y3rqgopkwuxwsokesszlidk6jvjft3hs7roltly4mzalcsczhh046o2pqidjdaeiwajsiax9snpa7avfbgmp3im1uzo92vd6ownhysmcmd1osohz4ds8writlkyn31yawvddf34ilrocwzi7fke0y6wjo05fhyrrqmroicsfncrsgthv2fz71ji0iup1siu8em9x1sevcuphmc1ppw7c9tpfvqr1xjl4ajkkmgtit0ugvapviqfzziqi5risjhehyniune0crj4m4ivsc6qimghgkgospzxphkswwxbmdlszlybvi9roebd3falbx5sagdr4xfzc5o4gf1taq00ypij4zoqyteoqt2eo48cvrkwg9sgztyz43zpmzfjccwsd9jxkgs9b59ri9yjh2gqnucwg3ekk8bymfry35x0zzhf6y5algaum8m6s1h0dfsisewz8dadxkjxovxmmkmcq5kxuul6c50jn1zhil6sdwyqhipv5w2nzeeyzei3a3kotmzahlrxt3fmg7ccvjtcya1ga0tghuwntby6uiyxfjqrq5qndja219ycztzm2wbemwhrtoriwh7sauqrovahyigtvfh1wk5nmyob4hdi2hyd12fnqzerk8gznjaudxs2nx0ggwkcyduki5ciwxkc0y0sku3jcl9tyu9b77crdwgpejkjxjg3xarvd0u7kyldlfhsyzjgdwi187co9niylwd1s1vpbee3hco8pjdlig5xto5tihmthwck0i4vofpo66uvf1tubbzrhboh2vjpn5tzudybklrcogurncpum7gq1yu6xujddgywah6kkry9wnzjfquo4gg8gfjx0a5wxlvbss5peypkphkplxnhzeidgsrnu4jrr8ma2jiq2qdpnvm5gct7gooyzzqab0drl8swegzd23gvohuz5ytxzjknfporrwqydehgro56fq3pcec4uointkxbz5ttqdvtyfkudse1vk474nixeg1u2aw21grdxpo2wojkvtouyfkyaht4sun1ug506mx0r23w2sz95srfxheniens4bi0odzgi7saigxbbjksxgbwkw7isu5agb90hgsve3o9nswzwvvtmnemec3p8mlng2xxdcldvolkcqky7suozjvyjlcj4dpes4eh0w3pruoqoxr4wrfumrw0sbgxa3bnt7iq7lp9tng2atrffsv7ylv8v4gsrohfythxaqbzy0lusuqjbfavox06a4zkoab0uhrznpuzvbz4mfckkccpglllf5civldl2obefez2qqbii6sptky3shhwqfxqxcgc5fq1jpcemljkaulrbt8epf131aqs5vizcgfr2dub1srjygapgcdnyfwoqvqgrev0hr5wjsrhwvdtlpjq5mnsqapfu7ctdmlmebwminu9ik4n5vxlkhrfcil7vq1hruldmladklmmgeup66ozrmbzpdf9n0klsr2jpzlq5mmorrdm2iezcts6dkusm2vj6crmoni4vbuy7kdmodshs1rlvngglvpgvtzpatr10wjxcwgajjxofxcucjk1onxsqc1nqolnwmltp7psjk1uvaoiz2tthuqlogxvsayeaw6bhjb2frulrm03lx2ysqhbpwnucmyxwkjbrwt7ri8e0q5kihheu258a32780ixvvyqudtdfwuwchhzmkvtxteydpyfhnfkskeqhstzanesexho1yr7yjxadnno7oazg00o7ut94qch5dmbpotqds7eldqzaawpimrxl5kzihpft9ay622rqlle8ugosif3cjskv1gp8upzbwtxncvbcovx2yaiodvdtpgzr4zl2swqctfjlpnbmyodnv5ei7rkbhoshwmsoo4n0hkwh1lnd83qp3oyscttdsabsntxlzydw4xsav3cq7b5sp7pmnxogatuksxylagfmxk4kuplewqnrbvkrluejwlyy","active":true,"token_type":"Bearer","expires_in":"300"} 
+ </msg>
+<msg timestamp="20230928 11:17:25.514" level="INFO">${RESPOSTA} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230928 11:17:25.437" endtime="20230928 11:17:25.514"/>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<arg>${ACCESS_TOKEN}</arg>
+<arg>Bearer ${RESPOSTA.json()['access_token']}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<msg timestamp="20230928 11:17:25.515" level="INFO">${ACCESS_TOKEN} = Bearer 93ddgubk39zdhmscd4co58bzzl8fvbrn85yyn75p4owlswrmwtnrqquukju2hdxjxpglwbwly3u2pjoxzvczdovhnhfupq2zpib67kilbjfwmifi9zhfyovumobs5k1ggjqwoeuhqoemanmvaeyc1g6a7wieazbbzco6jfx29gucg2vhg0xbbss8lzwtce7nv...</msg>
+<status status="PASS" starttime="20230928 11:17:25.514" endtime="20230928 11:17:25.515"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${RESPOSTA.content}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230928 11:17:25.516" level="INFO">{"access_token":"93ddgubk39zdhmscd4co58bzzl8fvbrn85yyn75p4owlswrmwtnrqquukju2hdxjxpglwbwly3u2pjoxzvczdovhnhfupq2zpib67kilbjfwmifi9zhfyovumobs5k1ggjqwoeuhqoemanmvaeyc1g6a7wieazbbzco6jfx29gucg2vhg0xbbss8lzwtce7nvx1kl41ppig1a1z5zwuasvjqyodjhyd6mbqwdubymrwwtnl0rnlqi8kuqrdurfvzhhvnlesms4dfj4qlupukzcsu9on0ooqbvm814er13nyrkugwdlh7ilznrmcobxyrjqgnpsri4c9aagvzf0axrnglamdsbmhyi5wrlormeesnh5a98i4mjt4uiaodhpasz8moidcfbwmr1w3x5yvzezjeegvxxyaopxb9f8r3hk0goxsuxx29lygskiewpihqjwgmez7t231nvcdwnm6kfndnjxuvai2yr6n4y6e3mt8w44qureg6nexf9yvomfbo7vgnzng30fmfi38prgsxnbfa6jdqfn0kj1sm2jaat3dkev5kmtelq79oegac53e1qebda7gv4bkmtoglsjgmrofvuzs5iqalnhvnnd2e9dsasvy5n7ilrfxmj4bhpbuwaqedxadfchbozgzi2m7nuukfin7jmwkwvc5xno4ftpzghcd7xdr7n2ry2t8c5ep3kgqmqtpvd1dnm1zhiibl3qfhgvtmi0ebvryax17q8vvn4oxorandqvucaeukpkstte8es4fugo0mrjolvcx9cszkpqimxtnzmqxyiehxy1pvxvwtov4apjj3epeutqxg3ilkaq7wn4clyzyucaox8lmghvu0kjrnzc2h2c3j2rixefumx2as0urzqwcnn5qb8itv5y3rqgopkwuxwsokesszlidk6jvjft3hs7roltly4mzalcsczhh046o2pqidjdaeiwajsiax9snpa7avfbgmp3im1uzo92vd6ownhysmcmd1osohz4ds8writlkyn31yawvddf34ilrocwzi7fke0y6wjo05fhyrrqmroicsfncrsgthv2fz71ji0iup1siu8em9x1sevcuphmc1ppw7c9tpfvqr1xjl4ajkkmgtit0ugvapviqfzziqi5risjhehyniune0crj4m4ivsc6qimghgkgospzxphkswwxbmdlszlybvi9roebd3falbx5sagdr4xfzc5o4gf1taq00ypij4zoqyteoqt2eo48cvrkwg9sgztyz43zpmzfjccwsd9jxkgs9b59ri9yjh2gqnucwg3ekk8bymfry35x0zzhf6y5algaum8m6s1h0dfsisewz8dadxkjxovxmmkmcq5kxuul6c50jn1zhil6sdwyqhipv5w2nzeeyzei3a3kotmzahlrxt3fmg7ccvjtcya1ga0tghuwntby6uiyxfjqrq5qndja219ycztzm2wbemwhrtoriwh7sauqrovahyigtvfh1wk5nmyob4hdi2hyd12fnqzerk8gznjaudxs2nx0ggwkcyduki5ciwxkc0y0sku3jcl9tyu9b77crdwgpejkjxjg3xarvd0u7kyldlfhsyzjgdwi187co9niylwd1s1vpbee3hco8pjdlig5xto5tihmthwck0i4vofpo66uvf1tubbzrhboh2vjpn5tzudybklrcogurncpum7gq1yu6xujddgywah6kkry9wnzjfquo4gg8gfjx0a5wxlvbss5peypkphkplxnhzeidgsrnu4jrr8ma2jiq2qdpnvm5gct7gooyzzqab0drl8swegzd23gvohuz5ytxzjknfporrwqydehgro56fq3pcec4uointkxbz5ttqdvtyfkudse1vk474nixeg1u2aw21grdxpo2wojkvtouyfkyaht4sun1ug506mx0r23w2sz95srfxheniens4bi0odzgi7saigxbbjksxgbwkw7isu5agb90hgsve3o9nswzwvvtmnemec3p8mlng2xxdcldvolkcqky7suozjvyjlcj4dpes4eh0w3pruoqoxr4wrfumrw0sbgxa3bnt7iq7lp9tng2atrffsv7ylv8v4gsrohfythxaqbzy0lusuqjbfavox06a4zkoab0uhrznpuzvbz4mfckkccpglllf5civldl2obefez2qqbii6sptky3shhwqfxqxcgc5fq1jpcemljkaulrbt8epf131aqs5vizcgfr2dub1srjygapgcdnyfwoqvqgrev0hr5wjsrhwvdtlpjq5mnsqapfu7ctdmlmebwminu9ik4n5vxlkhrfcil7vq1hruldmladklmmgeup66ozrmbzpdf9n0klsr2jpzlq5mmorrdm2iezcts6dkusm2vj6crmoni4vbuy7kdmodshs1rlvngglvpgvtzpatr10wjxcwgajjxofxcucjk1onxsqc1nqolnwmltp7psjk1uvaoiz2tthuqlogxvsayeaw6bhjb2frulrm03lx2ysqhbpwnucmyxwkjbrwt7ri8e0q5kihheu258a32780ixvvyqudtdfwuwchhzmkvtxteydpyfhnfkskeqhstzanesexho1yr7yjxadnno7oazg00o7ut94qch5dmbpotqds7eldqzaawpimrxl5kzihpft9ay622rqlle8ugosif3cjskv1gp8upzbwtxncvbcovx2yaiodvdtpgzr4zl2swqctfjlpnbmyodnv5ei7rkbhoshwmsoo4n0hkwh1lnd83qp3oyscttdsabsntxlzydw4xsav3cq7b5sp7pmnxogatuksxylagfmxk4kuplewqnrbvkrluejwlyy","active":true,"token_type":"Bearer","expires_in":"300"}</msg>
+<status status="PASS" starttime="20230928 11:17:25.515" endtime="20230928 11:17:25.516"/>
+</kw>
+<status status="PASS" starttime="20230928 11:17:25.433" endtime="20230928 11:17:25.516"/>
+</kw>
+<test id="s1-t1" name="Gerando Variaveis dinamicas" line="15">
+<kw name="Gerar variaveis dinamicas" library="stepsE2E">
+<kw name="Cpf" library="FakerLibrary">
+<var>${cpf1_pag}</var>
+<msg timestamp="20230928 11:17:25.517" level="INFO">${cpf1_pag} = 590.138.647-75</msg>
+<status status="PASS" starttime="20230928 11:17:25.517" endtime="20230928 11:17:25.517"/>
+</kw>
+<kw name="Remove String" library="String">
+<var>${doc_pag}</var>
+<arg>${cpf1_pag}</arg>
+<arg>.</arg>
+<arg>-</arg>
+<doc>Removes all ``removables`` from the given ``string``.</doc>
+<msg timestamp="20230928 11:17:25.517" level="INFO">${doc_pag} = 59013864775</msg>
+<status status="PASS" starttime="20230928 11:17:25.517" endtime="20230928 11:17:25.517"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${doc_pag}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20230928 11:17:25.518" level="INFO">${doc_pag} = 59013864775</msg>
+<status status="PASS" starttime="20230928 11:17:25.518" endtime="20230928 11:17:25.518"/>
+</kw>
+<kw name="Cpf" library="FakerLibrary">
+<var>${doc1_rec}</var>
+<msg timestamp="20230928 11:17:25.518" level="INFO">${doc1_rec} = 250.617.493-16</msg>
+<status status="PASS" starttime="20230928 11:17:25.518" endtime="20230928 11:17:25.518"/>
+</kw>
+<kw name="Remove String" library="String">
+<var>${doc_rec}</var>
+<arg>${doc1_rec}</arg>
+<arg>.</arg>
+<arg>-</arg>
+<doc>Removes all ``removables`` from the given ``string``.</doc>
+<msg timestamp="20230928 11:17:25.519" level="INFO">${doc_rec} = 25061749316</msg>
+<status status="PASS" starttime="20230928 11:17:25.519" endtime="20230928 11:17:25.519"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${doc_rec}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20230928 11:17:25.519" level="INFO">${doc_rec} = 25061749316</msg>
+<status status="PASS" starttime="20230928 11:17:25.519" endtime="20230928 11:17:25.519"/>
+</kw>
+<kw name="First Name" library="FakerLibrary">
+<var>${nome_pag1}</var>
+<msg timestamp="20230928 11:17:25.520" level="INFO">${nome_pag1} = João Vitor</msg>
+<status status="PASS" starttime="20230928 11:17:25.519" endtime="20230928 11:17:25.520"/>
+</kw>
+<kw name="Unidecode" library="unidecode">
+<var>${nome_pag}</var>
+<arg>${nome_pag1}</arg>
+<doc>Transliterate an Unicode object into an ASCII string</doc>
+<msg timestamp="20230928 11:17:25.521" level="INFO">${nome_pag} = Joao Vitor</msg>
+<status status="PASS" starttime="20230928 11:17:25.520" endtime="20230928 11:17:25.521"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${nome_pag}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20230928 11:17:25.522" level="INFO">${nome_pag} = Joao Vitor</msg>
+<status status="PASS" starttime="20230928 11:17:25.522" endtime="20230928 11:17:25.522"/>
+</kw>
+<kw name="Last Name" library="FakerLibrary">
+<var>${sobrenome_pag1}</var>
+<msg timestamp="20230928 11:17:25.522" level="INFO">${sobrenome_pag1} = Nascimento</msg>
+<status status="PASS" starttime="20230928 11:17:25.522" endtime="20230928 11:17:25.522"/>
+</kw>
+<kw name="Unidecode" library="unidecode">
+<var>${sobrenome_pag}</var>
+<arg>${sobrenome_pag1}</arg>
+<doc>Transliterate an Unicode object into an ASCII string</doc>
+<msg timestamp="20230928 11:17:25.523" level="INFO">${sobrenome_pag} = Nascimento</msg>
+<status status="PASS" starttime="20230928 11:17:25.522" endtime="20230928 11:17:25.523"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${sobrenome_pag}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20230928 11:17:25.523" level="INFO">${sobrenome_pag} = Nascimento</msg>
+<status status="PASS" starttime="20230928 11:17:25.523" endtime="20230928 11:17:25.523"/>
+</kw>
+<kw name="First Name" library="FakerLibrary">
+<var>${nome_rec1}</var>
+<msg timestamp="20230928 11:17:25.523" level="INFO">${nome_rec1} = Ana Clara</msg>
+<status status="PASS" starttime="20230928 11:17:25.523" endtime="20230928 11:17:25.523"/>
+</kw>
+<kw name="Unidecode" library="unidecode">
+<var>${nome_rec}</var>
+<arg>${nome_rec1}</arg>
+<doc>Transliterate an Unicode object into an ASCII string</doc>
+<msg timestamp="20230928 11:17:25.524" level="INFO">${nome_rec} = Ana Clara</msg>
+<status status="PASS" starttime="20230928 11:17:25.523" endtime="20230928 11:17:25.524"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${nome_rec}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20230928 11:17:25.524" level="INFO">${nome_rec} = Ana Clara</msg>
+<status status="PASS" starttime="20230928 11:17:25.524" endtime="20230928 11:17:25.524"/>
+</kw>
+<kw name="Last Name" library="FakerLibrary">
+<var>${sobrenome_rec1}</var>
+<msg timestamp="20230928 11:17:25.525" level="INFO">${sobrenome_rec1} = Campos</msg>
+<status status="PASS" starttime="20230928 11:17:25.524" endtime="20230928 11:17:25.525"/>
+</kw>
+<kw name="Unidecode" library="unidecode">
+<var>${sobrenome_rec}</var>
+<arg>${sobrenome_rec1}</arg>
+<doc>Transliterate an Unicode object into an ASCII string</doc>
+<msg timestamp="20230928 11:17:25.525" level="INFO">${sobrenome_rec} = Campos</msg>
+<status status="PASS" starttime="20230928 11:17:25.525" endtime="20230928 11:17:25.525"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${sobrenome_rec}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20230928 11:17:25.526" level="INFO">${sobrenome_rec} = Campos</msg>
+<status status="PASS" starttime="20230928 11:17:25.525" endtime="20230928 11:17:25.526"/>
+</kw>
+<kw name="Get Current Date" library="DateTime">
+<var>${data_atual}</var>
+<arg>result_format=timestamp</arg>
+<doc>Returns current local or UTC time with an optional increment.</doc>
+<msg timestamp="20230928 11:17:25.526" level="INFO">${data_atual} = 2023-09-28 11:17:25.526</msg>
+<status status="PASS" starttime="20230928 11:17:25.526" endtime="20230928 11:17:25.526"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${data_atual}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20230928 11:17:25.527" level="INFO">${data_atual} = 2023-09-28 11:17:25.526</msg>
+<status status="PASS" starttime="20230928 11:17:25.526" endtime="20230928 11:17:25.527"/>
+</kw>
+<kw name="Generate Random String" library="String">
+<var>${ag_pag}</var>
+<arg>4</arg>
+<arg>[NUMBERS]</arg>
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<msg timestamp="20230928 11:17:25.529" level="INFO">${ag_pag} = 7168</msg>
+<status status="PASS" starttime="20230928 11:17:25.528" endtime="20230928 11:17:25.529"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${ag_pag}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20230928 11:17:25.529" level="INFO">${ag_pag} = 7168</msg>
+<status status="PASS" starttime="20230928 11:17:25.529" endtime="20230928 11:17:25.529"/>
+</kw>
+<kw name="Generate Random String" library="String">
+<var>${ag_rec}</var>
+<arg>4</arg>
+<arg>[NUMBERS]</arg>
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<msg timestamp="20230928 11:17:25.530" level="INFO">${ag_rec} = 4554</msg>
+<status status="PASS" starttime="20230928 11:17:25.529" endtime="20230928 11:17:25.530"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${ag_rec}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20230928 11:17:25.530" level="INFO">${ag_rec} = 4554</msg>
+<status status="PASS" starttime="20230928 11:17:25.530" endtime="20230928 11:17:25.530"/>
+</kw>
+<kw name="Generate Random String" library="String">
+<var>${conta_pag}</var>
+<arg>6</arg>
+<arg>[NUMBERS]</arg>
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<msg timestamp="20230928 11:17:25.531" level="INFO">${conta_pag} = 821585</msg>
+<status status="PASS" starttime="20230928 11:17:25.530" endtime="20230928 11:17:25.531"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${conta_pag}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20230928 11:17:25.531" level="INFO">${conta_pag} = 821585</msg>
+<status status="PASS" starttime="20230928 11:17:25.531" endtime="20230928 11:17:25.531"/>
+</kw>
+<kw name="Generate Random String" library="String">
+<var>${conta_rec}</var>
+<arg>6</arg>
+<arg>[NUMBERS]</arg>
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<msg timestamp="20230928 11:17:25.531" level="INFO">${conta_rec} = 757059</msg>
+<status status="PASS" starttime="20230928 11:17:25.531" endtime="20230928 11:17:25.532"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${conta_rec}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20230928 11:17:25.532" level="INFO">${conta_rec} = 757059</msg>
+<status status="PASS" starttime="20230928 11:17:25.532" endtime="20230928 11:17:25.532"/>
+</kw>
+<kw name="Generate Random String" library="String">
+<var>${reais}</var>
+<arg>2</arg>
+<arg>[NUMBERS]</arg>
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<msg timestamp="20230928 11:17:25.532" level="INFO">${reais} = 46</msg>
+<status status="PASS" starttime="20230928 11:17:25.532" endtime="20230928 11:17:25.532"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${reais}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20230928 11:17:25.533" level="INFO">${reais} = 46</msg>
+<status status="PASS" starttime="20230928 11:17:25.533" endtime="20230928 11:17:25.533"/>
+</kw>
+<kw name="Generate Random String" library="String">
+<var>${centavos}</var>
+<arg>6</arg>
+<arg>[NUMBERS]</arg>
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<msg timestamp="20230928 11:17:25.533" level="INFO">${centavos} = 238718</msg>
+<status status="PASS" starttime="20230928 11:17:25.533" endtime="20230928 11:17:25.533"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${centavos}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20230928 11:17:25.534" level="INFO">${centavos} = 238718</msg>
+<status status="PASS" starttime="20230928 11:17:25.534" endtime="20230928 11:17:25.534"/>
+</kw>
+<status status="PASS" starttime="20230928 11:17:25.517" endtime="20230928 11:17:25.534"/>
+</kw>
+<tag>bdd</tag>
+<status status="PASS" starttime="20230928 11:17:25.516" endtime="20230928 11:17:25.534"/>
+</test>
+<test id="s1-t2" name="Realizar pagamento Pix entre Contas" line="20">
+<kw name="Dado que eu queira fazer um Pix entre contas" library="stepsE2E">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>massaEntreContas</arg>
+<arg>${Ambiente.pix_base_url}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230928 11:17:25.536" level="INFO">Creating Session using : alias=massaEntreContas, url=http://localhost:8080/hom, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230928 11:17:25.536" endtime="20230928 11:17:25.537"/>
+</kw>
+<status status="PASS" starttime="20230928 11:17:25.536" endtime="20230928 11:17:25.537"/>
+</kw>
+<kw name="Quando eu preencho os dados e envio" library="stepsE2E">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{headers}</var>
+<arg>Authorization=${access_token}</arg>
+<arg>Content-Type=${Ambiente.pix_Content_Type}</arg>
+<arg>api-id=${Ambiente.pix_api_id}</arg>
+<arg>api-key=${Ambiente.pix_api_key}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230928 11:17:25.539" level="INFO">&amp;{headers} = { Authorization=Bearer 93ddgubk39zdhmscd4co58bzzl8fvbrn85yyn75p4owlswrmwtnrqquukju2hdxjxpglwbwly3u2pjoxzvczdovhnhfupq2zpib67kilbjfwmifi9zhfyovumobs5k1ggjqwoeuhqoemanmvaeyc1g6a7wieazbbzco6jfx29gucg2vhg...</msg>
+<status status="PASS" starttime="20230928 11:17:25.537" endtime="20230928 11:17:25.539"/>
+</kw>
+<kw name="Get File" library="OperatingSystem">
+<var>${bodyteste}</var>
+<arg>./contract/request/pixEntreContas.json</arg>
+<doc>Returns the contents of a specified file.</doc>
+<msg timestamp="20230928 11:17:25.539" level="INFO" html="true">Getting file '&lt;a href="file://c:\Users\musicaf2\IdeaProjects\PerformanceRepo\robotFramework\contract\request\pixEntreContas.json"&gt;c:\Users\musicaf2\IdeaProjects\PerformanceRepo\robotFramework\contract\request\pixEntreContas.json&lt;/a&gt;'.</msg>
+<msg timestamp="20230928 11:17:25.540" level="INFO">${bodyteste} = {
+    "tipo_transferencia": "pix",
+    "informacoes": "Pix entre contas",
+    "id_transacao": "P7590005620230922080414002f58de0f3",
+    "data_transferencia": "2023-09-22T08:04:14.002-3:00",
+    "valor...</msg>
+<status status="PASS" starttime="20230928 11:17:25.539" endtime="20230928 11:17:25.540"/>
+</kw>
+<kw name="Replace Variables" library="BuiltIn">
+<var>${body}</var>
+<arg>${bodyteste}</arg>
+<doc>Replaces variables in the given text with their current values.</doc>
+<msg timestamp="20230928 11:17:25.541" level="INFO">${body} = {
+    "tipo_transferencia": "pix",
+    "informacoes": "Pix entre contas",
+    "id_transacao": "P7590005620230922080414002f58de0f3",
+    "data_transferencia": "2023-09-22T08:04:14.002-3:00",
+    "valor...</msg>
+<status status="PASS" starttime="20230928 11:17:25.540" endtime="20230928 11:17:25.541"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${resposta}</var>
+<arg>massaEntrecontas</arg>
+<arg>/pagamentos/pix</arg>
+<arg>data=${body}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20230928 11:17:25.927" level="INFO">POST Request : url=http://localhost:8080/hom/pagamentos/pix 
+ path_url=/hom/pagamentos/pix 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer 93ddgubk39zdhmscd4co58bzzl8fvbrn85yyn75p4owlswrmwtnrqquukju2hdxjxpglwbwly3u2pjoxzvczdovhnhfupq2zpib67kilbjfwmifi9zhfyovumobs5k1ggjqwoeuhqoemanmvaeyc1g6a7wieazbbzco6jfx29gucg2vhg0xbbss8lzwtce7nvx1kl41ppig1a1z5zwuasvjqyodjhyd6mbqwdubymrwwtnl0rnlqi8kuqrdurfvzhhvnlesms4dfj4qlupukzcsu9on0ooqbvm814er13nyrkugwdlh7ilznrmcobxyrjqgnpsri4c9aagvzf0axrnglamdsbmhyi5wrlormeesnh5a98i4mjt4uiaodhpasz8moidcfbwmr1w3x5yvzezjeegvxxyaopxb9f8r3hk0goxsuxx29lygskiewpihqjwgmez7t231nvcdwnm6kfndnjxuvai2yr6n4y6e3mt8w44qureg6nexf9yvomfbo7vgnzng30fmfi38prgsxnbfa6jdqfn0kj1sm2jaat3dkev5kmtelq79oegac53e1qebda7gv4bkmtoglsjgmrofvuzs5iqalnhvnnd2e9dsasvy5n7ilrfxmj4bhpbuwaqedxadfchbozgzi2m7nuukfin7jmwkwvc5xno4ftpzghcd7xdr7n2ry2t8c5ep3kgqmqtpvd1dnm1zhiibl3qfhgvtmi0ebvryax17q8vvn4oxorandqvucaeukpkstte8es4fugo0mrjolvcx9cszkpqimxtnzmqxyiehxy1pvxvwtov4apjj3epeutqxg3ilkaq7wn4clyzyucaox8lmghvu0kjrnzc2h2c3j2rixefumx2as0urzqwcnn5qb8itv5y3rqgopkwuxwsokesszlidk6jvjft3hs7roltly4mzalcsczhh046o2pqidjdaeiwajsiax9snpa7avfbgmp3im1uzo92vd6ownhysmcmd1osohz4ds8writlkyn31yawvddf34ilrocwzi7fke0y6wjo05fhyrrqmroicsfncrsgthv2fz71ji0iup1siu8em9x1sevcuphmc1ppw7c9tpfvqr1xjl4ajkkmgtit0ugvapviqfzziqi5risjhehyniune0crj4m4ivsc6qimghgkgospzxphkswwxbmdlszlybvi9roebd3falbx5sagdr4xfzc5o4gf1taq00ypij4zoqyteoqt2eo48cvrkwg9sgztyz43zpmzfjccwsd9jxkgs9b59ri9yjh2gqnucwg3ekk8bymfry35x0zzhf6y5algaum8m6s1h0dfsisewz8dadxkjxovxmmkmcq5kxuul6c50jn1zhil6sdwyqhipv5w2nzeeyzei3a3kotmzahlrxt3fmg7ccvjtcya1ga0tghuwntby6uiyxfjqrq5qndja219ycztzm2wbemwhrtoriwh7sauqrovahyigtvfh1wk5nmyob4hdi2hyd12fnqzerk8gznjaudxs2nx0ggwkcyduki5ciwxkc0y0sku3jcl9tyu9b77crdwgpejkjxjg3xarvd0u7kyldlfhsyzjgdwi187co9niylwd1s1vpbee3hco8pjdlig5xto5tihmthwck0i4vofpo66uvf1tubbzrhboh2vjpn5tzudybklrcogurncpum7gq1yu6xujddgywah6kkry9wnzjfquo4gg8gfjx0a5wxlvbss5peypkphkplxnhzeidgsrnu4jrr8ma2jiq2qdpnvm5gct7gooyzzqab0drl8swegzd23gvohuz5ytxzjknfporrwqydehgro56fq3pcec4uointkxbz5ttqdvtyfkudse1vk474nixeg1u2aw21grdxpo2wojkvtouyfkyaht4sun1ug506mx0r23w2sz95srfxheniens4bi0odzgi7saigxbbjksxgbwkw7isu5agb90hgsve3o9nswzwvvtmnemec3p8mlng2xxdcldvolkcqky7suozjvyjlcj4dpes4eh0w3pruoqoxr4wrfumrw0sbgxa3bnt7iq7lp9tng2atrffsv7ylv8v4gsrohfythxaqbzy0lusuqjbfavox06a4zkoab0uhrznpuzvbz4mfckkccpglllf5civldl2obefez2qqbii6sptky3shhwqfxqxcgc5fq1jpcemljkaulrbt8epf131aqs5vizcgfr2dub1srjygapgcdnyfwoqvqgrev0hr5wjsrhwvdtlpjq5mnsqapfu7ctdmlmebwminu9ik4n5vxlkhrfcil7vq1hruldmladklmmgeup66ozrmbzpdf9n0klsr2jpzlq5mmorrdm2iezcts6dkusm2vj6crmoni4vbuy7kdmodshs1rlvngglvpgvtzpatr10wjxcwgajjxofxcucjk1onxsqc1nqolnwmltp7psjk1uvaoiz2tthuqlogxvsayeaw6bhjb2frulrm03lx2ysqhbpwnucmyxwkjbrwt7ri8e0q5kihheu258a32780ixvvyqudtdfwuwchhzmkvtxteydpyfhnfkskeqhstzanesexho1yr7yjxadnno7oazg00o7ut94qch5dmbpotqds7eldqzaawpimrxl5kzihpft9ay622rqlle8ugosif3cjskv1gp8upzbwtxncvbcovx2yaiodvdtpgzr4zl2swqctfjlpnbmyodnv5ei7rkbhoshwmsoo4n0hkwh1lnd83qp3oyscttdsabsntxlzydw4xsav3cq7b5sp7pmnxogatuksxylagfmxk4kuplewqnrbvkrluejwlyy', 'Content-Type': 'application/json', 'api-id': '456v99vppt', 'api-key': '6759eb24-2449-44f4-8b58-f806f58', 'Content-Length': '1217'} 
+ body={
+    "tipo_transferencia": "pix",
+    "informacoes": "Pix entre contas",
+    "id_transacao": "P7590005620230922080414002f58de0f3",
+    "data_transferencia": "2023-09-22T08:04:14.002-3:00",
+    "valor": "46.238718",
+    "recebedor": [
+        {
+            "meio_pagamento": {
+                "tipo": "conta_corrente",
+                "dados": {
+                    "dados_conta": {
+                        "agencia": "4554",
+                        "conta": "757059"
+                    }
+                }
+            },
+            "identificacao": {
+                "tipo_pessoa": "F",
+                "nome": "Ana Clara Campos",
+                "numero_documento": "25061749316"
+            }
+        }
+    ],
+    "pagador": [
+        {
+            "meio_pagamento": {
+                "tipo": "conta_corrente",
+                "dados": {
+                    "dados_conta": {
+                        "agencia": "7168",
+                        "conta": "821585"
+                    }
+                }
+            },
+            "identificacao": {
+                "tipo_pessoa": "F",
+                "nome": "Joao Vitor Nascimento",
+                "numero_documento": "59013864775"
+            }
+        }
+    ]
+} 
+ </msg>
+<msg timestamp="20230928 11:17:25.927" level="INFO">POST Response : url=http://localhost:8080/hom/pagamentos/pix 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json', 'Matched-Stub-Id': '59a15015-cb10-4afe-bae1-f6b4cbdcc90f', 'Content-Encoding': 'gzip', 'Transfer-Encoding': 'chunked'} 
+ body={"tipo_transferencia":"pix","id_transacao":"P7590005620230922080414002f58de0f3","data_transferencia":"2023-09-22T08:04:14.002-3:00","valor":"46.238718","recebedor":[{"meio_pagamento":{"tipo":"conta_corrente","dados":{"dados_conta":{"agencia":"4554","conta":"757059"}}},"identificacao":{"tipo_pessoa":"F","nome":"Ana Clara Campos","numero_documento":"25061749316"}}],"pagador":[{"meio_pagamento":{"tipo":"conta_corrente","dados":{"dados_conta":{"agencia":"7168","conta":"821585"}}},"identificacao":{"tipo_pessoa":"F","nome":"Joao Vitor Nascimento","numero_documento":"59013864775"}}],"informacoes":"Pix entre contas","id_transferencia":"b6fcc526-c9f2-4f9b-86a8-9d0969ab59e3","status":"EFETIVACAO_CONCLUIDA"} 
+ </msg>
+<msg timestamp="20230928 11:17:25.927" level="INFO">${resposta} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230928 11:17:25.541" endtime="20230928 11:17:25.927"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${resposta}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20230928 11:17:25.927" level="INFO">${resposta} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230928 11:17:25.927" endtime="20230928 11:17:25.927"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${status}</var>
+<arg>${resposta.json()}[status]</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230928 11:17:25.927" level="INFO">${status} = EFETIVACAO_CONCLUIDA</msg>
+<status status="PASS" starttime="20230928 11:17:25.927" endtime="20230928 11:17:25.927"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${response}</var>
+<arg>${resposta.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230928 11:17:25.927" level="INFO">${response} = {'tipo_transferencia': 'pix', 'id_transacao': 'P7590005620230922080414002f58de0f3', 'data_transferencia': '2023-09-22T08:04:14.002-3:00', 'valor': '46.238718', 'recebedor': [{'meio_pagamento': {'tipo'...</msg>
+<status status="PASS" starttime="20230928 11:17:25.927" endtime="20230928 11:17:25.927"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${status}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20230928 11:17:25.927" level="INFO">${status} = EFETIVACAO_CONCLUIDA</msg>
+<status status="PASS" starttime="20230928 11:17:25.927" endtime="20230928 11:17:25.927"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${response}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20230928 11:17:25.927" level="INFO">${response} = {'tipo_transferencia': 'pix', 'id_transacao': 'P7590005620230922080414002f58de0f3', 'data_transferencia': '2023-09-22T08:04:14.002-3:00', 'valor': '46.238718', 'recebedor': [{'meio_pagamento': {'tipo'...</msg>
+<status status="PASS" starttime="20230928 11:17:25.927" endtime="20230928 11:17:25.927"/>
+</kw>
+<status status="PASS" starttime="20230928 11:17:25.537" endtime="20230928 11:17:25.927"/>
+</kw>
+<kw name="Então o sistema realiza a transação e me devolve um retorno com 200 com status EFETIVACAO_CONCLUIDA" library="stepsE2E">
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>200</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20230928 11:17:25.927" endtime="20230928 11:17:25.927"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status}</arg>
+<arg>EFETIVACAO_CONCLUIDA</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230928 11:17:25.927" endtime="20230928 11:17:25.927"/>
+</kw>
+<status status="PASS" starttime="20230928 11:17:25.927" endtime="20230928 11:17:25.927"/>
+</kw>
+<tag>bdd</tag>
+<status status="PASS" starttime="20230928 11:17:25.535" endtime="20230928 11:17:25.927"/>
+</test>
+<test id="s1-t3" name="Validar Contrato Pix entre contas (Cenário Positivo)" line="27">
+<kw name="Dado que eu queira validar o contrato da api Pix entre contas" library="stepsE2E">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>massaEntreContas</arg>
+<arg>${Ambiente.pix_base_url}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230928 11:17:25.927" level="INFO">Creating Session using : alias=massaEntreContas, url=http://localhost:8080/hom, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230928 11:17:25.927" endtime="20230928 11:17:25.927"/>
+</kw>
+<status status="PASS" starttime="20230928 11:17:25.927" endtime="20230928 11:17:25.927"/>
+</kw>
+<kw name="Quando eu realizo a transação" library="stepsE2E">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{headers}</var>
+<arg>Authorization=${access_token}</arg>
+<arg>Content-Type=${Ambiente.pix_Content_Type}</arg>
+<arg>api-id=${Ambiente.pix_api_id}</arg>
+<arg>api-key=${Ambiente.pix_api_key}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230928 11:17:25.927" level="INFO">&amp;{headers} = { Authorization=Bearer 93ddgubk39zdhmscd4co58bzzl8fvbrn85yyn75p4owlswrmwtnrqquukju2hdxjxpglwbwly3u2pjoxzvczdovhnhfupq2zpib67kilbjfwmifi9zhfyovumobs5k1ggjqwoeuhqoemanmvaeyc1g6a7wieazbbzco6jfx29gucg2vhg...</msg>
+<status status="PASS" starttime="20230928 11:17:25.927" endtime="20230928 11:17:25.927"/>
+</kw>
+<kw name="Get File" library="OperatingSystem">
+<var>${bodyteste}</var>
+<arg>./contract/request/pixEntreContas.json</arg>
+<doc>Returns the contents of a specified file.</doc>
+<msg timestamp="20230928 11:17:25.927" level="INFO" html="true">Getting file '&lt;a href="file://c:\Users\musicaf2\IdeaProjects\PerformanceRepo\robotFramework\contract\request\pixEntreContas.json"&gt;c:\Users\musicaf2\IdeaProjects\PerformanceRepo\robotFramework\contract\request\pixEntreContas.json&lt;/a&gt;'.</msg>
+<msg timestamp="20230928 11:17:25.927" level="INFO">${bodyteste} = {
+    "tipo_transferencia": "pix",
+    "informacoes": "Pix entre contas",
+    "id_transacao": "P7590005620230922080414002f58de0f3",
+    "data_transferencia": "2023-09-22T08:04:14.002-3:00",
+    "valor...</msg>
+<status status="PASS" starttime="20230928 11:17:25.927" endtime="20230928 11:17:25.927"/>
+</kw>
+<kw name="Replace Variables" library="BuiltIn">
+<var>${body}</var>
+<arg>${bodyteste}</arg>
+<doc>Replaces variables in the given text with their current values.</doc>
+<msg timestamp="20230928 11:17:25.927" level="INFO">${body} = {
+    "tipo_transferencia": "pix",
+    "informacoes": "Pix entre contas",
+    "id_transacao": "P7590005620230922080414002f58de0f3",
+    "data_transferencia": "2023-09-22T08:04:14.002-3:00",
+    "valor...</msg>
+<status status="PASS" starttime="20230928 11:17:25.927" endtime="20230928 11:17:25.927"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${resposta}</var>
+<arg>massaEntrecontas</arg>
+<arg>/pagamentos/pix</arg>
+<arg>data=${body}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20230928 11:17:26.330" level="INFO">POST Request : url=http://localhost:8080/hom/pagamentos/pix 
+ path_url=/hom/pagamentos/pix 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer 93ddgubk39zdhmscd4co58bzzl8fvbrn85yyn75p4owlswrmwtnrqquukju2hdxjxpglwbwly3u2pjoxzvczdovhnhfupq2zpib67kilbjfwmifi9zhfyovumobs5k1ggjqwoeuhqoemanmvaeyc1g6a7wieazbbzco6jfx29gucg2vhg0xbbss8lzwtce7nvx1kl41ppig1a1z5zwuasvjqyodjhyd6mbqwdubymrwwtnl0rnlqi8kuqrdurfvzhhvnlesms4dfj4qlupukzcsu9on0ooqbvm814er13nyrkugwdlh7ilznrmcobxyrjqgnpsri4c9aagvzf0axrnglamdsbmhyi5wrlormeesnh5a98i4mjt4uiaodhpasz8moidcfbwmr1w3x5yvzezjeegvxxyaopxb9f8r3hk0goxsuxx29lygskiewpihqjwgmez7t231nvcdwnm6kfndnjxuvai2yr6n4y6e3mt8w44qureg6nexf9yvomfbo7vgnzng30fmfi38prgsxnbfa6jdqfn0kj1sm2jaat3dkev5kmtelq79oegac53e1qebda7gv4bkmtoglsjgmrofvuzs5iqalnhvnnd2e9dsasvy5n7ilrfxmj4bhpbuwaqedxadfchbozgzi2m7nuukfin7jmwkwvc5xno4ftpzghcd7xdr7n2ry2t8c5ep3kgqmqtpvd1dnm1zhiibl3qfhgvtmi0ebvryax17q8vvn4oxorandqvucaeukpkstte8es4fugo0mrjolvcx9cszkpqimxtnzmqxyiehxy1pvxvwtov4apjj3epeutqxg3ilkaq7wn4clyzyucaox8lmghvu0kjrnzc2h2c3j2rixefumx2as0urzqwcnn5qb8itv5y3rqgopkwuxwsokesszlidk6jvjft3hs7roltly4mzalcsczhh046o2pqidjdaeiwajsiax9snpa7avfbgmp3im1uzo92vd6ownhysmcmd1osohz4ds8writlkyn31yawvddf34ilrocwzi7fke0y6wjo05fhyrrqmroicsfncrsgthv2fz71ji0iup1siu8em9x1sevcuphmc1ppw7c9tpfvqr1xjl4ajkkmgtit0ugvapviqfzziqi5risjhehyniune0crj4m4ivsc6qimghgkgospzxphkswwxbmdlszlybvi9roebd3falbx5sagdr4xfzc5o4gf1taq00ypij4zoqyteoqt2eo48cvrkwg9sgztyz43zpmzfjccwsd9jxkgs9b59ri9yjh2gqnucwg3ekk8bymfry35x0zzhf6y5algaum8m6s1h0dfsisewz8dadxkjxovxmmkmcq5kxuul6c50jn1zhil6sdwyqhipv5w2nzeeyzei3a3kotmzahlrxt3fmg7ccvjtcya1ga0tghuwntby6uiyxfjqrq5qndja219ycztzm2wbemwhrtoriwh7sauqrovahyigtvfh1wk5nmyob4hdi2hyd12fnqzerk8gznjaudxs2nx0ggwkcyduki5ciwxkc0y0sku3jcl9tyu9b77crdwgpejkjxjg3xarvd0u7kyldlfhsyzjgdwi187co9niylwd1s1vpbee3hco8pjdlig5xto5tihmthwck0i4vofpo66uvf1tubbzrhboh2vjpn5tzudybklrcogurncpum7gq1yu6xujddgywah6kkry9wnzjfquo4gg8gfjx0a5wxlvbss5peypkphkplxnhzeidgsrnu4jrr8ma2jiq2qdpnvm5gct7gooyzzqab0drl8swegzd23gvohuz5ytxzjknfporrwqydehgro56fq3pcec4uointkxbz5ttqdvtyfkudse1vk474nixeg1u2aw21grdxpo2wojkvtouyfkyaht4sun1ug506mx0r23w2sz95srfxheniens4bi0odzgi7saigxbbjksxgbwkw7isu5agb90hgsve3o9nswzwvvtmnemec3p8mlng2xxdcldvolkcqky7suozjvyjlcj4dpes4eh0w3pruoqoxr4wrfumrw0sbgxa3bnt7iq7lp9tng2atrffsv7ylv8v4gsrohfythxaqbzy0lusuqjbfavox06a4zkoab0uhrznpuzvbz4mfckkccpglllf5civldl2obefez2qqbii6sptky3shhwqfxqxcgc5fq1jpcemljkaulrbt8epf131aqs5vizcgfr2dub1srjygapgcdnyfwoqvqgrev0hr5wjsrhwvdtlpjq5mnsqapfu7ctdmlmebwminu9ik4n5vxlkhrfcil7vq1hruldmladklmmgeup66ozrmbzpdf9n0klsr2jpzlq5mmorrdm2iezcts6dkusm2vj6crmoni4vbuy7kdmodshs1rlvngglvpgvtzpatr10wjxcwgajjxofxcucjk1onxsqc1nqolnwmltp7psjk1uvaoiz2tthuqlogxvsayeaw6bhjb2frulrm03lx2ysqhbpwnucmyxwkjbrwt7ri8e0q5kihheu258a32780ixvvyqudtdfwuwchhzmkvtxteydpyfhnfkskeqhstzanesexho1yr7yjxadnno7oazg00o7ut94qch5dmbpotqds7eldqzaawpimrxl5kzihpft9ay622rqlle8ugosif3cjskv1gp8upzbwtxncvbcovx2yaiodvdtpgzr4zl2swqctfjlpnbmyodnv5ei7rkbhoshwmsoo4n0hkwh1lnd83qp3oyscttdsabsntxlzydw4xsav3cq7b5sp7pmnxogatuksxylagfmxk4kuplewqnrbvkrluejwlyy', 'Content-Type': 'application/json', 'api-id': '456v99vppt', 'api-key': '6759eb24-2449-44f4-8b58-f806f58', 'Content-Length': '1217'} 
+ body={
+    "tipo_transferencia": "pix",
+    "informacoes": "Pix entre contas",
+    "id_transacao": "P7590005620230922080414002f58de0f3",
+    "data_transferencia": "2023-09-22T08:04:14.002-3:00",
+    "valor": "46.238718",
+    "recebedor": [
+        {
+            "meio_pagamento": {
+                "tipo": "conta_corrente",
+                "dados": {
+                    "dados_conta": {
+                        "agencia": "4554",
+                        "conta": "757059"
+                    }
+                }
+            },
+            "identificacao": {
+                "tipo_pessoa": "F",
+                "nome": "Ana Clara Campos",
+                "numero_documento": "25061749316"
+            }
+        }
+    ],
+    "pagador": [
+        {
+            "meio_pagamento": {
+                "tipo": "conta_corrente",
+                "dados": {
+                    "dados_conta": {
+                        "agencia": "7168",
+                        "conta": "821585"
+                    }
+                }
+            },
+            "identificacao": {
+                "tipo_pessoa": "F",
+                "nome": "Joao Vitor Nascimento",
+                "numero_documento": "59013864775"
+            }
+        }
+    ]
+} 
+ </msg>
+<msg timestamp="20230928 11:17:26.330" level="INFO">POST Response : url=http://localhost:8080/hom/pagamentos/pix 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json', 'Matched-Stub-Id': '59a15015-cb10-4afe-bae1-f6b4cbdcc90f', 'Content-Encoding': 'gzip', 'Transfer-Encoding': 'chunked'} 
+ body={"tipo_transferencia":"pix","id_transacao":"P7590005620230922080414002f58de0f3","data_transferencia":"2023-09-22T08:04:14.002-3:00","valor":"46.238718","recebedor":[{"meio_pagamento":{"tipo":"conta_corrente","dados":{"dados_conta":{"agencia":"4554","conta":"757059"}}},"identificacao":{"tipo_pessoa":"F","nome":"Ana Clara Campos","numero_documento":"25061749316"}}],"pagador":[{"meio_pagamento":{"tipo":"conta_corrente","dados":{"dados_conta":{"agencia":"7168","conta":"821585"}}},"identificacao":{"tipo_pessoa":"F","nome":"Joao Vitor Nascimento","numero_documento":"59013864775"}}],"informacoes":"Pix entre contas","id_transferencia":"c4de73aa-58ae-4066-90eb-ba043527a2e4","status":"EFETIVACAO_CONCLUIDA"} 
+ </msg>
+<msg timestamp="20230928 11:17:26.330" level="INFO">${resposta} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230928 11:17:25.927" endtime="20230928 11:17:26.330"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${resposta}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20230928 11:17:26.331" level="INFO">${resposta} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230928 11:17:26.331" endtime="20230928 11:17:26.331"/>
+</kw>
+<status status="PASS" starttime="20230928 11:17:25.927" endtime="20230928 11:17:26.331"/>
+</kw>
+<kw name="Então o sistema valida o retorno da requisição e valida que o contrato está OK" library="stepsE2E">
+<kw name="Get File" library="OperatingSystem">
+<var>${schema_file}</var>
+<arg>./schemas/pixEntreContas.json</arg>
+<doc>Returns the contents of a specified file.</doc>
+<msg timestamp="20230928 11:17:26.332" level="INFO" html="true">Getting file '&lt;a href="file://c:\Users\musicaf2\IdeaProjects\PerformanceRepo\robotFramework\schemas\pixEntreContas.json"&gt;c:\Users\musicaf2\IdeaProjects\PerformanceRepo\robotFramework\schemas\pixEntreContas.json&lt;/a&gt;'.</msg>
+<msg timestamp="20230928 11:17:26.333" level="INFO">${schema_file} = {
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "default": {},
+    "title": "Root Schema",
+    "required": [
+  ...</msg>
+<status status="PASS" starttime="20230928 11:17:26.332" endtime="20230928 11:17:26.333"/>
+</kw>
+<kw name="Get Attribute">
+<var>${response_data}</var>
+<arg>${resposta}</arg>
+<arg>content</arg>
+<msg timestamp="20230928 11:17:26.340" level="FAIL">No keyword with name 'Get Attribute' found. Did you try using keyword 'RequestsLibrary.GET' and forgot to use enough whitespace between keyword and arguments?</msg>
+<status status="FAIL" starttime="20230928 11:17:26.340" endtime="20230928 11:17:26.340"/>
+</kw>
+<kw name="Convert Json To String" library="JSONLibrary">
+<var>${response_json}</var>
+<arg>${response_data}</arg>
+<doc>Convert JSON object to string</doc>
+<status status="NOT RUN" starttime="20230928 11:17:26.340" endtime="20230928 11:17:26.341"/>
+</kw>
+<kw name="Validate Json By Schema" library="JSONLibrary">
+<arg>${response_json}</arg>
+<arg>${schema_file}</arg>
+<doc>Validate json object by json schema.
+Arguments:
+    - json_object: json as a dictionary object.
+    - schema: schema as a dictionary object.</doc>
+<status status="NOT RUN" starttime="20230928 11:17:26.341" endtime="20230928 11:17:26.341"/>
+</kw>
+<status status="FAIL" starttime="20230928 11:17:26.331" endtime="20230928 11:17:26.341"/>
+</kw>
+<tag>bdd</tag>
+<status status="FAIL" starttime="20230928 11:17:25.927" endtime="20230928 11:17:26.341">No keyword with name 'Get Attribute' found. Did you try using keyword 'RequestsLibrary.GET' and forgot to use enough whitespace between keyword and arguments?</status>
+</test>
+<test id="s1-t4" name="Realizar pagamento Pix com Chave" line="34">
+<kw name="Dado que eu queira fazer um Pix com a chave do recebedor" library="stepsE2E">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>massaChave</arg>
+<arg>${Ambiente.pix_base_url}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230928 11:17:26.343" level="INFO">Creating Session using : alias=massaChave, url=http://localhost:8080/hom, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230928 11:17:26.343" endtime="20230928 11:17:26.344"/>
+</kw>
+<status status="PASS" starttime="20230928 11:17:26.343" endtime="20230928 11:17:26.344"/>
+</kw>
+<kw name="Quando preencho os dados e envio" library="stepsE2E">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{headers}</var>
+<arg>Authorization=${access_token}</arg>
+<arg>Content-Type=${Ambiente.pix_Content_Type}</arg>
+<arg>api-id=${Ambiente.pix_api_id}</arg>
+<arg>api-key=${Ambiente.pix_api_key}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230928 11:17:26.346" level="INFO">&amp;{headers} = { Authorization=Bearer 93ddgubk39zdhmscd4co58bzzl8fvbrn85yyn75p4owlswrmwtnrqquukju2hdxjxpglwbwly3u2pjoxzvczdovhnhfupq2zpib67kilbjfwmifi9zhfyovumobs5k1ggjqwoeuhqoemanmvaeyc1g6a7wieazbbzco6jfx29gucg2vhg...</msg>
+<status status="PASS" starttime="20230928 11:17:26.344" endtime="20230928 11:17:26.346"/>
+</kw>
+<kw name="Get File" library="OperatingSystem">
+<var>${bodyteste}</var>
+<arg>./contract/request/pixChave.json</arg>
+<doc>Returns the contents of a specified file.</doc>
+<msg timestamp="20230928 11:17:26.347" level="INFO" html="true">Getting file '&lt;a href="file://c:\Users\musicaf2\IdeaProjects\PerformanceRepo\robotFramework\contract\request\pixChave.json"&gt;c:\Users\musicaf2\IdeaProjects\PerformanceRepo\robotFramework\contract\request\pixChave.json&lt;/a&gt;'.</msg>
+<msg timestamp="20230928 11:17:26.348" level="INFO">${bodyteste} = {
+    "tipo_transferencia": "pix",
+    "informacoes": "Pix com chave",
+    "id_transacao": "P7590005620230922080414002f58de0f3",
+    "data_transferencia": "2023-09-22T08:04:14.002-3:00",
+    "valor": ...</msg>
+<status status="PASS" starttime="20230928 11:17:26.346" endtime="20230928 11:17:26.348"/>
+</kw>
+<kw name="Replace Variables" library="BuiltIn">
+<var>${body}</var>
+<arg>${bodyteste}</arg>
+<doc>Replaces variables in the given text with their current values.</doc>
+<msg timestamp="20230928 11:17:26.348" level="INFO">${body} = {
+    "tipo_transferencia": "pix",
+    "informacoes": "Pix com chave",
+    "id_transacao": "P7590005620230922080414002f58de0f3",
+    "data_transferencia": "2023-09-22T08:04:14.002-3:00",
+    "valor": ...</msg>
+<status status="PASS" starttime="20230928 11:17:26.348" endtime="20230928 11:17:26.348"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${resposta}</var>
+<arg>massaChave</arg>
+<arg>/pagamentos/pix</arg>
+<arg>data=${body}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20230928 11:17:26.737" level="INFO">POST Request : url=http://localhost:8080/hom/pagamentos/pix 
+ path_url=/hom/pagamentos/pix 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer 93ddgubk39zdhmscd4co58bzzl8fvbrn85yyn75p4owlswrmwtnrqquukju2hdxjxpglwbwly3u2pjoxzvczdovhnhfupq2zpib67kilbjfwmifi9zhfyovumobs5k1ggjqwoeuhqoemanmvaeyc1g6a7wieazbbzco6jfx29gucg2vhg0xbbss8lzwtce7nvx1kl41ppig1a1z5zwuasvjqyodjhyd6mbqwdubymrwwtnl0rnlqi8kuqrdurfvzhhvnlesms4dfj4qlupukzcsu9on0ooqbvm814er13nyrkugwdlh7ilznrmcobxyrjqgnpsri4c9aagvzf0axrnglamdsbmhyi5wrlormeesnh5a98i4mjt4uiaodhpasz8moidcfbwmr1w3x5yvzezjeegvxxyaopxb9f8r3hk0goxsuxx29lygskiewpihqjwgmez7t231nvcdwnm6kfndnjxuvai2yr6n4y6e3mt8w44qureg6nexf9yvomfbo7vgnzng30fmfi38prgsxnbfa6jdqfn0kj1sm2jaat3dkev5kmtelq79oegac53e1qebda7gv4bkmtoglsjgmrofvuzs5iqalnhvnnd2e9dsasvy5n7ilrfxmj4bhpbuwaqedxadfchbozgzi2m7nuukfin7jmwkwvc5xno4ftpzghcd7xdr7n2ry2t8c5ep3kgqmqtpvd1dnm1zhiibl3qfhgvtmi0ebvryax17q8vvn4oxorandqvucaeukpkstte8es4fugo0mrjolvcx9cszkpqimxtnzmqxyiehxy1pvxvwtov4apjj3epeutqxg3ilkaq7wn4clyzyucaox8lmghvu0kjrnzc2h2c3j2rixefumx2as0urzqwcnn5qb8itv5y3rqgopkwuxwsokesszlidk6jvjft3hs7roltly4mzalcsczhh046o2pqidjdaeiwajsiax9snpa7avfbgmp3im1uzo92vd6ownhysmcmd1osohz4ds8writlkyn31yawvddf34ilrocwzi7fke0y6wjo05fhyrrqmroicsfncrsgthv2fz71ji0iup1siu8em9x1sevcuphmc1ppw7c9tpfvqr1xjl4ajkkmgtit0ugvapviqfzziqi5risjhehyniune0crj4m4ivsc6qimghgkgospzxphkswwxbmdlszlybvi9roebd3falbx5sagdr4xfzc5o4gf1taq00ypij4zoqyteoqt2eo48cvrkwg9sgztyz43zpmzfjccwsd9jxkgs9b59ri9yjh2gqnucwg3ekk8bymfry35x0zzhf6y5algaum8m6s1h0dfsisewz8dadxkjxovxmmkmcq5kxuul6c50jn1zhil6sdwyqhipv5w2nzeeyzei3a3kotmzahlrxt3fmg7ccvjtcya1ga0tghuwntby6uiyxfjqrq5qndja219ycztzm2wbemwhrtoriwh7sauqrovahyigtvfh1wk5nmyob4hdi2hyd12fnqzerk8gznjaudxs2nx0ggwkcyduki5ciwxkc0y0sku3jcl9tyu9b77crdwgpejkjxjg3xarvd0u7kyldlfhsyzjgdwi187co9niylwd1s1vpbee3hco8pjdlig5xto5tihmthwck0i4vofpo66uvf1tubbzrhboh2vjpn5tzudybklrcogurncpum7gq1yu6xujddgywah6kkry9wnzjfquo4gg8gfjx0a5wxlvbss5peypkphkplxnhzeidgsrnu4jrr8ma2jiq2qdpnvm5gct7gooyzzqab0drl8swegzd23gvohuz5ytxzjknfporrwqydehgro56fq3pcec4uointkxbz5ttqdvtyfkudse1vk474nixeg1u2aw21grdxpo2wojkvtouyfkyaht4sun1ug506mx0r23w2sz95srfxheniens4bi0odzgi7saigxbbjksxgbwkw7isu5agb90hgsve3o9nswzwvvtmnemec3p8mlng2xxdcldvolkcqky7suozjvyjlcj4dpes4eh0w3pruoqoxr4wrfumrw0sbgxa3bnt7iq7lp9tng2atrffsv7ylv8v4gsrohfythxaqbzy0lusuqjbfavox06a4zkoab0uhrznpuzvbz4mfckkccpglllf5civldl2obefez2qqbii6sptky3shhwqfxqxcgc5fq1jpcemljkaulrbt8epf131aqs5vizcgfr2dub1srjygapgcdnyfwoqvqgrev0hr5wjsrhwvdtlpjq5mnsqapfu7ctdmlmebwminu9ik4n5vxlkhrfcil7vq1hruldmladklmmgeup66ozrmbzpdf9n0klsr2jpzlq5mmorrdm2iezcts6dkusm2vj6crmoni4vbuy7kdmodshs1rlvngglvpgvtzpatr10wjxcwgajjxofxcucjk1onxsqc1nqolnwmltp7psjk1uvaoiz2tthuqlogxvsayeaw6bhjb2frulrm03lx2ysqhbpwnucmyxwkjbrwt7ri8e0q5kihheu258a32780ixvvyqudtdfwuwchhzmkvtxteydpyfhnfkskeqhstzanesexho1yr7yjxadnno7oazg00o7ut94qch5dmbpotqds7eldqzaawpimrxl5kzihpft9ay622rqlle8ugosif3cjskv1gp8upzbwtxncvbcovx2yaiodvdtpgzr4zl2swqctfjlpnbmyodnv5ei7rkbhoshwmsoo4n0hkwh1lnd83qp3oyscttdsabsntxlzydw4xsav3cq7b5sp7pmnxogatuksxylagfmxk4kuplewqnrbvkrluejwlyy', 'Content-Type': 'application/json', 'api-id': '456v99vppt', 'api-key': '6759eb24-2449-44f4-8b58-f806f58', 'Content-Length': '1249'} 
+ body={
+    "tipo_transferencia": "pix",
+    "informacoes": "Pix com chave",
+    "id_transacao": "P7590005620230922080414002f58de0f3",
+    "data_transferencia": "2023-09-22T08:04:14.002-3:00",
+    "valor": "10.23",
+    "recebedor": [
+        {
+            "meio_pagamento": {
+                "tipo": "conta_corrente",
+                "dados": {
+                    "chave": "033987233222",
+                    "dados_conta": {
+                        "agencia": "3200",
+                        "conta": "00919399"
+                    }
+                }
+            },
+            "identificacao": {
+                "tipo_pessoa": "F",
+                "nome": "Joao Avelar",
+                "numero_documento": "033987233222"
+            }
+        }
+    ],
+    "pagador": [
+        {
+            "meio_pagamento": {
+                "tipo": "conta_corrente",
+                "dados": {
+                    "dados_conta": {
+                        "agencia": "1200",
+                        "conta": "00229399"
+                    }
+                }
+            },
+            "identificacao": {
+                "tipo_pessoa": "F",
+                "nome": "Marina Barbosa",
+                "numero_documento": "033987233222"
+            }
+        }
+    ]
+} 
+ </msg>
+<msg timestamp="20230928 11:17:26.738" level="INFO">POST Response : url=http://localhost:8080/hom/pagamentos/pix 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json', 'Matched-Stub-Id': '0ffa54af-b212-4142-9874-106f59a79fdd', 'Content-Encoding': 'gzip', 'Transfer-Encoding': 'chunked'} 
+ body={"tipo_transferencia":"pix","id_transacao":"P7590005620230922080414002f58de0f3","data_transferencia":"2023-09-22T08:04:14.002-3:00","valor":"10.23","recebedor":[{"meio_pagamento":{"tipo":"conta_corrente","dados":{"chave":"033987233222","dados_conta":{"agencia":"3200","conta":"00919399"}}},"identificacao":{"tipo_pessoa":"F","nome":"Joao Avelar","numero_documento":"033987233222"}}],"pagador":[{"meio_pagamento":{"tipo":"conta_corrente","dados":{"dados_conta":{"agencia":"1200","conta":"00229399"}}},"identificacao":{"tipo_pessoa":"F","nome":"Marina Barbosa","numero_documento":"033987233222"}}],"informacoes":"Pix com chave","id_transferencia":"29355999-4751-4c3a-a57d-8e0692cf0130","status":"EFETIVACAO_CONCLUIDA"} 
+ </msg>
+<msg timestamp="20230928 11:17:26.738" level="INFO">${resposta} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230928 11:17:26.348" endtime="20230928 11:17:26.738"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${resposta}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20230928 11:17:26.739" level="INFO">${resposta} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230928 11:17:26.738" endtime="20230928 11:17:26.739"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${status}</var>
+<arg>${resposta.json()}[status]</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230928 11:17:26.740" level="INFO">${status} = EFETIVACAO_CONCLUIDA</msg>
+<status status="PASS" starttime="20230928 11:17:26.739" endtime="20230928 11:17:26.740"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${response}</var>
+<arg>${resposta.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230928 11:17:26.741" level="INFO">${response} = {'tipo_transferencia': 'pix', 'id_transacao': 'P7590005620230922080414002f58de0f3', 'data_transferencia': '2023-09-22T08:04:14.002-3:00', 'valor': '10.23', 'recebedor': [{'meio_pagamento': {'tipo': 'c...</msg>
+<status status="PASS" starttime="20230928 11:17:26.740" endtime="20230928 11:17:26.741"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${status}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20230928 11:17:26.741" level="INFO">${status} = EFETIVACAO_CONCLUIDA</msg>
+<status status="PASS" starttime="20230928 11:17:26.741" endtime="20230928 11:17:26.741"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${response}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20230928 11:17:26.742" level="INFO">${response} = {'tipo_transferencia': 'pix', 'id_transacao': 'P7590005620230922080414002f58de0f3', 'data_transferencia': '2023-09-22T08:04:14.002-3:00', 'valor': '10.23', 'recebedor': [{'meio_pagamento': {'tipo': 'c...</msg>
+<status status="PASS" starttime="20230928 11:17:26.742" endtime="20230928 11:17:26.742"/>
+</kw>
+<status status="PASS" starttime="20230928 11:17:26.344" endtime="20230928 11:17:26.742"/>
+</kw>
+<kw name="Então o sistema realiza o pix e me devolve um retorno com 200 com status EFETIVACAO_CONCLUIDA" library="stepsE2E">
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>200</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20230928 11:17:26.743" endtime="20230928 11:17:26.743"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${status}</arg>
+<arg>EFETIVACAO_CONCLUIDA</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20230928 11:17:26.744" endtime="20230928 11:17:26.744"/>
+</kw>
+<status status="PASS" starttime="20230928 11:17:26.743" endtime="20230928 11:17:26.744"/>
+</kw>
+<tag>bdd</tag>
+<status status="PASS" starttime="20230928 11:17:26.342" endtime="20230928 11:17:26.744"/>
+</test>
+<doc>Cenarios de teste BDD</doc>
+<status status="FAIL" starttime="20230928 11:17:23.996" endtime="20230928 11:17:26.745"/>
+</suite>
+<statistics>
+<total>
+<stat pass="3" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="3" fail="1" skip="0">bdd</stat>
+</tag>
+<suite>
+<stat pass="3" fail="1" skip="0" id="s1" name="Log Cenarios de teste automatizados">Log Cenarios de teste automatizados</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
