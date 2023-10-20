@@ -1,0 +1,1181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.1.1 (Python 3.11.6 on win32)" generated="20231019 18:25:11.041" rpa="false" schemaversion="4">
+<suite id="s1" name="Log Cenarios de teste automatizados" source="c:\Users\ffreitaf\IdeaProjects\PerformanceRepo\robotFramework\tests\BDD.robot">
+<kw name="Bearer token" library="authentication" type="SETUP">
+<kw name="Convert To Boolean" library="BuiltIn">
+<var>${false}</var>
+<arg>False</arg>
+<doc>Converts the given item to Boolean true or false.</doc>
+<msg timestamp="20231019 18:25:12.131" level="INFO">${false} = False</msg>
+<status status="PASS" starttime="20231019 18:25:12.131" endtime="20231019 18:25:12.131"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${HEADERS}</var>
+<arg>Content-Type=${Ambiente.token_Content_Type}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20231019 18:25:12.132" level="INFO">${HEADERS} = {'Content-Type': 'application/x-www-form-urlencoded'}</msg>
+<status status="PASS" starttime="20231019 18:25:12.131" endtime="20231019 18:25:12.132"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${BODY}</var>
+<arg>grant_type=${Ambiente.token_grant_type}</arg>
+<arg>client_id=${Ambiente.token_client_id}</arg>
+<arg>client_secret=${Ambiente.token_client_secret}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20231019 18:25:12.133" level="INFO">${BODY} = {'grant_type': 'client_credentials', 'client_id': '9x48f5da-63c6-4793-8570-3d0b3a6d0822', 'client_secret': '2a48f5da-63c6-4793-8570-3d0b3a6d0825'}</msg>
+<status status="PASS" starttime="20231019 18:25:12.132" endtime="20231019 18:25:12.133"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>oauth</arg>
+<arg>${Ambiente.token_url}</arg>
+<arg>disable_warnings=1</arg>
+<arg>verify=${false}</arg>
+<arg>headers=${HEADERS}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20231019 18:25:12.133" level="INFO">Creating Session using : alias=oauth, url=http://localhost:8081/hom/api/oauth, headers={'Content-Type': 'application/x-www-form-urlencoded'},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20231019 18:25:12.133" endtime="20231019 18:25:12.134"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${RESPOSTA}</var>
+<arg>oauth</arg>
+<arg>${Ambiente.token_url}/token</arg>
+<arg>data=${BODY}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20231019 18:25:12.216" level="INFO">POST Request : url=http://localhost:8081/hom/api/oauth/token 
+ path_url=/hom/api/oauth/token 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/x-www-form-urlencoded', 'Content-Length': '127'} 
+ body=grant_type=client_credentials&amp;client_id=9x48f5da-63c6-4793-8570-3d0b3a6d0822&amp;client_secret=2a48f5da-63c6-4793-8570-3d0b3a6d0825 
+ </msg>
+<msg timestamp="20231019 18:25:12.226" level="INFO">POST Response : url=http://localhost:8081/hom/api/oauth/token 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/x-www-form-urlencoded', 'Matched-Stub-Id': 'acc11980-89dc-4a6b-95c9-63a99ef4a74e', 'Content-Encoding': 'gzip', 'Transfer-Encoding': 'chunked'} 
+ body={"access_token":"iadqc1ibqto8dqjrx1np1xyvrjngkjl1tyx9icipesndkmiydfp0oimzbfm3pl7uib2xbpbxhlaj5hltt9u6s5gvhm419qn9iiwpad3by2uz3ujzmjn6t5n49ltiydjdrvnxqefn6tyj9nrbyyueukqftabf3y0ir0szwa631nkfcxp3xswumdhrd0ofrimnuekp3issrpobel0sorkwqjrzzltjwfiblgm74ktfqtp583lb5moiki17n7uyhlgcdahmhbzen7ixgocysvsl3urxifja1kvx39ei7hkt5xczfsrtyfvhyrgulyqekbcj4i5ulzmnrpb6hyyfu1jedmpibijqjp44yqz6yldgvsxwecobsabtigkyngitxfpgpxfc7nibtthpahmjeasbdr7fxpo1gsnhz34gjamcwc1h6l5chcqzr0f8ieqqboy2todyvydgepe7kz3vwbtuqj2nkdp8xc0rlrhi9v6fcmvij2iop4kg5x7ldrnkgvc41bwswfdefa2uonexngrljw5gqviw5ieehqbaglpq1xakvqcspauongu1yi6yrgkvqgn1frnrmehfnslqhummkm1vmd95koxevwomturhshthvg5uzmaq3bnwapsc1vjnzhjdozpmmht8o3mogalzda17yg1dqly62wg2wwbflim5kc1hldjhplwj6vg1ieyfzbga9ook2po1xeshnu5rdy5prgirnkjjui00rwpfqobzxsydk0autectog0nxe3hvcdwjyjahljkxj2xafznin8s8izajwej5uvw12wgee9ox0kcfqhavqfsnytlh1zqjjecixxxe4fhhsqetd1exke1qc6kfubfkfgrypsgxw4834eahyzrxqym7xuaujdl2hjwgxvhjqpnotc6i3l2uvtk2nbuh9qgdck9p4wa0xemwystevavntmsbqjyckisdo9nfgvemfwfktcwaxlbrrvfjiq83o4gz9vlszbyruqe98abkobd4zfvp7xpatgdnjo2pmldfbivhnba1316zdazl43zxo8pvqxkghcetvxr7dhpmnsqgakgcnzd4pcob090tw6xevzdpudh8dy9qy6hx2zycsrapszm58toaxvphclxvr2iacnc9746y2xj7ugy01vvv96jnpbzsnfjxwtzmded0vj96ttsylm9ojfxgffyphzc65ghc2kd9d8wx6xyc7wneykknrmi8akxezwv22dnj59oajjej4ibeicjn8f8mfjpzdpadq21hjsifyysi3pltu80kqic1stwawu1vefqogcfv4zbt6onzery6jjrzvgbobxmi8ohlv6pkbiykux5vgt6qv1wqgxae7zm4vcrkrybix7thumvfddqxkchcqooba3ak7ud2isqxlbg9pqngmubieco9oyvulnnxgsxknqhbd0llrfeqv1zhwauuqpgmzerbbx4fksfcae0sjuhpabxdkoj03pkdbaodcznnylkeshhuw3knpilwtd8zulziy1zvseapd6apacarfwoxsjpwbqf9e6reu85bjsgujk8w6dx6upwxu6oajwxvsq7ghbysoesur5x9rkzoetzy6wvqta7wgio9dlfbz8p9dkotefk1cuqj3cwwmgljnqgz01gftblvhurs85a71doexrlkl8j4iquec4xoohhys9ykriedghtkubkzdwzztojq73oj7pqh8ji1qwu0uwrcmtizzajk2hhwxvc3zlbjnbpstyyo7ovqucb97ygffztfwneruw3gi7xftdjfaktalfxhcjszt5hz3zlmmgafai6wub2tkyiuy5wwxwpf7lkegwro0qiklxgoisbkrzgex4xwz1rzkbvcqoizrr3genxrnyevzk3voixf8ubsx2kvuvrkhkaevnkfogahktpktb06soxjlhuvhsxvqfwhapdqzttts1li8vsmni8zzblcwpcrp93ljvwv3hrzkswlen2r5ubxz109qx5nvcstywcbdmo0heyr3miwlchoxkurzo1g6iotwdji4k4vbupjcqwb78bmxvmqojaavhtzspnliatkws9hwcobbzxebcx7fyqrqudsyt7l1gztmuw5jfwfntovbfyxtmnpcxxlr5evvco2nnip2akfbphqrssedmhc4gn6gnb0icnr08ra5begrotzaecrwl9mtugmc6mvtoq0wsorn9l6ss2st5mo7jnvy2ylliawb7y4k5cndko8pzfkpt53rr5oewdjjnjgnz0yxymlbimfo4hxdcgetfyuoeyyhhlvhpqezdqjchkqg6pmqjqxjinmxqtopkx0vqosihawcu63wfbvujvabmpe8sigzyhkjyaeqxol8zxc5dvunfi4enoqyueiipnisrqgqpah9jmm9schvwwrc0ptulgmlgdp2sg3hbtin9glxk9s37fr05uesddpsujufgi38mv1xlvxn3snkpo6xkszqpg5e5cwrtk8opsaabmmi77ymotmm0h0psnzkopkusfdhponeulpg7h8wezfeqfionm0aez2zuxcbjgnweycuc95egnu26cwmqjrs0slxrwxahfchz1zwbfvia3sdtbqffowem7afzuwjshwn0dns7xgcharyxxggpsg3h8kpqabmq6igdbwenczpbaq0b1cr4u43uq0hfkkprc1jaswgx7jewuas2lwrlcbvnxffuukriquowsrotgj3bwkvsfmc8qvzlj08qgsqd4d6i1butogi1olo5ynxtnydbfyykbsxgc5eisftvh5mm08iew49qlyi6ft3vwm74jbx9qjcjqkp5vwnyyipdy8ww4hahlvkuwzwcr1gbxt","active":true,"token_type":"Bearer","expires_in":"300"} 
+ </msg>
+<msg timestamp="20231019 18:25:12.227" level="INFO">${RESPOSTA} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20231019 18:25:12.134" endtime="20231019 18:25:12.227"/>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<arg>${ACCESS_TOKEN}</arg>
+<arg>Bearer ${RESPOSTA.json()['access_token']}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<msg timestamp="20231019 18:25:12.228" level="INFO">${ACCESS_TOKEN} = Bearer iadqc1ibqto8dqjrx1np1xyvrjngkjl1tyx9icipesndkmiydfp0oimzbfm3pl7uib2xbpbxhlaj5hltt9u6s5gvhm419qn9iiwpad3by2uz3ujzmjn6t5n49ltiydjdrvnxqefn6tyj9nrbyyueukqftabf3y0ir0szwa631nkfcxp3xswumdhrd0ofrimnu...</msg>
+<status status="PASS" starttime="20231019 18:25:12.227" endtime="20231019 18:25:12.228"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${RESPOSTA.content}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20231019 18:25:12.229" level="INFO">{"access_token":"iadqc1ibqto8dqjrx1np1xyvrjngkjl1tyx9icipesndkmiydfp0oimzbfm3pl7uib2xbpbxhlaj5hltt9u6s5gvhm419qn9iiwpad3by2uz3ujzmjn6t5n49ltiydjdrvnxqefn6tyj9nrbyyueukqftabf3y0ir0szwa631nkfcxp3xswumdhrd0ofrimnuekp3issrpobel0sorkwqjrzzltjwfiblgm74ktfqtp583lb5moiki17n7uyhlgcdahmhbzen7ixgocysvsl3urxifja1kvx39ei7hkt5xczfsrtyfvhyrgulyqekbcj4i5ulzmnrpb6hyyfu1jedmpibijqjp44yqz6yldgvsxwecobsabtigkyngitxfpgpxfc7nibtthpahmjeasbdr7fxpo1gsnhz34gjamcwc1h6l5chcqzr0f8ieqqboy2todyvydgepe7kz3vwbtuqj2nkdp8xc0rlrhi9v6fcmvij2iop4kg5x7ldrnkgvc41bwswfdefa2uonexngrljw5gqviw5ieehqbaglpq1xakvqcspauongu1yi6yrgkvqgn1frnrmehfnslqhummkm1vmd95koxevwomturhshthvg5uzmaq3bnwapsc1vjnzhjdozpmmht8o3mogalzda17yg1dqly62wg2wwbflim5kc1hldjhplwj6vg1ieyfzbga9ook2po1xeshnu5rdy5prgirnkjjui00rwpfqobzxsydk0autectog0nxe3hvcdwjyjahljkxj2xafznin8s8izajwej5uvw12wgee9ox0kcfqhavqfsnytlh1zqjjecixxxe4fhhsqetd1exke1qc6kfubfkfgrypsgxw4834eahyzrxqym7xuaujdl2hjwgxvhjqpnotc6i3l2uvtk2nbuh9qgdck9p4wa0xemwystevavntmsbqjyckisdo9nfgvemfwfktcwaxlbrrvfjiq83o4gz9vlszbyruqe98abkobd4zfvp7xpatgdnjo2pmldfbivhnba1316zdazl43zxo8pvqxkghcetvxr7dhpmnsqgakgcnzd4pcob090tw6xevzdpudh8dy9qy6hx2zycsrapszm58toaxvphclxvr2iacnc9746y2xj7ugy01vvv96jnpbzsnfjxwtzmded0vj96ttsylm9ojfxgffyphzc65ghc2kd9d8wx6xyc7wneykknrmi8akxezwv22dnj59oajjej4ibeicjn8f8mfjpzdpadq21hjsifyysi3pltu80kqic1stwawu1vefqogcfv4zbt6onzery6jjrzvgbobxmi8ohlv6pkbiykux5vgt6qv1wqgxae7zm4vcrkrybix7thumvfddqxkchcqooba3ak7ud2isqxlbg9pqngmubieco9oyvulnnxgsxknqhbd0llrfeqv1zhwauuqpgmzerbbx4fksfcae0sjuhpabxdkoj03pkdbaodcznnylkeshhuw3knpilwtd8zulziy1zvseapd6apacarfwoxsjpwbqf9e6reu85bjsgujk8w6dx6upwxu6oajwxvsq7ghbysoesur5x9rkzoetzy6wvqta7wgio9dlfbz8p9dkotefk1cuqj3cwwmgljnqgz01gftblvhurs85a71doexrlkl8j4iquec4xoohhys9ykriedghtkubkzdwzztojq73oj7pqh8ji1qwu0uwrcmtizzajk2hhwxvc3zlbjnbpstyyo7ovqucb97ygffztfwneruw3gi7xftdjfaktalfxhcjszt5hz3zlmmgafai6wub2tkyiuy5wwxwpf7lkegwro0qiklxgoisbkrzgex4xwz1rzkbvcqoizrr3genxrnyevzk3voixf8ubsx2kvuvrkhkaevnkfogahktpktb06soxjlhuvhsxvqfwhapdqzttts1li8vsmni8zzblcwpcrp93ljvwv3hrzkswlen2r5ubxz109qx5nvcstywcbdmo0heyr3miwlchoxkurzo1g6iotwdji4k4vbupjcqwb78bmxvmqojaavhtzspnliatkws9hwcobbzxebcx7fyqrqudsyt7l1gztmuw5jfwfntovbfyxtmnpcxxlr5evvco2nnip2akfbphqrssedmhc4gn6gnb0icnr08ra5begrotzaecrwl9mtugmc6mvtoq0wsorn9l6ss2st5mo7jnvy2ylliawb7y4k5cndko8pzfkpt53rr5oewdjjnjgnz0yxymlbimfo4hxdcgetfyuoeyyhhlvhpqezdqjchkqg6pmqjqxjinmxqtopkx0vqosihawcu63wfbvujvabmpe8sigzyhkjyaeqxol8zxc5dvunfi4enoqyueiipnisrqgqpah9jmm9schvwwrc0ptulgmlgdp2sg3hbtin9glxk9s37fr05uesddpsujufgi38mv1xlvxn3snkpo6xkszqpg5e5cwrtk8opsaabmmi77ymotmm0h0psnzkopkusfdhponeulpg7h8wezfeqfionm0aez2zuxcbjgnweycuc95egnu26cwmqjrs0slxrwxahfchz1zwbfvia3sdtbqffowem7afzuwjshwn0dns7xgcharyxxggpsg3h8kpqabmq6igdbwenczpbaq0b1cr4u43uq0hfkkprc1jaswgx7jewuas2lwrlcbvnxffuukriquowsrotgj3bwkvsfmc8qvzlj08qgsqd4d6i1butogi1olo5ynxtnydbfyykbsxgc5eisftvh5mm08iew49qlyi6ft3vwm74jbx9qjcjqkp5vwnyyipdy8ww4hahlvkuwzwcr1gbxt","active":true,"token_type":"Bearer","expires_in":"300"}</msg>
+<status status="PASS" starttime="20231019 18:25:12.228" endtime="20231019 18:25:12.229"/>
+</kw>
+<status status="PASS" starttime="20231019 18:25:12.131" endtime="20231019 18:25:12.230"/>
+</kw>
+<test id="s1-t1" name="Gerando Variaveis dinamicas" line="15">
+<kw name="Gerar variaveis dinamicas" library="stepsE2E">
+<kw name="Cpf" library="FakerLibrary">
+<var>${cpf1_pag}</var>
+<msg timestamp="20231019 18:25:12.230" level="INFO">${cpf1_pag} = 206.987.135-59</msg>
+<status status="PASS" starttime="20231019 18:25:12.230" endtime="20231019 18:25:12.230"/>
+</kw>
+<kw name="Remove String" library="String">
+<var>${doc_pag}</var>
+<arg>${cpf1_pag}</arg>
+<arg>.</arg>
+<arg>-</arg>
+<doc>Removes all ``removables`` from the given ``string``.</doc>
+<msg timestamp="20231019 18:25:12.230" level="INFO">${doc_pag} = 20698713559</msg>
+<status status="PASS" starttime="20231019 18:25:12.230" endtime="20231019 18:25:12.230"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${doc_pag}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20231019 18:25:12.231" level="INFO">${doc_pag} = 20698713559</msg>
+<status status="PASS" starttime="20231019 18:25:12.230" endtime="20231019 18:25:12.231"/>
+</kw>
+<kw name="Cpf" library="FakerLibrary">
+<var>${doc1_rec}</var>
+<msg timestamp="20231019 18:25:12.231" level="INFO">${doc1_rec} = 160.389.457-84</msg>
+<status status="PASS" starttime="20231019 18:25:12.231" endtime="20231019 18:25:12.231"/>
+</kw>
+<kw name="Remove String" library="String">
+<var>${doc_rec}</var>
+<arg>${doc1_rec}</arg>
+<arg>.</arg>
+<arg>-</arg>
+<doc>Removes all ``removables`` from the given ``string``.</doc>
+<msg timestamp="20231019 18:25:12.231" level="INFO">${doc_rec} = 16038945784</msg>
+<status status="PASS" starttime="20231019 18:25:12.231" endtime="20231019 18:25:12.231"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${doc_rec}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20231019 18:25:12.231" level="INFO">${doc_rec} = 16038945784</msg>
+<status status="PASS" starttime="20231019 18:25:12.231" endtime="20231019 18:25:12.232"/>
+</kw>
+<kw name="First Name" library="FakerLibrary">
+<var>${nome_pag1}</var>
+<msg timestamp="20231019 18:25:12.232" level="INFO">${nome_pag1} = Gabrielly</msg>
+<status status="PASS" starttime="20231019 18:25:12.232" endtime="20231019 18:25:12.232"/>
+</kw>
+<kw name="Unidecode" library="unidecode">
+<var>${nome_pag}</var>
+<arg>${nome_pag1}</arg>
+<doc>Transliterate an Unicode object into an ASCII string</doc>
+<msg timestamp="20231019 18:25:12.232" level="INFO">${nome_pag} = Gabrielly</msg>
+<status status="PASS" starttime="20231019 18:25:12.232" endtime="20231019 18:25:12.232"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${nome_pag}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20231019 18:25:12.233" level="INFO">${nome_pag} = Gabrielly</msg>
+<status status="PASS" starttime="20231019 18:25:12.232" endtime="20231019 18:25:12.233"/>
+</kw>
+<kw name="Last Name" library="FakerLibrary">
+<var>${sobrenome_pag1}</var>
+<msg timestamp="20231019 18:25:12.233" level="INFO">${sobrenome_pag1} = Barros</msg>
+<status status="PASS" starttime="20231019 18:25:12.233" endtime="20231019 18:25:12.233"/>
+</kw>
+<kw name="Unidecode" library="unidecode">
+<var>${sobrenome_pag}</var>
+<arg>${sobrenome_pag1}</arg>
+<doc>Transliterate an Unicode object into an ASCII string</doc>
+<msg timestamp="20231019 18:25:12.233" level="INFO">${sobrenome_pag} = Barros</msg>
+<status status="PASS" starttime="20231019 18:25:12.233" endtime="20231019 18:25:12.233"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${sobrenome_pag}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20231019 18:25:12.233" level="INFO">${sobrenome_pag} = Barros</msg>
+<status status="PASS" starttime="20231019 18:25:12.233" endtime="20231019 18:25:12.233"/>
+</kw>
+<kw name="First Name" library="FakerLibrary">
+<var>${nome_rec1}</var>
+<msg timestamp="20231019 18:25:12.234" level="INFO">${nome_rec1} = Mirella</msg>
+<status status="PASS" starttime="20231019 18:25:12.234" endtime="20231019 18:25:12.234"/>
+</kw>
+<kw name="Unidecode" library="unidecode">
+<var>${nome_rec}</var>
+<arg>${nome_rec1}</arg>
+<doc>Transliterate an Unicode object into an ASCII string</doc>
+<msg timestamp="20231019 18:25:12.234" level="INFO">${nome_rec} = Mirella</msg>
+<status status="PASS" starttime="20231019 18:25:12.234" endtime="20231019 18:25:12.234"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${nome_rec}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20231019 18:25:12.234" level="INFO">${nome_rec} = Mirella</msg>
+<status status="PASS" starttime="20231019 18:25:12.234" endtime="20231019 18:25:12.234"/>
+</kw>
+<kw name="Last Name" library="FakerLibrary">
+<var>${sobrenome_rec1}</var>
+<msg timestamp="20231019 18:25:12.234" level="INFO">${sobrenome_rec1} = da Mota</msg>
+<status status="PASS" starttime="20231019 18:25:12.234" endtime="20231019 18:25:12.234"/>
+</kw>
+<kw name="Unidecode" library="unidecode">
+<var>${sobrenome_rec}</var>
+<arg>${sobrenome_rec1}</arg>
+<doc>Transliterate an Unicode object into an ASCII string</doc>
+<msg timestamp="20231019 18:25:12.235" level="INFO">${sobrenome_rec} = da Mota</msg>
+<status status="PASS" starttime="20231019 18:25:12.235" endtime="20231019 18:25:12.235"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${sobrenome_rec}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20231019 18:25:12.235" level="INFO">${sobrenome_rec} = da Mota</msg>
+<status status="PASS" starttime="20231019 18:25:12.235" endtime="20231019 18:25:12.235"/>
+</kw>
+<kw name="Get Current Date" library="DateTime">
+<var>${data_atual}</var>
+<arg>result_format= %y-%m-%d</arg>
+<doc>Returns current local or UTC time with an optional increment.</doc>
+<msg timestamp="20231019 18:25:12.236" level="INFO">${data_atual} =  23-10-19</msg>
+<status status="PASS" starttime="20231019 18:25:12.235" endtime="20231019 18:25:12.236"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${data_atual}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20231019 18:25:12.236" level="INFO">${data_atual} =  23-10-19</msg>
+<status status="PASS" starttime="20231019 18:25:12.236" endtime="20231019 18:25:12.236"/>
+</kw>
+<kw name="Get Current Date" library="DateTime">
+<var>${hora_atual}</var>
+<arg>result_format=%H:%M:%S</arg>
+<doc>Returns current local or UTC time with an optional increment.</doc>
+<msg timestamp="20231019 18:25:12.237" level="INFO">${hora_atual} = 18:25:12</msg>
+<status status="PASS" starttime="20231019 18:25:12.237" endtime="20231019 18:25:12.237"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${hora_atual}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20231019 18:25:12.237" level="INFO">${hora_atual} = 18:25:12</msg>
+<status status="PASS" starttime="20231019 18:25:12.237" endtime="20231019 18:25:12.237"/>
+</kw>
+<kw name="Get Current Date" library="DateTime">
+<var>${data_atualF}</var>
+<arg>result_format= %y%m%d</arg>
+<doc>Returns current local or UTC time with an optional increment.</doc>
+<msg timestamp="20231019 18:25:12.238" level="INFO">${data_atualF} =  231019</msg>
+<status status="PASS" starttime="20231019 18:25:12.238" endtime="20231019 18:25:12.238"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${data_atualF}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20231019 18:25:12.238" level="INFO">${data_atualF} =  231019</msg>
+<status status="PASS" starttime="20231019 18:25:12.238" endtime="20231019 18:25:12.238"/>
+</kw>
+<kw name="Get Current Date" library="DateTime">
+<var>${hora_atualF}</var>
+<arg>result_format=%H%M%S</arg>
+<doc>Returns current local or UTC time with an optional increment.</doc>
+<msg timestamp="20231019 18:25:12.239" level="INFO">${hora_atualF} = 182512</msg>
+<status status="PASS" starttime="20231019 18:25:12.238" endtime="20231019 18:25:12.239"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${hora_atualF}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20231019 18:25:12.239" level="INFO">${hora_atualF} = 182512</msg>
+<status status="PASS" starttime="20231019 18:25:12.239" endtime="20231019 18:25:12.239"/>
+</kw>
+<kw name="Generate Random String" library="String">
+<var>${ag_pag}</var>
+<arg>4</arg>
+<arg>[NUMBERS]</arg>
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<msg timestamp="20231019 18:25:12.239" level="INFO">${ag_pag} = 7675</msg>
+<status status="PASS" starttime="20231019 18:25:12.239" endtime="20231019 18:25:12.240"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${ag_pag}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20231019 18:25:12.240" level="INFO">${ag_pag} = 7675</msg>
+<status status="PASS" starttime="20231019 18:25:12.240" endtime="20231019 18:25:12.240"/>
+</kw>
+<kw name="Generate Random String" library="String">
+<var>${ag_rec}</var>
+<arg>4</arg>
+<arg>[NUMBERS]</arg>
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<msg timestamp="20231019 18:25:12.241" level="INFO">${ag_rec} = 4490</msg>
+<status status="PASS" starttime="20231019 18:25:12.240" endtime="20231019 18:25:12.241"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${ag_rec}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20231019 18:25:12.241" level="INFO">${ag_rec} = 4490</msg>
+<status status="PASS" starttime="20231019 18:25:12.241" endtime="20231019 18:25:12.241"/>
+</kw>
+<kw name="Generate Random String" library="String">
+<var>${conta_pag}</var>
+<arg>6</arg>
+<arg>[NUMBERS]</arg>
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<msg timestamp="20231019 18:25:12.241" level="INFO">${conta_pag} = 333543</msg>
+<status status="PASS" starttime="20231019 18:25:12.241" endtime="20231019 18:25:12.242"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${conta_pag}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20231019 18:25:12.242" level="INFO">${conta_pag} = 333543</msg>
+<status status="PASS" starttime="20231019 18:25:12.242" endtime="20231019 18:25:12.242"/>
+</kw>
+<kw name="Generate Random String" library="String">
+<var>${conta_rec}</var>
+<arg>6</arg>
+<arg>[NUMBERS]</arg>
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<msg timestamp="20231019 18:25:12.243" level="INFO">${conta_rec} = 718909</msg>
+<status status="PASS" starttime="20231019 18:25:12.243" endtime="20231019 18:25:12.243"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${conta_rec}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20231019 18:25:12.243" level="INFO">${conta_rec} = 718909</msg>
+<status status="PASS" starttime="20231019 18:25:12.243" endtime="20231019 18:25:12.243"/>
+</kw>
+<kw name="Generate Random String" library="String">
+<var>${reais}</var>
+<arg>2</arg>
+<arg>[NUMBERS]</arg>
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<msg timestamp="20231019 18:25:12.244" level="INFO">${reais} = 76</msg>
+<status status="PASS" starttime="20231019 18:25:12.244" endtime="20231019 18:25:12.244"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${reais}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20231019 18:25:12.244" level="INFO">${reais} = 76</msg>
+<status status="PASS" starttime="20231019 18:25:12.244" endtime="20231019 18:25:12.244"/>
+</kw>
+<kw name="Generate Random String" library="String">
+<var>${centavos}</var>
+<arg>2</arg>
+<arg>[NUMBERS]</arg>
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<msg timestamp="20231019 18:25:12.245" level="INFO">${centavos} = 62</msg>
+<status status="PASS" starttime="20231019 18:25:12.245" endtime="20231019 18:25:12.245"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${centavos}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20231019 18:25:12.245" level="INFO">${centavos} = 62</msg>
+<status status="PASS" starttime="20231019 18:25:12.245" endtime="20231019 18:25:12.245"/>
+</kw>
+<kw name="Generate Random String" library="String">
+<var>${rdmstring}</var>
+<arg>length=8</arg>
+<arg>chars=[LETTERS][NUMBERS]</arg>
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<msg timestamp="20231019 18:25:12.246" level="INFO">${rdmstring} = SZWihee7</msg>
+<status status="PASS" starttime="20231019 18:25:12.245" endtime="20231019 18:25:12.246"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${rdmstring}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20231019 18:25:12.246" level="INFO">${rdmstring} = SZWihee7</msg>
+<status status="PASS" starttime="20231019 18:25:12.246" endtime="20231019 18:25:12.246"/>
+</kw>
+<status status="PASS" starttime="20231019 18:25:12.230" endtime="20231019 18:25:12.246"/>
+</kw>
+<tag>bdd</tag>
+<status status="PASS" starttime="20231019 18:25:12.230" endtime="20231019 18:25:12.247"/>
+</test>
+<test id="s1-t2" name="Cenario 1 - Realizar pagamento Pix entre Contas" line="20">
+<kw name="Dado que eu queira fazer um Pix entre contas" library="stepsE2E">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>massaEntreContas</arg>
+<arg>${Ambiente.pix_base_url}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20231019 18:25:12.249" level="INFO">Creating Session using : alias=massaEntreContas, url=http://localhost:8081/hom, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20231019 18:25:12.248" endtime="20231019 18:25:12.249"/>
+</kw>
+<status status="PASS" starttime="20231019 18:25:12.248" endtime="20231019 18:25:12.249"/>
+</kw>
+<kw name="Quando eu preencho os dados e envio" library="stepsE2E">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{headers}</var>
+<arg>Authorization=${access_token}</arg>
+<arg>Content-Type=${Ambiente.pix_Content_Type}</arg>
+<arg>api-id=${Ambiente.pix_api_id}</arg>
+<arg>api-key=${Ambiente.pix_api_key}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20231019 18:25:12.252" level="INFO">&amp;{headers} = { Authorization=Bearer iadqc1ibqto8dqjrx1np1xyvrjngkjl1tyx9icipesndkmiydfp0oimzbfm3pl7uib2xbpbxhlaj5hltt9u6s5gvhm419qn9iiwpad3by2uz3ujzmjn6t5n49ltiydjdrvnxqefn6tyj9nrbyyueukqftabf3y0ir0szwa631nkfcxp3x...</msg>
+<status status="PASS" starttime="20231019 18:25:12.250" endtime="20231019 18:25:12.252"/>
+</kw>
+<kw name="Get File" library="OperatingSystem">
+<var>${bodyteste}</var>
+<arg>./contract/request/pixEntreContas.json</arg>
+<doc>Returns the contents of a specified file.</doc>
+<msg timestamp="20231019 18:25:12.252" level="INFO" html="true">Getting file '&lt;a href="file://c:\Users\ffreitaf\IdeaProjects\PerformanceRepo\robotFramework\contract\request\pixEntreContas.json"&gt;c:\Users\ffreitaf\IdeaProjects\PerformanceRepo\robotFramework\contract\request\pixEntreContas.json&lt;/a&gt;'.</msg>
+<msg timestamp="20231019 18:25:12.252" level="INFO">${bodyteste} = {
+    "tipo_transferencia": "pix",
+    "informacoes": "Pix Entre Contas",
+    "id_transacao": "P75900056${data_atualF}${hora_atualF}002${rdmstring}", 
+    "data_transferencia": "${data_atual}T${hora_a...</msg>
+<status status="PASS" starttime="20231019 18:25:12.252" endtime="20231019 18:25:12.252"/>
+</kw>
+<kw name="Replace Variables" library="BuiltIn">
+<var>${body}</var>
+<arg>${bodyteste}</arg>
+<doc>Replaces variables in the given text with their current values.</doc>
+<msg timestamp="20231019 18:25:12.253" level="INFO">${body} = {
+    "tipo_transferencia": "pix",
+    "informacoes": "Pix Entre Contas",
+    "id_transacao": "P75900056 231019182512002SZWihee7", 
+    "data_transferencia": " 23-10-19T18:25:12.025-3:00",
+    "valor"...</msg>
+<status status="PASS" starttime="20231019 18:25:12.253" endtime="20231019 18:25:12.253"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${resposta}</var>
+<arg>massaEntrecontas</arg>
+<arg>/pagamentos/pix</arg>
+<arg>data=${body}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20231019 18:25:12.642" level="INFO">POST Request : url=http://localhost:8081/hom/pagamentos/pix 
+ path_url=/hom/pagamentos/pix 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer iadqc1ibqto8dqjrx1np1xyvrjngkjl1tyx9icipesndkmiydfp0oimzbfm3pl7uib2xbpbxhlaj5hltt9u6s5gvhm419qn9iiwpad3by2uz3ujzmjn6t5n49ltiydjdrvnxqefn6tyj9nrbyyueukqftabf3y0ir0szwa631nkfcxp3xswumdhrd0ofrimnuekp3issrpobel0sorkwqjrzzltjwfiblgm74ktfqtp583lb5moiki17n7uyhlgcdahmhbzen7ixgocysvsl3urxifja1kvx39ei7hkt5xczfsrtyfvhyrgulyqekbcj4i5ulzmnrpb6hyyfu1jedmpibijqjp44yqz6yldgvsxwecobsabtigkyngitxfpgpxfc7nibtthpahmjeasbdr7fxpo1gsnhz34gjamcwc1h6l5chcqzr0f8ieqqboy2todyvydgepe7kz3vwbtuqj2nkdp8xc0rlrhi9v6fcmvij2iop4kg5x7ldrnkgvc41bwswfdefa2uonexngrljw5gqviw5ieehqbaglpq1xakvqcspauongu1yi6yrgkvqgn1frnrmehfnslqhummkm1vmd95koxevwomturhshthvg5uzmaq3bnwapsc1vjnzhjdozpmmht8o3mogalzda17yg1dqly62wg2wwbflim5kc1hldjhplwj6vg1ieyfzbga9ook2po1xeshnu5rdy5prgirnkjjui00rwpfqobzxsydk0autectog0nxe3hvcdwjyjahljkxj2xafznin8s8izajwej5uvw12wgee9ox0kcfqhavqfsnytlh1zqjjecixxxe4fhhsqetd1exke1qc6kfubfkfgrypsgxw4834eahyzrxqym7xuaujdl2hjwgxvhjqpnotc6i3l2uvtk2nbuh9qgdck9p4wa0xemwystevavntmsbqjyckisdo9nfgvemfwfktcwaxlbrrvfjiq83o4gz9vlszbyruqe98abkobd4zfvp7xpatgdnjo2pmldfbivhnba1316zdazl43zxo8pvqxkghcetvxr7dhpmnsqgakgcnzd4pcob090tw6xevzdpudh8dy9qy6hx2zycsrapszm58toaxvphclxvr2iacnc9746y2xj7ugy01vvv96jnpbzsnfjxwtzmded0vj96ttsylm9ojfxgffyphzc65ghc2kd9d8wx6xyc7wneykknrmi8akxezwv22dnj59oajjej4ibeicjn8f8mfjpzdpadq21hjsifyysi3pltu80kqic1stwawu1vefqogcfv4zbt6onzery6jjrzvgbobxmi8ohlv6pkbiykux5vgt6qv1wqgxae7zm4vcrkrybix7thumvfddqxkchcqooba3ak7ud2isqxlbg9pqngmubieco9oyvulnnxgsxknqhbd0llrfeqv1zhwauuqpgmzerbbx4fksfcae0sjuhpabxdkoj03pkdbaodcznnylkeshhuw3knpilwtd8zulziy1zvseapd6apacarfwoxsjpwbqf9e6reu85bjsgujk8w6dx6upwxu6oajwxvsq7ghbysoesur5x9rkzoetzy6wvqta7wgio9dlfbz8p9dkotefk1cuqj3cwwmgljnqgz01gftblvhurs85a71doexrlkl8j4iquec4xoohhys9ykriedghtkubkzdwzztojq73oj7pqh8ji1qwu0uwrcmtizzajk2hhwxvc3zlbjnbpstyyo7ovqucb97ygffztfwneruw3gi7xftdjfaktalfxhcjszt5hz3zlmmgafai6wub2tkyiuy5wwxwpf7lkegwro0qiklxgoisbkrzgex4xwz1rzkbvcqoizrr3genxrnyevzk3voixf8ubsx2kvuvrkhkaevnkfogahktpktb06soxjlhuvhsxvqfwhapdqzttts1li8vsmni8zzblcwpcrp93ljvwv3hrzkswlen2r5ubxz109qx5nvcstywcbdmo0heyr3miwlchoxkurzo1g6iotwdji4k4vbupjcqwb78bmxvmqojaavhtzspnliatkws9hwcobbzxebcx7fyqrqudsyt7l1gztmuw5jfwfntovbfyxtmnpcxxlr5evvco2nnip2akfbphqrssedmhc4gn6gnb0icnr08ra5begrotzaecrwl9mtugmc6mvtoq0wsorn9l6ss2st5mo7jnvy2ylliawb7y4k5cndko8pzfkpt53rr5oewdjjnjgnz0yxymlbimfo4hxdcgetfyuoeyyhhlvhpqezdqjchkqg6pmqjqxjinmxqtopkx0vqosihawcu63wfbvujvabmpe8sigzyhkjyaeqxol8zxc5dvunfi4enoqyueiipnisrqgqpah9jmm9schvwwrc0ptulgmlgdp2sg3hbtin9glxk9s37fr05uesddpsujufgi38mv1xlvxn3snkpo6xkszqpg5e5cwrtk8opsaabmmi77ymotmm0h0psnzkopkusfdhponeulpg7h8wezfeqfionm0aez2zuxcbjgnweycuc95egnu26cwmqjrs0slxrwxahfchz1zwbfvia3sdtbqffowem7afzuwjshwn0dns7xgcharyxxggpsg3h8kpqabmq6igdbwenczpbaq0b1cr4u43uq0hfkkprc1jaswgx7jewuas2lwrlcbvnxffuukriquowsrotgj3bwkvsfmc8qvzlj08qgsqd4d6i1butogi1olo5ynxtnydbfyykbsxgc5eisftvh5mm08iew49qlyi6ft3vwm74jbx9qjcjqkp5vwnyyipdy8ww4hahlvkuwzwcr1gbxt', 'Content-Type': 'application/json', 'api-id': '456v99vppt', 'api-key': '6759eb24-2449-44f4-8b58-f806f58', 'Content-Length': '1206'} 
+ body={
+    "tipo_transferencia": "pix",
+    "informacoes": "Pix Entre Contas",
+    "id_transacao": "P75900056 231019182512002SZWihee7", 
+    "data_transferencia": " 23-10-19T18:25:12.025-3:00",
+    "valor": "76.62",
+    "recebedor": [
+        {
+            "meio_pagamento": {
+                "tipo": "conta_corrente",
+                "dados": {
+                    "dados_conta": {
+                        "agencia": "4490",
+                        "conta": "718909"
+                    }
+                }
+            },
+            "identificacao": {
+                "tipo_pessoa": "F",
+                "nome": "Mirella da Mota",
+                "numero_documento": "16038945784"
+            }
+        }
+    ],
+    "pagador": [
+        {
+            "meio_pagamento": {
+                "tipo": "conta_corrente",
+                "dados": {
+                    "dados_conta": {
+                        "agencia": "7675",
+                        "conta": "333543"
+                    }
+                }
+            },
+            "identificacao": {
+                "tipo_pessoa": "F",
+                "nome": "Gabrielly Barros",
+                "numero_documento": "20698713559"
+            }
+        }
+    ]
+} 
+ </msg>
+<msg timestamp="20231019 18:25:12.643" level="INFO">POST Response : url=http://localhost:8081/hom/pagamentos/pix 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json', 'Matched-Stub-Id': 'dd261b28-7dfe-4730-8649-8d4bb65c0388', 'Content-Encoding': 'gzip', 'Transfer-Encoding': 'chunked'} 
+ body={"tipo_transferencia":"pix","id_transacao":"P75900056 231019182512002SZWihee7","data_transferencia":" 23-10-19T18:25:12.025-3:00","valor":"76.62","recebedor":[{"meio_pagamento":{"tipo":"conta_corrente","dados":{"dados_conta":{"agencia":"4490","conta":"718909"}}},"identificacao":{"tipo_pessoa":"F","nome":"Mirella da Mota","numero_documento":"16038945784"}}],"pagador":[{"meio_pagamento":{"tipo":"conta_corrente","dados":{"dados_conta":{"agencia":"7675","conta":"333543"}}},"identificacao":{"tipo_pessoa":"F","nome":"Gabrielly Barros","numero_documento":"20698713559"}}],"informacoes":"Pix Entre Contas","id_transferencia":"7ec40b26-2b7a-4489-9850-22e62d7c0877","status":"EFETIVACAO_CONCLUIDA"} 
+ </msg>
+<msg timestamp="20231019 18:25:12.643" level="INFO">${resposta} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20231019 18:25:12.253" endtime="20231019 18:25:12.643"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${resposta}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20231019 18:25:12.644" level="INFO">${resposta} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20231019 18:25:12.644" endtime="20231019 18:25:12.644"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${status}</var>
+<arg>${resposta.json()}[status]</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231019 18:25:12.645" level="INFO">${status} = EFETIVACAO_CONCLUIDA</msg>
+<status status="PASS" starttime="20231019 18:25:12.644" endtime="20231019 18:25:12.645"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${status}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20231019 18:25:12.646" level="INFO">${status} = EFETIVACAO_CONCLUIDA</msg>
+<status status="PASS" starttime="20231019 18:25:12.646" endtime="20231019 18:25:12.646"/>
+</kw>
+<status status="PASS" starttime="20231019 18:25:12.250" endtime="20231019 18:25:12.646"/>
+</kw>
+<kw name="Então o sistema realiza a transação e me devolve um retorno com 200 com status EFETIVACAO_CONCLUIDA" library="stepsE2E">
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>200</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20231019 18:25:12.647" endtime="20231019 18:25:12.647"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>EFETIVACAO_CONCLUIDA</arg>
+<arg>${status}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20231019 18:25:12.648" endtime="20231019 18:25:12.648"/>
+</kw>
+<status status="PASS" starttime="20231019 18:25:12.647" endtime="20231019 18:25:12.648"/>
+</kw>
+<tag>bdd</tag>
+<status status="PASS" starttime="20231019 18:25:12.247" endtime="20231019 18:25:12.648"/>
+</test>
+<test id="s1-t3" name="Cenario 2 - Validar Contrato Pix entre contas (Cenário Positivo)" line="27">
+<kw name="Dado que eu queira validar o contrato da api Pix entre contas" library="stepsE2E">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>massaEntreContas</arg>
+<arg>${Ambiente.pix_base_url}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20231019 18:25:12.653" level="INFO">Creating Session using : alias=massaEntreContas, url=http://localhost:8081/hom, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20231019 18:25:12.652" endtime="20231019 18:25:12.653"/>
+</kw>
+<status status="PASS" starttime="20231019 18:25:12.650" endtime="20231019 18:25:12.653"/>
+</kw>
+<kw name="Quando eu realizo a transação" library="stepsE2E">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{headers}</var>
+<arg>Authorization=${access_token}</arg>
+<arg>Content-Type=${Ambiente.pix_Content_Type}</arg>
+<arg>api-id=${Ambiente.pix_api_id}</arg>
+<arg>api-key=${Ambiente.pix_api_key}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20231019 18:25:12.655" level="INFO">&amp;{headers} = { Authorization=Bearer iadqc1ibqto8dqjrx1np1xyvrjngkjl1tyx9icipesndkmiydfp0oimzbfm3pl7uib2xbpbxhlaj5hltt9u6s5gvhm419qn9iiwpad3by2uz3ujzmjn6t5n49ltiydjdrvnxqefn6tyj9nrbyyueukqftabf3y0ir0szwa631nkfcxp3x...</msg>
+<status status="PASS" starttime="20231019 18:25:12.654" endtime="20231019 18:25:12.655"/>
+</kw>
+<kw name="Get File" library="OperatingSystem">
+<var>${bodyteste}</var>
+<arg>./contract/request/pixEntreContas.json</arg>
+<doc>Returns the contents of a specified file.</doc>
+<msg timestamp="20231019 18:25:12.656" level="INFO" html="true">Getting file '&lt;a href="file://c:\Users\ffreitaf\IdeaProjects\PerformanceRepo\robotFramework\contract\request\pixEntreContas.json"&gt;c:\Users\ffreitaf\IdeaProjects\PerformanceRepo\robotFramework\contract\request\pixEntreContas.json&lt;/a&gt;'.</msg>
+<msg timestamp="20231019 18:25:12.656" level="INFO">${bodyteste} = {
+    "tipo_transferencia": "pix",
+    "informacoes": "Pix Entre Contas",
+    "id_transacao": "P75900056${data_atualF}${hora_atualF}002${rdmstring}", 
+    "data_transferencia": "${data_atual}T${hora_a...</msg>
+<status status="PASS" starttime="20231019 18:25:12.656" endtime="20231019 18:25:12.656"/>
+</kw>
+<kw name="Replace Variables" library="BuiltIn">
+<var>${body}</var>
+<arg>${bodyteste}</arg>
+<doc>Replaces variables in the given text with their current values.</doc>
+<msg timestamp="20231019 18:25:12.657" level="INFO">${body} = {
+    "tipo_transferencia": "pix",
+    "informacoes": "Pix Entre Contas",
+    "id_transacao": "P75900056 231019182512002SZWihee7", 
+    "data_transferencia": " 23-10-19T18:25:12.025-3:00",
+    "valor"...</msg>
+<status status="PASS" starttime="20231019 18:25:12.656" endtime="20231019 18:25:12.657"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${resposta}</var>
+<arg>massaEntrecontas</arg>
+<arg>/pagamentos/pix</arg>
+<arg>data=${body}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20231019 18:25:13.058" level="INFO">POST Request : url=http://localhost:8081/hom/pagamentos/pix 
+ path_url=/hom/pagamentos/pix 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer iadqc1ibqto8dqjrx1np1xyvrjngkjl1tyx9icipesndkmiydfp0oimzbfm3pl7uib2xbpbxhlaj5hltt9u6s5gvhm419qn9iiwpad3by2uz3ujzmjn6t5n49ltiydjdrvnxqefn6tyj9nrbyyueukqftabf3y0ir0szwa631nkfcxp3xswumdhrd0ofrimnuekp3issrpobel0sorkwqjrzzltjwfiblgm74ktfqtp583lb5moiki17n7uyhlgcdahmhbzen7ixgocysvsl3urxifja1kvx39ei7hkt5xczfsrtyfvhyrgulyqekbcj4i5ulzmnrpb6hyyfu1jedmpibijqjp44yqz6yldgvsxwecobsabtigkyngitxfpgpxfc7nibtthpahmjeasbdr7fxpo1gsnhz34gjamcwc1h6l5chcqzr0f8ieqqboy2todyvydgepe7kz3vwbtuqj2nkdp8xc0rlrhi9v6fcmvij2iop4kg5x7ldrnkgvc41bwswfdefa2uonexngrljw5gqviw5ieehqbaglpq1xakvqcspauongu1yi6yrgkvqgn1frnrmehfnslqhummkm1vmd95koxevwomturhshthvg5uzmaq3bnwapsc1vjnzhjdozpmmht8o3mogalzda17yg1dqly62wg2wwbflim5kc1hldjhplwj6vg1ieyfzbga9ook2po1xeshnu5rdy5prgirnkjjui00rwpfqobzxsydk0autectog0nxe3hvcdwjyjahljkxj2xafznin8s8izajwej5uvw12wgee9ox0kcfqhavqfsnytlh1zqjjecixxxe4fhhsqetd1exke1qc6kfubfkfgrypsgxw4834eahyzrxqym7xuaujdl2hjwgxvhjqpnotc6i3l2uvtk2nbuh9qgdck9p4wa0xemwystevavntmsbqjyckisdo9nfgvemfwfktcwaxlbrrvfjiq83o4gz9vlszbyruqe98abkobd4zfvp7xpatgdnjo2pmldfbivhnba1316zdazl43zxo8pvqxkghcetvxr7dhpmnsqgakgcnzd4pcob090tw6xevzdpudh8dy9qy6hx2zycsrapszm58toaxvphclxvr2iacnc9746y2xj7ugy01vvv96jnpbzsnfjxwtzmded0vj96ttsylm9ojfxgffyphzc65ghc2kd9d8wx6xyc7wneykknrmi8akxezwv22dnj59oajjej4ibeicjn8f8mfjpzdpadq21hjsifyysi3pltu80kqic1stwawu1vefqogcfv4zbt6onzery6jjrzvgbobxmi8ohlv6pkbiykux5vgt6qv1wqgxae7zm4vcrkrybix7thumvfddqxkchcqooba3ak7ud2isqxlbg9pqngmubieco9oyvulnnxgsxknqhbd0llrfeqv1zhwauuqpgmzerbbx4fksfcae0sjuhpabxdkoj03pkdbaodcznnylkeshhuw3knpilwtd8zulziy1zvseapd6apacarfwoxsjpwbqf9e6reu85bjsgujk8w6dx6upwxu6oajwxvsq7ghbysoesur5x9rkzoetzy6wvqta7wgio9dlfbz8p9dkotefk1cuqj3cwwmgljnqgz01gftblvhurs85a71doexrlkl8j4iquec4xoohhys9ykriedghtkubkzdwzztojq73oj7pqh8ji1qwu0uwrcmtizzajk2hhwxvc3zlbjnbpstyyo7ovqucb97ygffztfwneruw3gi7xftdjfaktalfxhcjszt5hz3zlmmgafai6wub2tkyiuy5wwxwpf7lkegwro0qiklxgoisbkrzgex4xwz1rzkbvcqoizrr3genxrnyevzk3voixf8ubsx2kvuvrkhkaevnkfogahktpktb06soxjlhuvhsxvqfwhapdqzttts1li8vsmni8zzblcwpcrp93ljvwv3hrzkswlen2r5ubxz109qx5nvcstywcbdmo0heyr3miwlchoxkurzo1g6iotwdji4k4vbupjcqwb78bmxvmqojaavhtzspnliatkws9hwcobbzxebcx7fyqrqudsyt7l1gztmuw5jfwfntovbfyxtmnpcxxlr5evvco2nnip2akfbphqrssedmhc4gn6gnb0icnr08ra5begrotzaecrwl9mtugmc6mvtoq0wsorn9l6ss2st5mo7jnvy2ylliawb7y4k5cndko8pzfkpt53rr5oewdjjnjgnz0yxymlbimfo4hxdcgetfyuoeyyhhlvhpqezdqjchkqg6pmqjqxjinmxqtopkx0vqosihawcu63wfbvujvabmpe8sigzyhkjyaeqxol8zxc5dvunfi4enoqyueiipnisrqgqpah9jmm9schvwwrc0ptulgmlgdp2sg3hbtin9glxk9s37fr05uesddpsujufgi38mv1xlvxn3snkpo6xkszqpg5e5cwrtk8opsaabmmi77ymotmm0h0psnzkopkusfdhponeulpg7h8wezfeqfionm0aez2zuxcbjgnweycuc95egnu26cwmqjrs0slxrwxahfchz1zwbfvia3sdtbqffowem7afzuwjshwn0dns7xgcharyxxggpsg3h8kpqabmq6igdbwenczpbaq0b1cr4u43uq0hfkkprc1jaswgx7jewuas2lwrlcbvnxffuukriquowsrotgj3bwkvsfmc8qvzlj08qgsqd4d6i1butogi1olo5ynxtnydbfyykbsxgc5eisftvh5mm08iew49qlyi6ft3vwm74jbx9qjcjqkp5vwnyyipdy8ww4hahlvkuwzwcr1gbxt', 'Content-Type': 'application/json', 'api-id': '456v99vppt', 'api-key': '6759eb24-2449-44f4-8b58-f806f58', 'Content-Length': '1206'} 
+ body={
+    "tipo_transferencia": "pix",
+    "informacoes": "Pix Entre Contas",
+    "id_transacao": "P75900056 231019182512002SZWihee7", 
+    "data_transferencia": " 23-10-19T18:25:12.025-3:00",
+    "valor": "76.62",
+    "recebedor": [
+        {
+            "meio_pagamento": {
+                "tipo": "conta_corrente",
+                "dados": {
+                    "dados_conta": {
+                        "agencia": "4490",
+                        "conta": "718909"
+                    }
+                }
+            },
+            "identificacao": {
+                "tipo_pessoa": "F",
+                "nome": "Mirella da Mota",
+                "numero_documento": "16038945784"
+            }
+        }
+    ],
+    "pagador": [
+        {
+            "meio_pagamento": {
+                "tipo": "conta_corrente",
+                "dados": {
+                    "dados_conta": {
+                        "agencia": "7675",
+                        "conta": "333543"
+                    }
+                }
+            },
+            "identificacao": {
+                "tipo_pessoa": "F",
+                "nome": "Gabrielly Barros",
+                "numero_documento": "20698713559"
+            }
+        }
+    ]
+} 
+ </msg>
+<msg timestamp="20231019 18:25:13.058" level="INFO">POST Response : url=http://localhost:8081/hom/pagamentos/pix 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json', 'Matched-Stub-Id': 'dd261b28-7dfe-4730-8649-8d4bb65c0388', 'Content-Encoding': 'gzip', 'Transfer-Encoding': 'chunked'} 
+ body={"tipo_transferencia":"pix","id_transacao":"P75900056 231019182512002SZWihee7","data_transferencia":" 23-10-19T18:25:12.025-3:00","valor":"76.62","recebedor":[{"meio_pagamento":{"tipo":"conta_corrente","dados":{"dados_conta":{"agencia":"4490","conta":"718909"}}},"identificacao":{"tipo_pessoa":"F","nome":"Mirella da Mota","numero_documento":"16038945784"}}],"pagador":[{"meio_pagamento":{"tipo":"conta_corrente","dados":{"dados_conta":{"agencia":"7675","conta":"333543"}}},"identificacao":{"tipo_pessoa":"F","nome":"Gabrielly Barros","numero_documento":"20698713559"}}],"informacoes":"Pix Entre Contas","id_transferencia":"0d5ccd56-a423-4f64-a8f7-3e316cab1430","status":"EFETIVACAO_CONCLUIDA"} 
+ </msg>
+<msg timestamp="20231019 18:25:13.058" level="INFO">${resposta} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20231019 18:25:12.657" endtime="20231019 18:25:13.058"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${resposta}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20231019 18:25:13.059" level="INFO">${resposta} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20231019 18:25:13.059" endtime="20231019 18:25:13.059"/>
+</kw>
+<status status="PASS" starttime="20231019 18:25:12.654" endtime="20231019 18:25:13.059"/>
+</kw>
+<kw name="Então o sistema valida o retorno da requisição e valida que o contrato está OK" library="stepsE2E">
+<kw name="Validate Json" library="JSONSchemaLibrary">
+<arg>pixEntreContas.json</arg>
+<arg>${resposta.json()}</arg>
+<doc>Validates the sample JSON against the given schema.</doc>
+<status status="PASS" starttime="20231019 18:25:13.060" endtime="20231019 18:25:13.085"/>
+</kw>
+<status status="PASS" starttime="20231019 18:25:13.060" endtime="20231019 18:25:13.086"/>
+</kw>
+<tag>bdd</tag>
+<status status="PASS" starttime="20231019 18:25:12.650" endtime="20231019 18:25:13.086"/>
+</test>
+<test id="s1-t4" name="Cenario 3 - Realizar pagamento Pix com Chave" line="34">
+<kw name="Dado que eu queira fazer um Pix com a chave do recebedor" library="stepsE2E">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>massaChave</arg>
+<arg>${Ambiente.pix_base_url}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20231019 18:25:13.089" level="INFO">Creating Session using : alias=massaChave, url=http://localhost:8081/hom, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20231019 18:25:13.088" endtime="20231019 18:25:13.089"/>
+</kw>
+<status status="PASS" starttime="20231019 18:25:13.088" endtime="20231019 18:25:13.089"/>
+</kw>
+<kw name="Quando preencho os dados e envio" library="stepsE2E">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{headers}</var>
+<arg>Authorization=${access_token}</arg>
+<arg>Content-Type=${Ambiente.pix_Content_Type}</arg>
+<arg>api-id=${Ambiente.pix_api_id}</arg>
+<arg>api-key=${Ambiente.pix_api_key}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20231019 18:25:13.091" level="INFO">&amp;{headers} = { Authorization=Bearer iadqc1ibqto8dqjrx1np1xyvrjngkjl1tyx9icipesndkmiydfp0oimzbfm3pl7uib2xbpbxhlaj5hltt9u6s5gvhm419qn9iiwpad3by2uz3ujzmjn6t5n49ltiydjdrvnxqefn6tyj9nrbyyueukqftabf3y0ir0szwa631nkfcxp3x...</msg>
+<status status="PASS" starttime="20231019 18:25:13.089" endtime="20231019 18:25:13.091"/>
+</kw>
+<kw name="Get File" library="OperatingSystem">
+<var>${bodyteste}</var>
+<arg>./contract/request/pixChave.json</arg>
+<doc>Returns the contents of a specified file.</doc>
+<msg timestamp="20231019 18:25:13.091" level="INFO" html="true">Getting file '&lt;a href="file://c:\Users\ffreitaf\IdeaProjects\PerformanceRepo\robotFramework\contract\request\pixChave.json"&gt;c:\Users\ffreitaf\IdeaProjects\PerformanceRepo\robotFramework\contract\request\pixChave.json&lt;/a&gt;'.</msg>
+<msg timestamp="20231019 18:25:13.092" level="INFO">${bodyteste} = {
+    "tipo_transferencia": "pix",
+    "informacoes": "Pix com Chave",
+    "id_transacao": "P75900056${data_atualF}${hora_atualF}002${rdmstring}",
+    "data_transferencia": "${data_atual}T${hora_atual...</msg>
+<status status="PASS" starttime="20231019 18:25:13.091" endtime="20231019 18:25:13.092"/>
+</kw>
+<kw name="Replace Variables" library="BuiltIn">
+<var>${body}</var>
+<arg>${bodyteste}</arg>
+<doc>Replaces variables in the given text with their current values.</doc>
+<msg timestamp="20231019 18:25:13.092" level="INFO">${body} = {
+    "tipo_transferencia": "pix",
+    "informacoes": "Pix com Chave",
+    "id_transacao": "P75900056 231019182512002SZWihee7",
+    "data_transferencia": " 23-10-19T18:25:12.027-3:00",
+    "valor": "7...</msg>
+<status status="PASS" starttime="20231019 18:25:13.092" endtime="20231019 18:25:13.092"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${resposta}</var>
+<arg>massaChave</arg>
+<arg>/pagamentos/pix</arg>
+<arg>data=${body}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20231019 18:25:13.491" level="INFO">POST Request : url=http://localhost:8081/hom/pagamentos/pix 
+ path_url=/hom/pagamentos/pix 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer iadqc1ibqto8dqjrx1np1xyvrjngkjl1tyx9icipesndkmiydfp0oimzbfm3pl7uib2xbpbxhlaj5hltt9u6s5gvhm419qn9iiwpad3by2uz3ujzmjn6t5n49ltiydjdrvnxqefn6tyj9nrbyyueukqftabf3y0ir0szwa631nkfcxp3xswumdhrd0ofrimnuekp3issrpobel0sorkwqjrzzltjwfiblgm74ktfqtp583lb5moiki17n7uyhlgcdahmhbzen7ixgocysvsl3urxifja1kvx39ei7hkt5xczfsrtyfvhyrgulyqekbcj4i5ulzmnrpb6hyyfu1jedmpibijqjp44yqz6yldgvsxwecobsabtigkyngitxfpgpxfc7nibtthpahmjeasbdr7fxpo1gsnhz34gjamcwc1h6l5chcqzr0f8ieqqboy2todyvydgepe7kz3vwbtuqj2nkdp8xc0rlrhi9v6fcmvij2iop4kg5x7ldrnkgvc41bwswfdefa2uonexngrljw5gqviw5ieehqbaglpq1xakvqcspauongu1yi6yrgkvqgn1frnrmehfnslqhummkm1vmd95koxevwomturhshthvg5uzmaq3bnwapsc1vjnzhjdozpmmht8o3mogalzda17yg1dqly62wg2wwbflim5kc1hldjhplwj6vg1ieyfzbga9ook2po1xeshnu5rdy5prgirnkjjui00rwpfqobzxsydk0autectog0nxe3hvcdwjyjahljkxj2xafznin8s8izajwej5uvw12wgee9ox0kcfqhavqfsnytlh1zqjjecixxxe4fhhsqetd1exke1qc6kfubfkfgrypsgxw4834eahyzrxqym7xuaujdl2hjwgxvhjqpnotc6i3l2uvtk2nbuh9qgdck9p4wa0xemwystevavntmsbqjyckisdo9nfgvemfwfktcwaxlbrrvfjiq83o4gz9vlszbyruqe98abkobd4zfvp7xpatgdnjo2pmldfbivhnba1316zdazl43zxo8pvqxkghcetvxr7dhpmnsqgakgcnzd4pcob090tw6xevzdpudh8dy9qy6hx2zycsrapszm58toaxvphclxvr2iacnc9746y2xj7ugy01vvv96jnpbzsnfjxwtzmded0vj96ttsylm9ojfxgffyphzc65ghc2kd9d8wx6xyc7wneykknrmi8akxezwv22dnj59oajjej4ibeicjn8f8mfjpzdpadq21hjsifyysi3pltu80kqic1stwawu1vefqogcfv4zbt6onzery6jjrzvgbobxmi8ohlv6pkbiykux5vgt6qv1wqgxae7zm4vcrkrybix7thumvfddqxkchcqooba3ak7ud2isqxlbg9pqngmubieco9oyvulnnxgsxknqhbd0llrfeqv1zhwauuqpgmzerbbx4fksfcae0sjuhpabxdkoj03pkdbaodcznnylkeshhuw3knpilwtd8zulziy1zvseapd6apacarfwoxsjpwbqf9e6reu85bjsgujk8w6dx6upwxu6oajwxvsq7ghbysoesur5x9rkzoetzy6wvqta7wgio9dlfbz8p9dkotefk1cuqj3cwwmgljnqgz01gftblvhurs85a71doexrlkl8j4iquec4xoohhys9ykriedghtkubkzdwzztojq73oj7pqh8ji1qwu0uwrcmtizzajk2hhwxvc3zlbjnbpstyyo7ovqucb97ygffztfwneruw3gi7xftdjfaktalfxhcjszt5hz3zlmmgafai6wub2tkyiuy5wwxwpf7lkegwro0qiklxgoisbkrzgex4xwz1rzkbvcqoizrr3genxrnyevzk3voixf8ubsx2kvuvrkhkaevnkfogahktpktb06soxjlhuvhsxvqfwhapdqzttts1li8vsmni8zzblcwpcrp93ljvwv3hrzkswlen2r5ubxz109qx5nvcstywcbdmo0heyr3miwlchoxkurzo1g6iotwdji4k4vbupjcqwb78bmxvmqojaavhtzspnliatkws9hwcobbzxebcx7fyqrqudsyt7l1gztmuw5jfwfntovbfyxtmnpcxxlr5evvco2nnip2akfbphqrssedmhc4gn6gnb0icnr08ra5begrotzaecrwl9mtugmc6mvtoq0wsorn9l6ss2st5mo7jnvy2ylliawb7y4k5cndko8pzfkpt53rr5oewdjjnjgnz0yxymlbimfo4hxdcgetfyuoeyyhhlvhpqezdqjchkqg6pmqjqxjinmxqtopkx0vqosihawcu63wfbvujvabmpe8sigzyhkjyaeqxol8zxc5dvunfi4enoqyueiipnisrqgqpah9jmm9schvwwrc0ptulgmlgdp2sg3hbtin9glxk9s37fr05uesddpsujufgi38mv1xlvxn3snkpo6xkszqpg5e5cwrtk8opsaabmmi77ymotmm0h0psnzkopkusfdhponeulpg7h8wezfeqfionm0aez2zuxcbjgnweycuc95egnu26cwmqjrs0slxrwxahfchz1zwbfvia3sdtbqffowem7afzuwjshwn0dns7xgcharyxxggpsg3h8kpqabmq6igdbwenczpbaq0b1cr4u43uq0hfkkprc1jaswgx7jewuas2lwrlcbvnxffuukriquowsrotgj3bwkvsfmc8qvzlj08qgsqd4d6i1butogi1olo5ynxtnydbfyykbsxgc5eisftvh5mm08iew49qlyi6ft3vwm74jbx9qjcjqkp5vwnyyipdy8ww4hahlvkuwzwcr1gbxt', 'Content-Type': 'application/json', 'api-id': '456v99vppt', 'api-key': '6759eb24-2449-44f4-8b58-f806f58', 'Content-Length': '1246'} 
+ body={
+    "tipo_transferencia": "pix",
+    "informacoes": "Pix com Chave",
+    "id_transacao": "P75900056 231019182512002SZWihee7",
+    "data_transferencia": " 23-10-19T18:25:12.027-3:00",
+    "valor": "76.62",
+    "recebedor": [
+        {
+            "meio_pagamento": {
+                "tipo": "conta_corrente",
+                "dados": {
+                    "chave": "16038945784",
+                    "dados_conta": {
+                        "agencia": "4490",
+                        "conta": "718909"
+                    }
+                }
+            },
+            "identificacao": {
+                "tipo_pessoa": "F",
+                "nome": "Mirella da Mota",
+                "numero_documento": "16038945784"
+            }
+        }
+    ],
+    "pagador": [
+        {
+            "meio_pagamento": {
+                "tipo": "conta_corrente",
+                "dados": {
+                    "dados_conta": {
+                        "agencia": "7675",
+                        "conta": "333543"
+                    }
+                }
+            },
+            "identificacao": {
+                "tipo_pessoa": "F",
+                "nome": "Gabrielly Barros",
+                "numero_documento": "20698713559"
+            }
+        }
+    ]
+} 
+ </msg>
+<msg timestamp="20231019 18:25:13.491" level="INFO">POST Response : url=http://localhost:8081/hom/pagamentos/pix 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json', 'Matched-Stub-Id': '0e507487-8a24-4a88-a595-dec92f953b7d', 'Content-Encoding': 'gzip', 'Transfer-Encoding': 'chunked'} 
+ body={"tipo_transferencia":"pix","id_transacao":"P75900056 231019182512002SZWihee7","data_transferencia":" 23-10-19T18:25:12.027-3:00","valor":"76.62","recebedor":[{"meio_pagamento":{"tipo":"conta_corrente","dados":{"chave":"16038945784","dados_conta":{"agencia":"4490","conta":"718909"}}},"identificacao":{"tipo_pessoa":"F","nome":"Mirella da Mota","numero_documento":"16038945784"}}],"pagador":[{"meio_pagamento":{"tipo":"conta_corrente","dados":{"dados_conta":{"agencia":"7675","conta":"333543"}}},"identificacao":{"tipo_pessoa":"F","nome":"Gabrielly Barros","numero_documento":"20698713559"}}],"informacoes":"Pix com Chave","id_transferencia":"da9d3792-f355-4f0d-9d2f-dfba573895f7","status":"EFETIVACAO_CONCLUIDA"} 
+ </msg>
+<msg timestamp="20231019 18:25:13.491" level="INFO">${resposta} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20231019 18:25:13.092" endtime="20231019 18:25:13.491"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${resposta}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20231019 18:25:13.491" level="INFO">${resposta} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20231019 18:25:13.491" endtime="20231019 18:25:13.492"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${status}</var>
+<arg>${resposta.json()}[status]</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231019 18:25:13.492" level="INFO">${status} = EFETIVACAO_CONCLUIDA</msg>
+<status status="PASS" starttime="20231019 18:25:13.492" endtime="20231019 18:25:13.492"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${status}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20231019 18:25:13.493" level="INFO">${status} = EFETIVACAO_CONCLUIDA</msg>
+<status status="PASS" starttime="20231019 18:25:13.492" endtime="20231019 18:25:13.493"/>
+</kw>
+<status status="PASS" starttime="20231019 18:25:13.089" endtime="20231019 18:25:13.493"/>
+</kw>
+<kw name="Então o sistema realiza o pix e me devolve um retorno com 200 com status EFETIVACAO_CONCLUIDA" library="stepsE2E">
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>200</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20231019 18:25:13.494" endtime="20231019 18:25:13.494"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>EFETIVACAO_CONCLUIDA</arg>
+<arg>${status}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20231019 18:25:13.495" endtime="20231019 18:25:13.495"/>
+</kw>
+<status status="PASS" starttime="20231019 18:25:13.494" endtime="20231019 18:25:13.495"/>
+</kw>
+<tag>bdd</tag>
+<status status="PASS" starttime="20231019 18:25:13.087" endtime="20231019 18:25:13.496"/>
+</test>
+<test id="s1-t5" name="Cenario 4 - Validar Contrato Pix com Chave (Cenário Negativo)" line="41">
+<kw name="Dado que eu queira validar o contrato da API Pix com Chave" library="stepsE2E">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>massaChave</arg>
+<arg>${Ambiente.pix_base_url}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20231019 18:25:13.498" level="INFO">Creating Session using : alias=massaChave, url=http://localhost:8081/hom, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20231019 18:25:13.497" endtime="20231019 18:25:13.498"/>
+</kw>
+<status status="PASS" starttime="20231019 18:25:13.497" endtime="20231019 18:25:13.498"/>
+</kw>
+<kw name="Quando eu realizo uma transação" library="stepsE2E">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{headers}</var>
+<arg>Authorization=${access_token}</arg>
+<arg>Content-Type=${Ambiente.pix_Content_Type}</arg>
+<arg>api-id=${Ambiente.pix_api_id}</arg>
+<arg>api-key=${Ambiente.pix_api_key}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20231019 18:25:13.501" level="INFO">&amp;{headers} = { Authorization=Bearer iadqc1ibqto8dqjrx1np1xyvrjngkjl1tyx9icipesndkmiydfp0oimzbfm3pl7uib2xbpbxhlaj5hltt9u6s5gvhm419qn9iiwpad3by2uz3ujzmjn6t5n49ltiydjdrvnxqefn6tyj9nrbyyueukqftabf3y0ir0szwa631nkfcxp3x...</msg>
+<status status="PASS" starttime="20231019 18:25:13.499" endtime="20231019 18:25:13.501"/>
+</kw>
+<kw name="Get File" library="OperatingSystem">
+<var>${bodyteste}</var>
+<arg>./contract/request/pixChave2.json</arg>
+<doc>Returns the contents of a specified file.</doc>
+<msg timestamp="20231019 18:25:13.501" level="INFO" html="true">Getting file '&lt;a href="file://c:\Users\ffreitaf\IdeaProjects\PerformanceRepo\robotFramework\contract\request\pixChave2.json"&gt;c:\Users\ffreitaf\IdeaProjects\PerformanceRepo\robotFramework\contract\request\pixChave2.json&lt;/a&gt;'.</msg>
+<msg timestamp="20231019 18:25:13.502" level="INFO">${bodyteste} = {
+    "tipo_transferencia": "pix",
+    "informacoes": "Pix com Chave",
+    "id_transacao": "P75900056${data_atualF}${hora_atualF}002${rdmstring}",
+    "data_transferencia": "${data_atual}T${hora_atual...</msg>
+<status status="PASS" starttime="20231019 18:25:13.501" endtime="20231019 18:25:13.502"/>
+</kw>
+<kw name="Replace Variables" library="BuiltIn">
+<var>${body}</var>
+<arg>${bodyteste}</arg>
+<doc>Replaces variables in the given text with their current values.</doc>
+<msg timestamp="20231019 18:25:13.503" level="INFO">${body} = {
+    "tipo_transferencia": "pix",
+    "informacoes": "Pix com Chave",
+    "id_transacao": "P75900056 231019182512002SZWihee7",
+    "data_transferencia": " 23-10-19T18:25:12.027-3:00",
+    "valor": 11...</msg>
+<status status="PASS" starttime="20231019 18:25:13.502" endtime="20231019 18:25:13.503"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${resposta}</var>
+<arg>massaChave</arg>
+<arg>/pagamentos/pix</arg>
+<arg>data=${body}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=anything</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20231019 18:25:13.529" level="INFO">POST Request : url=http://localhost:8081/hom/pagamentos/pix 
+ path_url=/hom/pagamentos/pix 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer iadqc1ibqto8dqjrx1np1xyvrjngkjl1tyx9icipesndkmiydfp0oimzbfm3pl7uib2xbpbxhlaj5hltt9u6s5gvhm419qn9iiwpad3by2uz3ujzmjn6t5n49ltiydjdrvnxqefn6tyj9nrbyyueukqftabf3y0ir0szwa631nkfcxp3xswumdhrd0ofrimnuekp3issrpobel0sorkwqjrzzltjwfiblgm74ktfqtp583lb5moiki17n7uyhlgcdahmhbzen7ixgocysvsl3urxifja1kvx39ei7hkt5xczfsrtyfvhyrgulyqekbcj4i5ulzmnrpb6hyyfu1jedmpibijqjp44yqz6yldgvsxwecobsabtigkyngitxfpgpxfc7nibtthpahmjeasbdr7fxpo1gsnhz34gjamcwc1h6l5chcqzr0f8ieqqboy2todyvydgepe7kz3vwbtuqj2nkdp8xc0rlrhi9v6fcmvij2iop4kg5x7ldrnkgvc41bwswfdefa2uonexngrljw5gqviw5ieehqbaglpq1xakvqcspauongu1yi6yrgkvqgn1frnrmehfnslqhummkm1vmd95koxevwomturhshthvg5uzmaq3bnwapsc1vjnzhjdozpmmht8o3mogalzda17yg1dqly62wg2wwbflim5kc1hldjhplwj6vg1ieyfzbga9ook2po1xeshnu5rdy5prgirnkjjui00rwpfqobzxsydk0autectog0nxe3hvcdwjyjahljkxj2xafznin8s8izajwej5uvw12wgee9ox0kcfqhavqfsnytlh1zqjjecixxxe4fhhsqetd1exke1qc6kfubfkfgrypsgxw4834eahyzrxqym7xuaujdl2hjwgxvhjqpnotc6i3l2uvtk2nbuh9qgdck9p4wa0xemwystevavntmsbqjyckisdo9nfgvemfwfktcwaxlbrrvfjiq83o4gz9vlszbyruqe98abkobd4zfvp7xpatgdnjo2pmldfbivhnba1316zdazl43zxo8pvqxkghcetvxr7dhpmnsqgakgcnzd4pcob090tw6xevzdpudh8dy9qy6hx2zycsrapszm58toaxvphclxvr2iacnc9746y2xj7ugy01vvv96jnpbzsnfjxwtzmded0vj96ttsylm9ojfxgffyphzc65ghc2kd9d8wx6xyc7wneykknrmi8akxezwv22dnj59oajjej4ibeicjn8f8mfjpzdpadq21hjsifyysi3pltu80kqic1stwawu1vefqogcfv4zbt6onzery6jjrzvgbobxmi8ohlv6pkbiykux5vgt6qv1wqgxae7zm4vcrkrybix7thumvfddqxkchcqooba3ak7ud2isqxlbg9pqngmubieco9oyvulnnxgsxknqhbd0llrfeqv1zhwauuqpgmzerbbx4fksfcae0sjuhpabxdkoj03pkdbaodcznnylkeshhuw3knpilwtd8zulziy1zvseapd6apacarfwoxsjpwbqf9e6reu85bjsgujk8w6dx6upwxu6oajwxvsq7ghbysoesur5x9rkzoetzy6wvqta7wgio9dlfbz8p9dkotefk1cuqj3cwwmgljnqgz01gftblvhurs85a71doexrlkl8j4iquec4xoohhys9ykriedghtkubkzdwzztojq73oj7pqh8ji1qwu0uwrcmtizzajk2hhwxvc3zlbjnbpstyyo7ovqucb97ygffztfwneruw3gi7xftdjfaktalfxhcjszt5hz3zlmmgafai6wub2tkyiuy5wwxwpf7lkegwro0qiklxgoisbkrzgex4xwz1rzkbvcqoizrr3genxrnyevzk3voixf8ubsx2kvuvrkhkaevnkfogahktpktb06soxjlhuvhsxvqfwhapdqzttts1li8vsmni8zzblcwpcrp93ljvwv3hrzkswlen2r5ubxz109qx5nvcstywcbdmo0heyr3miwlchoxkurzo1g6iotwdji4k4vbupjcqwb78bmxvmqojaavhtzspnliatkws9hwcobbzxebcx7fyqrqudsyt7l1gztmuw5jfwfntovbfyxtmnpcxxlr5evvco2nnip2akfbphqrssedmhc4gn6gnb0icnr08ra5begrotzaecrwl9mtugmc6mvtoq0wsorn9l6ss2st5mo7jnvy2ylliawb7y4k5cndko8pzfkpt53rr5oewdjjnjgnz0yxymlbimfo4hxdcgetfyuoeyyhhlvhpqezdqjchkqg6pmqjqxjinmxqtopkx0vqosihawcu63wfbvujvabmpe8sigzyhkjyaeqxol8zxc5dvunfi4enoqyueiipnisrqgqpah9jmm9schvwwrc0ptulgmlgdp2sg3hbtin9glxk9s37fr05uesddpsujufgi38mv1xlvxn3snkpo6xkszqpg5e5cwrtk8opsaabmmi77ymotmm0h0psnzkopkusfdhponeulpg7h8wezfeqfionm0aez2zuxcbjgnweycuc95egnu26cwmqjrs0slxrwxahfchz1zwbfvia3sdtbqffowem7afzuwjshwn0dns7xgcharyxxggpsg3h8kpqabmq6igdbwenczpbaq0b1cr4u43uq0hfkkprc1jaswgx7jewuas2lwrlcbvnxffuukriquowsrotgj3bwkvsfmc8qvzlj08qgsqd4d6i1butogi1olo5ynxtnydbfyykbsxgc5eisftvh5mm08iew49qlyi6ft3vwm74jbx9qjcjqkp5vwnyyipdy8ww4hahlvkuwzwcr1gbxt', 'Content-Type': 'application/json', 'api-id': '456v99vppt', 'api-key': '6759eb24-2449-44f4-8b58-f806f58', 'Content-Length': '1244'} 
+ body={
+    "tipo_transferencia": "pix",
+    "informacoes": "Pix com Chave",
+    "id_transacao": "P75900056 231019182512002SZWihee7",
+    "data_transferencia": " 23-10-19T18:25:12.027-3:00",
+    "valor": 11.22,
+    "recebedor": [
+        {
+            "meio_pagamento": {
+                "tipo": "conta_corrente",
+                "dados": {
+                    "chave": "16038945784",
+                    "dados_conta": {
+                        "agencia": "4490",
+                        "conta": "718909"
+                    }
+                }
+            },
+            "identificacao": {
+                "tipo_pessoa": "F",
+                "nome": "Mirella da Mota",
+                "numero_documento": "16038945784"
+            }
+        }
+    ],
+    "pagador": [
+        {
+            "meio_pagamento": {
+                "tipo": "conta_corrente",
+                "dados": {
+                    "dados_conta": {
+                        "agencia": "7675",
+                        "conta": "333543"
+                    }
+                }
+            },
+            "identificacao": {
+                "tipo_pessoa": "F",
+                "nome": "Gabrielly Barros",
+                "numero_documento": "20698713559"
+            }
+        }
+    ]
+} 
+ </msg>
+<msg timestamp="20231019 18:25:13.529" level="INFO">POST Response : url=http://localhost:8081/hom/pagamentos/pix 
+ status=404, reason=Not Found 
+ headers={'Content-Type': 'application/json', 'Matched-Stub-Id': 'c47906b9-1a5c-4f00-a2e8-2f0fa79c42f8', 'Transfer-Encoding': 'chunked'} 
+ body={"status":"Error","message":"Dados Invalidos, not found"} 
+ </msg>
+<msg timestamp="20231019 18:25:13.529" level="INFO">${resposta} = &lt;Response [404]&gt;</msg>
+<status status="PASS" starttime="20231019 18:25:13.503" endtime="20231019 18:25:13.529"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${resposta}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20231019 18:25:13.531" level="INFO">${resposta} = &lt;Response [404]&gt;</msg>
+<status status="PASS" starttime="20231019 18:25:13.530" endtime="20231019 18:25:13.531"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${status}</var>
+<arg>${resposta.json()}[status]</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231019 18:25:13.532" level="INFO">${status} = Error</msg>
+<status status="PASS" starttime="20231019 18:25:13.531" endtime="20231019 18:25:13.532"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${status}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20231019 18:25:13.533" level="INFO">${status} = Error</msg>
+<status status="PASS" starttime="20231019 18:25:13.532" endtime="20231019 18:25:13.533"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${response_body}</var>
+<arg>${resposta.text}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231019 18:25:13.533" level="INFO">${response_body} = {"status":"Error","message":"Dados Invalidos, not found"}</msg>
+<status status="PASS" starttime="20231019 18:25:13.533" endtime="20231019 18:25:13.533"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${expected_response_body}</var>
+<arg>{"status":"Error","message":"Endpoint not found"}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231019 18:25:13.534" level="INFO">${expected_response_body} = {"status":"Error","message":"Endpoint not found"}</msg>
+<status status="PASS" starttime="20231019 18:25:13.534" endtime="20231019 18:25:13.534"/>
+</kw>
+<status status="PASS" starttime="20231019 18:25:13.499" endtime="20231019 18:25:13.534"/>
+</kw>
+<kw name="Então o sistema valida o retorno da requisição e devolve um ERRO no qual o contrato foi quebrado" library="stepsE2E">
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>404</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20231019 18:25:13.535" endtime="20231019 18:25:13.535"/>
+</kw>
+<status status="PASS" starttime="20231019 18:25:13.534" endtime="20231019 18:25:13.535"/>
+</kw>
+<tag>bdd</tag>
+<status status="PASS" starttime="20231019 18:25:13.497" endtime="20231019 18:25:13.535"/>
+</test>
+<test id="s1-t6" name="Cenario 5 - Realizar pagamento Pix com QRCode" line="48">
+<kw name="Dado que eu queira fazer um Pix e gero um QRCode" library="stepsE2E">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>massaGeraQrCode</arg>
+<arg>${Ambiente.pix_base_url}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20231019 18:25:13.538" level="INFO">Creating Session using : alias=massaGeraQrCode, url=http://localhost:8081/hom, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20231019 18:25:13.537" endtime="20231019 18:25:13.538"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{headers}</var>
+<arg>Authorization=${access_token}</arg>
+<arg>Content-Type=${Ambiente.pix_Content_Type}</arg>
+<arg>api-id=${Ambiente.pix_api_id}</arg>
+<arg>api-key=${Ambiente.pix_api_key}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20231019 18:25:13.540" level="INFO">&amp;{headers} = { Authorization=Bearer iadqc1ibqto8dqjrx1np1xyvrjngkjl1tyx9icipesndkmiydfp0oimzbfm3pl7uib2xbpbxhlaj5hltt9u6s5gvhm419qn9iiwpad3by2uz3ujzmjn6t5n49ltiydjdrvnxqefn6tyj9nrbyyueukqftabf3y0ir0szwa631nkfcxp3x...</msg>
+<status status="PASS" starttime="20231019 18:25:13.538" endtime="20231019 18:25:13.540"/>
+</kw>
+<kw name="Get File" library="OperatingSystem">
+<var>${bodyteste}</var>
+<arg>./contract/request/geraQrCode.json</arg>
+<doc>Returns the contents of a specified file.</doc>
+<msg timestamp="20231019 18:25:13.540" level="INFO" html="true">Getting file '&lt;a href="file://c:\Users\ffreitaf\IdeaProjects\PerformanceRepo\robotFramework\contract\request\geraQrCode.json"&gt;c:\Users\ffreitaf\IdeaProjects\PerformanceRepo\robotFramework\contract\request\geraQrCode.json&lt;/a&gt;'.</msg>
+<msg timestamp="20231019 18:25:13.541" level="INFO">${bodyteste} = {
+    "informacoes": "Gerando QrCode",
+    "valor": "${reais}.${centavos}",
+    "recebedor": [
+        {
+            "chave": "${doc_rec}"
+        }
+    ],
+    "pagador": [
+        {
+            "nume...</msg>
+<status status="PASS" starttime="20231019 18:25:13.540" endtime="20231019 18:25:13.541"/>
+</kw>
+<kw name="Replace Variables" library="BuiltIn">
+<var>${body}</var>
+<arg>${bodyteste}</arg>
+<doc>Replaces variables in the given text with their current values.</doc>
+<msg timestamp="20231019 18:25:13.541" level="INFO">${body} = {
+    "informacoes": "Gerando QrCode",
+    "valor": "76.62",
+    "recebedor": [
+        {
+            "chave": "16038945784"
+        }
+    ],
+    "pagador": [
+        {
+            "numero_documento":...</msg>
+<status status="PASS" starttime="20231019 18:25:13.541" endtime="20231019 18:25:13.541"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${resposta}</var>
+<arg>massaGeraQrCode</arg>
+<arg>/qrcode/pix</arg>
+<arg>data=${body}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20231019 18:25:13.698" level="INFO">POST Request : url=http://localhost:8081/hom/qrcode/pix 
+ path_url=/hom/qrcode/pix 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer iadqc1ibqto8dqjrx1np1xyvrjngkjl1tyx9icipesndkmiydfp0oimzbfm3pl7uib2xbpbxhlaj5hltt9u6s5gvhm419qn9iiwpad3by2uz3ujzmjn6t5n49ltiydjdrvnxqefn6tyj9nrbyyueukqftabf3y0ir0szwa631nkfcxp3xswumdhrd0ofrimnuekp3issrpobel0sorkwqjrzzltjwfiblgm74ktfqtp583lb5moiki17n7uyhlgcdahmhbzen7ixgocysvsl3urxifja1kvx39ei7hkt5xczfsrtyfvhyrgulyqekbcj4i5ulzmnrpb6hyyfu1jedmpibijqjp44yqz6yldgvsxwecobsabtigkyngitxfpgpxfc7nibtthpahmjeasbdr7fxpo1gsnhz34gjamcwc1h6l5chcqzr0f8ieqqboy2todyvydgepe7kz3vwbtuqj2nkdp8xc0rlrhi9v6fcmvij2iop4kg5x7ldrnkgvc41bwswfdefa2uonexngrljw5gqviw5ieehqbaglpq1xakvqcspauongu1yi6yrgkvqgn1frnrmehfnslqhummkm1vmd95koxevwomturhshthvg5uzmaq3bnwapsc1vjnzhjdozpmmht8o3mogalzda17yg1dqly62wg2wwbflim5kc1hldjhplwj6vg1ieyfzbga9ook2po1xeshnu5rdy5prgirnkjjui00rwpfqobzxsydk0autectog0nxe3hvcdwjyjahljkxj2xafznin8s8izajwej5uvw12wgee9ox0kcfqhavqfsnytlh1zqjjecixxxe4fhhsqetd1exke1qc6kfubfkfgrypsgxw4834eahyzrxqym7xuaujdl2hjwgxvhjqpnotc6i3l2uvtk2nbuh9qgdck9p4wa0xemwystevavntmsbqjyckisdo9nfgvemfwfktcwaxlbrrvfjiq83o4gz9vlszbyruqe98abkobd4zfvp7xpatgdnjo2pmldfbivhnba1316zdazl43zxo8pvqxkghcetvxr7dhpmnsqgakgcnzd4pcob090tw6xevzdpudh8dy9qy6hx2zycsrapszm58toaxvphclxvr2iacnc9746y2xj7ugy01vvv96jnpbzsnfjxwtzmded0vj96ttsylm9ojfxgffyphzc65ghc2kd9d8wx6xyc7wneykknrmi8akxezwv22dnj59oajjej4ibeicjn8f8mfjpzdpadq21hjsifyysi3pltu80kqic1stwawu1vefqogcfv4zbt6onzery6jjrzvgbobxmi8ohlv6pkbiykux5vgt6qv1wqgxae7zm4vcrkrybix7thumvfddqxkchcqooba3ak7ud2isqxlbg9pqngmubieco9oyvulnnxgsxknqhbd0llrfeqv1zhwauuqpgmzerbbx4fksfcae0sjuhpabxdkoj03pkdbaodcznnylkeshhuw3knpilwtd8zulziy1zvseapd6apacarfwoxsjpwbqf9e6reu85bjsgujk8w6dx6upwxu6oajwxvsq7ghbysoesur5x9rkzoetzy6wvqta7wgio9dlfbz8p9dkotefk1cuqj3cwwmgljnqgz01gftblvhurs85a71doexrlkl8j4iquec4xoohhys9ykriedghtkubkzdwzztojq73oj7pqh8ji1qwu0uwrcmtizzajk2hhwxvc3zlbjnbpstyyo7ovqucb97ygffztfwneruw3gi7xftdjfaktalfxhcjszt5hz3zlmmgafai6wub2tkyiuy5wwxwpf7lkegwro0qiklxgoisbkrzgex4xwz1rzkbvcqoizrr3genxrnyevzk3voixf8ubsx2kvuvrkhkaevnkfogahktpktb06soxjlhuvhsxvqfwhapdqzttts1li8vsmni8zzblcwpcrp93ljvwv3hrzkswlen2r5ubxz109qx5nvcstywcbdmo0heyr3miwlchoxkurzo1g6iotwdji4k4vbupjcqwb78bmxvmqojaavhtzspnliatkws9hwcobbzxebcx7fyqrqudsyt7l1gztmuw5jfwfntovbfyxtmnpcxxlr5evvco2nnip2akfbphqrssedmhc4gn6gnb0icnr08ra5begrotzaecrwl9mtugmc6mvtoq0wsorn9l6ss2st5mo7jnvy2ylliawb7y4k5cndko8pzfkpt53rr5oewdjjnjgnz0yxymlbimfo4hxdcgetfyuoeyyhhlvhpqezdqjchkqg6pmqjqxjinmxqtopkx0vqosihawcu63wfbvujvabmpe8sigzyhkjyaeqxol8zxc5dvunfi4enoqyueiipnisrqgqpah9jmm9schvwwrc0ptulgmlgdp2sg3hbtin9glxk9s37fr05uesddpsujufgi38mv1xlvxn3snkpo6xkszqpg5e5cwrtk8opsaabmmi77ymotmm0h0psnzkopkusfdhponeulpg7h8wezfeqfionm0aez2zuxcbjgnweycuc95egnu26cwmqjrs0slxrwxahfchz1zwbfvia3sdtbqffowem7afzuwjshwn0dns7xgcharyxxggpsg3h8kpqabmq6igdbwenczpbaq0b1cr4u43uq0hfkkprc1jaswgx7jewuas2lwrlcbvnxffuukriquowsrotgj3bwkvsfmc8qvzlj08qgsqd4d6i1butogi1olo5ynxtnydbfyykbsxgc5eisftvh5mm08iew49qlyi6ft3vwm74jbx9qjcjqkp5vwnyyipdy8ww4hahlvkuwzwcr1gbxt', 'Content-Type': 'application/json', 'api-id': '456v99vppt', 'api-key': '6759eb24-2449-44f4-8b58-f806f58', 'Content-Length': '232'} 
+ body={
+    "informacoes": "Gerando QrCode",
+    "valor": "76.62",
+    "recebedor": [
+        {
+            "chave": "16038945784"
+        }
+    ],
+    "pagador": [
+        {
+            "numero_documento": "20698713559"
+        }
+    ]
+} 
+ </msg>
+<msg timestamp="20231019 18:25:13.699" level="INFO">POST Response : url=http://localhost:8081/hom/qrcode/pix 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json', 'Matched-Stub-Id': 'd71309b6-ffa8-4ab1-8fda-dc6b4b9bfd05', 'Content-Encoding': 'gzip', 'Transfer-Encoding': 'chunked'} 
+ body={"id_transacao":"P75900056202310191825130027MK7J04K","data_transferencia":"2023-10-19T18:25:13.573-3:00","valor":"76.62","qrcode":"0000289398788054181BR.GOV.BCB.PIX2333spi-h.banco.com.br/pix/qr/v3/502a05a8-b5ad-4adf-bcdc-c90fd87476997631***vwmghx"} 
+ </msg>
+<msg timestamp="20231019 18:25:13.699" level="INFO">${resposta} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20231019 18:25:13.541" endtime="20231019 18:25:13.699"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${qrcode}</var>
+<arg>${resposta.json()}[qrcode]</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231019 18:25:13.699" level="INFO">${qrcode} = 0000289398788054181BR.GOV.BCB.PIX2333spi-h.banco.com.br/pix/qr/v3/502a05a8-b5ad-4adf-bcdc-c90fd87476997631***vwmghx</msg>
+<status status="PASS" starttime="20231019 18:25:13.699" endtime="20231019 18:25:13.700"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${qrcode}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20231019 18:25:13.700" level="INFO">${qrcode} = 0000289398788054181BR.GOV.BCB.PIX2333spi-h.banco.com.br/pix/qr/v3/502a05a8-b5ad-4adf-bcdc-c90fd87476997631***vwmghx</msg>
+<status status="PASS" starttime="20231019 18:25:13.700" endtime="20231019 18:25:13.700"/>
+</kw>
+<status status="PASS" starttime="20231019 18:25:13.537" endtime="20231019 18:25:13.700"/>
+</kw>
+<kw name="Quando decodifico o QrCode e envio os dados da minha requisição" library="stepsE2E">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>massaQrCode</arg>
+<arg>${Ambiente.pix_base_url}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20231019 18:25:13.702" level="INFO">Creating Session using : alias=massaQrCode, url=http://localhost:8081/hom, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20231019 18:25:13.701" endtime="20231019 18:25:13.702"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{headers}</var>
+<arg>Authorization=${access_token}</arg>
+<arg>Content-Type=${Ambiente.pix_Content_Type}</arg>
+<arg>api-id=${Ambiente.pix_api_id}</arg>
+<arg>api-key=${Ambiente.pix_api_key}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20231019 18:25:13.703" level="INFO">&amp;{headers} = { Authorization=Bearer iadqc1ibqto8dqjrx1np1xyvrjngkjl1tyx9icipesndkmiydfp0oimzbfm3pl7uib2xbpbxhlaj5hltt9u6s5gvhm419qn9iiwpad3by2uz3ujzmjn6t5n49ltiydjdrvnxqefn6tyj9nrbyyueukqftabf3y0ir0szwa631nkfcxp3x...</msg>
+<status status="PASS" starttime="20231019 18:25:13.702" endtime="20231019 18:25:13.703"/>
+</kw>
+<kw name="Get File" library="OperatingSystem">
+<var>${bodyteste}</var>
+<arg>./contract/request/pixQrCode.json</arg>
+<doc>Returns the contents of a specified file.</doc>
+<msg timestamp="20231019 18:25:13.704" level="INFO" html="true">Getting file '&lt;a href="file://c:\Users\ffreitaf\IdeaProjects\PerformanceRepo\robotFramework\contract\request\pixQrCode.json"&gt;c:\Users\ffreitaf\IdeaProjects\PerformanceRepo\robotFramework\contract\request\pixQrCode.json&lt;/a&gt;'.</msg>
+<msg timestamp="20231019 18:25:13.705" level="INFO">${bodyteste} = {
+    "tipo_transferencia": "pix",
+    "informacoes": "Pix com QRCode",
+    "id_transacao": "P75900056${data_atualF}${hora_atualF}002${rdmstring}",
+    "data_transferencia": "${data_atual}T${hora_atua...</msg>
+<status status="PASS" starttime="20231019 18:25:13.704" endtime="20231019 18:25:13.705"/>
+</kw>
+<kw name="Replace Variables" library="BuiltIn">
+<var>${body}</var>
+<arg>${bodyteste}</arg>
+<doc>Replaces variables in the given text with their current values.</doc>
+<msg timestamp="20231019 18:25:13.705" level="INFO">${body} = {
+    "tipo_transferencia": "pix",
+    "informacoes": "Pix com QRCode",
+    "id_transacao": "P75900056 231019182512002SZWihee7",
+    "data_transferencia": " 23-10-19T18:25:12.052-3:00",
+    "valor": "...</msg>
+<status status="PASS" starttime="20231019 18:25:13.705" endtime="20231019 18:25:13.705"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${resposta}</var>
+<arg>massaQrCode</arg>
+<arg>/pagamentos/pix</arg>
+<arg>data=${body}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20231019 18:25:14.098" level="INFO">POST Request : url=http://localhost:8081/hom/pagamentos/pix 
+ path_url=/hom/pagamentos/pix 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer iadqc1ibqto8dqjrx1np1xyvrjngkjl1tyx9icipesndkmiydfp0oimzbfm3pl7uib2xbpbxhlaj5hltt9u6s5gvhm419qn9iiwpad3by2uz3ujzmjn6t5n49ltiydjdrvnxqefn6tyj9nrbyyueukqftabf3y0ir0szwa631nkfcxp3xswumdhrd0ofrimnuekp3issrpobel0sorkwqjrzzltjwfiblgm74ktfqtp583lb5moiki17n7uyhlgcdahmhbzen7ixgocysvsl3urxifja1kvx39ei7hkt5xczfsrtyfvhyrgulyqekbcj4i5ulzmnrpb6hyyfu1jedmpibijqjp44yqz6yldgvsxwecobsabtigkyngitxfpgpxfc7nibtthpahmjeasbdr7fxpo1gsnhz34gjamcwc1h6l5chcqzr0f8ieqqboy2todyvydgepe7kz3vwbtuqj2nkdp8xc0rlrhi9v6fcmvij2iop4kg5x7ldrnkgvc41bwswfdefa2uonexngrljw5gqviw5ieehqbaglpq1xakvqcspauongu1yi6yrgkvqgn1frnrmehfnslqhummkm1vmd95koxevwomturhshthvg5uzmaq3bnwapsc1vjnzhjdozpmmht8o3mogalzda17yg1dqly62wg2wwbflim5kc1hldjhplwj6vg1ieyfzbga9ook2po1xeshnu5rdy5prgirnkjjui00rwpfqobzxsydk0autectog0nxe3hvcdwjyjahljkxj2xafznin8s8izajwej5uvw12wgee9ox0kcfqhavqfsnytlh1zqjjecixxxe4fhhsqetd1exke1qc6kfubfkfgrypsgxw4834eahyzrxqym7xuaujdl2hjwgxvhjqpnotc6i3l2uvtk2nbuh9qgdck9p4wa0xemwystevavntmsbqjyckisdo9nfgvemfwfktcwaxlbrrvfjiq83o4gz9vlszbyruqe98abkobd4zfvp7xpatgdnjo2pmldfbivhnba1316zdazl43zxo8pvqxkghcetvxr7dhpmnsqgakgcnzd4pcob090tw6xevzdpudh8dy9qy6hx2zycsrapszm58toaxvphclxvr2iacnc9746y2xj7ugy01vvv96jnpbzsnfjxwtzmded0vj96ttsylm9ojfxgffyphzc65ghc2kd9d8wx6xyc7wneykknrmi8akxezwv22dnj59oajjej4ibeicjn8f8mfjpzdpadq21hjsifyysi3pltu80kqic1stwawu1vefqogcfv4zbt6onzery6jjrzvgbobxmi8ohlv6pkbiykux5vgt6qv1wqgxae7zm4vcrkrybix7thumvfddqxkchcqooba3ak7ud2isqxlbg9pqngmubieco9oyvulnnxgsxknqhbd0llrfeqv1zhwauuqpgmzerbbx4fksfcae0sjuhpabxdkoj03pkdbaodcznnylkeshhuw3knpilwtd8zulziy1zvseapd6apacarfwoxsjpwbqf9e6reu85bjsgujk8w6dx6upwxu6oajwxvsq7ghbysoesur5x9rkzoetzy6wvqta7wgio9dlfbz8p9dkotefk1cuqj3cwwmgljnqgz01gftblvhurs85a71doexrlkl8j4iquec4xoohhys9ykriedghtkubkzdwzztojq73oj7pqh8ji1qwu0uwrcmtizzajk2hhwxvc3zlbjnbpstyyo7ovqucb97ygffztfwneruw3gi7xftdjfaktalfxhcjszt5hz3zlmmgafai6wub2tkyiuy5wwxwpf7lkegwro0qiklxgoisbkrzgex4xwz1rzkbvcqoizrr3genxrnyevzk3voixf8ubsx2kvuvrkhkaevnkfogahktpktb06soxjlhuvhsxvqfwhapdqzttts1li8vsmni8zzblcwpcrp93ljvwv3hrzkswlen2r5ubxz109qx5nvcstywcbdmo0heyr3miwlchoxkurzo1g6iotwdji4k4vbupjcqwb78bmxvmqojaavhtzspnliatkws9hwcobbzxebcx7fyqrqudsyt7l1gztmuw5jfwfntovbfyxtmnpcxxlr5evvco2nnip2akfbphqrssedmhc4gn6gnb0icnr08ra5begrotzaecrwl9mtugmc6mvtoq0wsorn9l6ss2st5mo7jnvy2ylliawb7y4k5cndko8pzfkpt53rr5oewdjjnjgnz0yxymlbimfo4hxdcgetfyuoeyyhhlvhpqezdqjchkqg6pmqjqxjinmxqtopkx0vqosihawcu63wfbvujvabmpe8sigzyhkjyaeqxol8zxc5dvunfi4enoqyueiipnisrqgqpah9jmm9schvwwrc0ptulgmlgdp2sg3hbtin9glxk9s37fr05uesddpsujufgi38mv1xlvxn3snkpo6xkszqpg5e5cwrtk8opsaabmmi77ymotmm0h0psnzkopkusfdhponeulpg7h8wezfeqfionm0aez2zuxcbjgnweycuc95egnu26cwmqjrs0slxrwxahfchz1zwbfvia3sdtbqffowem7afzuwjshwn0dns7xgcharyxxggpsg3h8kpqabmq6igdbwenczpbaq0b1cr4u43uq0hfkkprc1jaswgx7jewuas2lwrlcbvnxffuukriquowsrotgj3bwkvsfmc8qvzlj08qgsqd4d6i1butogi1olo5ynxtnydbfyykbsxgc5eisftvh5mm08iew49qlyi6ft3vwm74jbx9qjcjqkp5vwnyyipdy8ww4hahlvkuwzwcr1gbxt', 'Content-Type': 'application/json', 'api-id': '456v99vppt', 'api-key': '6759eb24-2449-44f4-8b58-f806f58', 'Content-Length': '1377'} 
+ body={
+    "tipo_transferencia": "pix",
+    "informacoes": "Pix com QRCode",
+    "id_transacao": "P75900056 231019182512002SZWihee7",
+    "data_transferencia": " 23-10-19T18:25:12.052-3:00",
+    "valor": "76.62",
+    "recebedor": [
+        {
+            "meio_pagamento": {
+                "tipo": "conta_corrente",
+                "dados": {
+                    "chave": "16038945784",
+                    "dados_conta": {
+                        "agencia": "4490",
+                        "conta": "718909"
+                    }
+                }
+            },
+            "identificacao": {
+                "tipo_pessoa": "F",
+                "nome": "Joao Avelar",
+                "numero_documento": "033987233222"
+            }
+        }
+    ],
+    "pagador": [
+        {
+            "meio_pagamento": {
+                "tipo": "conta_corrente",
+                "dados": {
+                    "dados_conta": {
+                        "agencia": "7675",
+                        "conta": "333543"
+                    }
+                }
+            },
+            "identificacao": {
+                "tipo_pessoa": "F",
+                "nome": "Gabrielly Barros",
+                "numero_documento": "20698713559"
+            }
+        }
+    ],
+    "qrcode": "0000289398788054181BR.GOV.BCB.PIX2333spi-h.banco.com.br/pix/qr/v3/502a05a8-b5ad-4adf-bcdc-c90fd87476997631***vwmghx"
+} 
+ </msg>
+<msg timestamp="20231019 18:25:14.098" level="INFO">POST Response : url=http://localhost:8081/hom/pagamentos/pix 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json', 'Matched-Stub-Id': '74aaa107-0c33-47f3-9998-9ec8de1a40b0', 'Content-Encoding': 'gzip', 'Transfer-Encoding': 'chunked'} 
+ body={"tipo_transferencia":"pix","id_transacao":"P75900056 231019182512002SZWihee7","data_transferencia":" 23-10-19T18:25:12.052-3:00","valor":"76.62","recebedor":[{"meio_pagamento":{"tipo":"conta_corrente","dados":{"chave":"16038945784","dados_conta":{"agencia":"4490","conta":"718909"}}},"identificacao":{"tipo_pessoa":"F","nome":"Joao Avelar","numero_documento":"033987233222"}}],"pagador":[{"meio_pagamento":{"tipo":"conta_corrente","dados":{"dados_conta":{"agencia":"7675","conta":"333543"}}},"identificacao":{"tipo_pessoa":"F","nome":"Gabrielly Barros","numero_documento":"20698713559"}}],"informacoes":"Pix com QRCode","qrcode":"0000289398788054181BR.GOV.BCB.PIX2333spi-h.banco.com.br/pix/qr/v3/502a05a8-b5ad-4adf-bcdc-c90fd87476997631***vwmghx","id_transferencia":"da2a32a2-5392-41a3-8e63-e7b8149c65b9","status":"EFETIVACAO_CONCLUIDA"} 
+ </msg>
+<msg timestamp="20231019 18:25:14.098" level="INFO">${resposta} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20231019 18:25:13.705" endtime="20231019 18:25:14.098"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${resposta}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20231019 18:25:14.099" level="INFO">${resposta} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20231019 18:25:14.099" endtime="20231019 18:25:14.099"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${status}</var>
+<arg>${resposta.json()}[status]</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231019 18:25:14.100" level="INFO">${status} = EFETIVACAO_CONCLUIDA</msg>
+<status status="PASS" starttime="20231019 18:25:14.099" endtime="20231019 18:25:14.100"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${status}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20231019 18:25:14.101" level="INFO">${status} = EFETIVACAO_CONCLUIDA</msg>
+<status status="PASS" starttime="20231019 18:25:14.100" endtime="20231019 18:25:14.101"/>
+</kw>
+<status status="PASS" starttime="20231019 18:25:13.701" endtime="20231019 18:25:14.101"/>
+</kw>
+<kw name="Então o sistema realiza a transação e devolve um status 200 apresentando a resposta EFETIVACAO_CONCLUIDA" library="stepsE2E">
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>200</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20231019 18:25:14.101" endtime="20231019 18:25:14.101"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>EFETIVACAO_CONCLUIDA</arg>
+<arg>${status}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20231019 18:25:14.101" endtime="20231019 18:25:14.102"/>
+</kw>
+<status status="PASS" starttime="20231019 18:25:14.101" endtime="20231019 18:25:14.102"/>
+</kw>
+<tag>bdd</tag>
+<status status="PASS" starttime="20231019 18:25:13.537" endtime="20231019 18:25:14.103"/>
+</test>
+<doc>Cenarios de teste BDD</doc>
+<status status="PASS" starttime="20231019 18:25:11.043" endtime="20231019 18:25:14.104"/>
+</suite>
+<statistics>
+<total>
+<stat pass="6" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="6" fail="0" skip="0">bdd</stat>
+</tag>
+<suite>
+<stat pass="6" fail="0" skip="0" id="s1" name="Log Cenarios de teste automatizados">Log Cenarios de teste automatizados</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

@@ -1,0 +1,14 @@
+{
+    "informacoes": "Gerando QrCode",
+    "valor": "${reais}.${centavos}",
+    "recebedor": [
+        {
+            "chave": "${doc_rec}"
+        }
+    ],
+    "pagador": [
+        {
+            "numero_documento": "${doc_pag}"
+        }
+    ]
+}
