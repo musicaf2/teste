@@ -1,0 +1,14 @@
+{
+    "informacoes": "${json-unit.any-string}",
+    "valor": "${json-unit.any-number}",
+    "recebedor": [
+        {
+            "chave": "${json-unit.any-string}"
+        }
+    ],
+    "pagador": [
+        {
+            "numero_documento": "${json-unit.any-string}"
+        }
+    ]
+}

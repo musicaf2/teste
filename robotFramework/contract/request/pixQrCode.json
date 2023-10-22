@@ -1,0 +1,45 @@
+{
+    "tipo_transferencia": "pix",
+    "informacoes": "Pix com QRCode",
+    "id_transacao": "P75900056${data_atualF}${hora_atualF}002${rdmstring}",
+    "data_transferencia": "${data_atual}T${hora_atual}.052-3:00",
+    "valor": "${reais}.${centavos}",
+    "recebedor": [
+        {
+            "meio_pagamento": {
+                "tipo": "conta_corrente",
+                "dados": {
+                    "chave": "${doc_rec}",
+                    "dados_conta": {
+                        "agencia": "${ag_rec}",
+                        "conta": "${conta_rec}"
+                    }
+                }
+            },
+            "identificacao": {
+                "tipo_pessoa": "F",
+                "nome": "Joao Avelar",
+                "numero_documento": "033987233222"
+            }
+        }
+    ],
+    "pagador": [
+        {
+            "meio_pagamento": {
+                "tipo": "conta_corrente",
+                "dados": {
+                    "dados_conta": {
+                        "agencia": "${ag_pag}",
+                        "conta": "${conta_pag}"
+                    }
+                }
+            },
+            "identificacao": {
+                "tipo_pessoa": "F",
+                "nome": "${nome_pag} ${sobrenome_pag}",
+                "numero_documento": "${doc_pag}"
+            }
+        }
+    ],
+    "qrcode": "${qrcode}"
+}

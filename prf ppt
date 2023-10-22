@@ -1,0 +1,29 @@
+Importância dos Testes de Desempenho na Pipeline de Desenvolvimento Contínuo:
+
+Garantir eficiência dos sistemas em produção.
+Desafios em ambientes distribuídos e com concorrência.
+Desafios na Validação de Desempenho:
+3. Diferenças entre ambientes de desenvolvimento/homologação e produção.
+
+Variações em configurações, hardware e carga de trabalho.
+Possibilidade de resultados otimistas ou pessimistas.
+Métricas Mais Resilientes:
+6. Tempo de resposta (latência) e disponibilidade são métricas mais confiáveis.
+
+Menos afetadas pelas diferenças de ambiente.
+Vantagens dos Testes de Desempenho na Pipeline:
+8. Identificação antecipada de problemas de desempenho.
+
+Ações corretivas antes de impactar a produção.
+Limitações dos Testes na Pipeline:
+10. Não capturam todas as possíveis questões de desempenho.
+
+Especialmente relacionadas ao dimensionamento da infraestrutura de produção.
+Necessidade de Complementar os Testes:
+12. Importância de interpretar resultados com cuidado.
+
+Validação em ambiente de teste equivalente à produção.
+Conclusão:
+14. A realização de testes de desempenho na pipeline é valiosa, mas requer compreensão das limitações dos ambientes não proporcionais.
+
+Abordagem equilibrada e complemento com testes em ambiente equivalente à produção são essenciais para avaliação completa do desempenho do sistema.

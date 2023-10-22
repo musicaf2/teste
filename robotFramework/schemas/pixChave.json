@@ -1,0 +1,449 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "default": {},
+    "title": "Root Schema",
+    "required": [
+        "tipo_transferencia",
+        "id_transacao",
+        "data_transferencia",
+        "valor",
+        "favorecido",
+        "debto",
+        "informacoes",
+        "id_transferencia",
+        "status"
+    ],
+    "properties": {
+        "tipo_transferencia": {
+            "type": "string",
+            "default": "",
+            "title": "The tipo_transferencia Schema",
+            "examples": [
+                "pix"
+            ]
+        },
+        "id_transacao": {
+            "type": "string",
+            "default": "",
+            "title": "The id_transacao Schema",
+            "examples": [
+                "P7590005620230922080414002f58de0f3"
+            ]
+        },
+        "data_transferencia": {
+            "type": "string",
+            "default": "",
+            "title": "The data_transferencia Schema",
+            "examples": [
+                "2023-09-22T08:04:14.002-3:00"
+            ]
+        },
+        "valor": {
+            "type": "string",
+            "default": "",
+            "title": "The valor Schema",
+            "examples": [
+                "10.23"
+            ]
+        },
+        "favorecido": {
+            "type": "array",
+            "default": [],
+            "title": "The favorecido Schema",
+            "items": {
+                "type": "object",
+                "default": {},
+                "title": "A Schema",
+                "required": [
+                    "meios_pagamento",
+                    "identificao"
+                ],
+                "properties": {
+                    "meios_pagamento": {
+                        "type": "object",
+                        "default": {},
+                        "title": "The meios_pagamento Schema",
+                        "required": [
+                            "tipo",
+                            "dados"
+                        ],
+                        "properties": {
+                            "tipo": {
+                                "type": "string",
+                                "default": "",
+                                "title": "The tipo Schema",
+                                "examples": [
+                                    "conta_corrente"
+                                ]
+                            },
+                            "dados": {
+                                "type": "object",
+                                "default": {},
+                                "title": "The dados Schema",
+                                "required": [
+                                    "dados_conta"
+                                ],
+                                "properties": {
+                                    "dados_conta": {
+                                        "type": "object",
+                                        "default": {},
+                                        "title": "The dados_conta Schema",
+                                        "required": [
+                                            "agencia",
+                                            "conta"
+                                        ],
+                                        "properties": {
+                                            "agencia": {
+                                                "type": "string",
+                                                "default": "",
+                                                "title": "The agencia Schema",
+                                                "examples": [
+                                                    "3200"
+                                                ]
+                                            },
+                                            "conta": {
+                                                "type": "string",
+                                                "default": "",
+                                                "title": "The conta Schema",
+                                                "examples": [
+                                                    "00919399"
+                                                ]
+                                            }
+                                        },
+                                        "examples": [{
+                                            "agencia": "3200",
+                                            "conta": "00919399"
+                                        }]
+                                    }
+                                },
+                                "examples": [{
+                                    "dados_conta": {
+                                        "agencia": "3200",
+                                        "conta": "00919399"
+                                    }
+                                }]
+                            }
+                        },
+                        "examples": [{
+                            "tipo": "conta_corrente",
+                            "dados": {
+                                "dados_conta": {
+                                    "agencia": "3200",
+                                    "conta": "00919399"
+                                }
+                            }
+                        }]
+                    },
+                    "identificao": {
+                        "type": "object",
+                        "default": {},
+                        "title": "The identificao Schema",
+                        "required": [
+                            "tipo_pessoa",
+                            "nome",
+                            "numero_documento"
+                        ],
+                        "properties": {
+                            "tipo_pessoa": {
+                                "type": "string",
+                                "default": "",
+                                "title": "The tipo_pessoa Schema",
+                                "examples": [
+                                    "F"
+                                ]
+                            },
+                            "nome": {
+                                "type": "string",
+                                "default": "",
+                                "title": "The nome Schema",
+                                "examples": [
+                                    "Joao Avelar"
+                                ]
+                            },
+                            "numero_documento": {
+                                "type": "string",
+                                "default": "",
+                                "title": "The numero_documento Schema",
+                                "examples": [
+                                    "033987233222"
+                                ]
+                            }
+                        },
+                        "examples": [{
+                            "tipo_pessoa": "F",
+                            "nome": "Joao Avelar",
+                            "numero_documento": "033987233222"
+                        }]
+                    }
+                },
+                "examples": [{
+                    "meios_pagamento": {
+                        "tipo": "conta_corrente",
+                        "dados": {
+                            "dados_conta": {
+                                "agencia": "3200",
+                                "conta": "00919399"
+                            }
+                        }
+                    },
+                    "identificao": {
+                        "tipo_pessoa": "F",
+                        "nome": "Joao Avelar",
+                        "numero_documento": "033987233222"
+                    }
+                }]
+            },
+            "examples": [
+                [{
+                    "meios_pagamento": {
+                        "tipo": "conta_corrente",
+                        "dados": {
+                            "dados_conta": {
+                                "agencia": "3200",
+                                "conta": "00919399"
+                            }
+                        }
+                    },
+                    "identificao": {
+                        "tipo_pessoa": "F",
+                        "nome": "Joao Avelar",
+                        "numero_documento": "033987233222"
+                    }
+                }]
+            ]
+        },
+        "debto": {
+            "type": "array",
+            "default": [],
+            "title": "The debto Schema",
+            "items": {
+                "type": "object",
+                "default": {},
+                "title": "A Schema",
+                "required": [
+                    "meio_pagamento",
+                    "identificcao"
+                ],
+                "properties": {
+                    "meio_pagamento": {
+                        "type": "object",
+                        "default": {},
+                        "title": "The meio_pagamento Schema",
+                        "required": [
+                            "tipo",
+                            "dados"
+                        ],
+                        "properties": {
+                            "tipo": {
+                                "type": "string",
+                                "default": "",
+                                "title": "The tipo Schema",
+                                "examples": [
+                                    "conta_corrente"
+                                ]
+                            },
+                            "dados": {
+                                "type": "object",
+                                "default": {},
+                                "title": "The dados Schema",
+                                "required": [
+                                    "dados_conta"
+                                ],
+                                "properties": {
+                                    "dados_conta": {
+                                        "type": "object",
+                                        "default": {},
+                                        "title": "The dados_conta Schema",
+                                        "required": [
+                                            "agencia",
+                                            "conta"
+                                        ],
+                                        "properties": {
+                                            "agencia": {
+                                                "type": "string",
+                                                "default": "",
+                                                "title": "The agencia Schema",
+                                                "examples": [
+                                                    "1200"
+                                                ]
+                                            },
+                                            "conta": {
+                                                "type": "string",
+                                                "default": "",
+                                                "title": "The conta Schema",
+                                                "examples": [
+                                                    "00229399"
+                                                ]
+                                            }
+                                        },
+                                        "examples": [{
+                                            "agencia": "1200",
+                                            "conta": "00229399"
+                                        }]
+                                    }
+                                },
+                                "examples": [{
+                                    "dados_conta": {
+                                        "agencia": "1200",
+                                        "conta": "00229399"
+                                    }
+                                }]
+                            }
+                        },
+                        "examples": [{
+                            "tipo": "conta_corrente",
+                            "dados": {
+                                "dados_conta": {
+                                    "agencia": "1200",
+                                    "conta": "00229399"
+                                }
+                            }
+                        }]
+                    },
+                    "identificcao": {
+                        "type": "object",
+                        "default": {},
+                        "title": "The identificcao Schema",
+                        "required": [
+                            "tipo_pessoa",
+                            "nome",
+                            "numero_documento"
+                        ],
+                        "properties": {
+                            "tipo_pessoa": {
+                                "type": "string",
+                                "default": "",
+                                "title": "The tipo_pessoa Schema",
+                                "examples": [
+                                    "F"
+                                ]
+                            },
+                            "nome": {
+                                "type": "string",
+                                "default": "",
+                                "title": "The nome Schema",
+                                "examples": [
+                                    "Marina Barbosa"
+                                ]
+                            },
+                            "numero_documento": {
+                                "type": "string",
+                                "default": "",
+                                "title": "The numero_documento Schema",
+                                "examples": [
+                                    "033987233222"
+                                ]
+                            }
+                        },
+                        "examples": [{
+                            "tipo_pessoa": "F",
+                            "nome": "Marina Barbosa",
+                            "numero_documento": "033987233222"
+                        }]
+                    }
+                },
+                "examples": [{
+                    "meio_pagamento": {
+                        "tipo": "conta_corrente",
+                        "dados": {
+                            "dados_conta": {
+                                "agencia": "1200",
+                                "conta": "00229399"
+                            }
+                        }
+                    },
+                    "identificcao": {
+                        "tipo_pessoa": "F",
+                        "nome": "Marina Barbosa",
+                        "numero_documento": "033987233222"
+                    }
+                }]
+            },
+            "examples": [
+                [{
+                    "meio_pagamento": {
+                        "tipo": "conta_corrente",
+                        "dados": {
+                            "dados_conta": {
+                                "agencia": "1200",
+                                "conta": "00229399"
+                            }
+                        }
+                    },
+                    "identificcao": {
+                        "tipo_pessoa": "F",
+                        "nome": "Marina Barbosa",
+                        "numero_documento": "033987233222"
+                    }
+                }]
+            ]
+        },
+        "informacoes": {
+            "type": "string",
+            "default": "",
+            "title": "The informacoes Schema",
+            "examples": [
+                "Pix entre contas"
+            ]
+        },
+        "id_transferencia": {
+            "type": "string",
+            "default": "",
+            "title": "The id_transferencia Schema",
+            "examples": [
+                "ba2691bd-d46c-4ed9-a20e-32cd94fb7e9e"
+            ]
+        },
+        "status": {
+            "type": "string",
+            "default": "",
+            "title": "The status Schema",
+            "examples": [
+                "EFETIVACAO_CONCLUIDA"
+            ]
+        }
+    },
+    "examples": [{
+        "tipo_transferencia": "pix",
+        "id_transacao": "P7590005620230922080414002f58de0f3",
+        "data_transferencia": "2023-09-22T08:04:14.002-3:00",
+        "valor": "10.23",
+        "favorecido": [{
+            "meios_pagamento": {
+                "tipo": "conta_corrente",
+                "dados": {
+                    "dados_conta": {
+                        "agencia": "3200",
+                        "conta": "00919399"
+                    }
+                }
+            },
+            "identificao": {
+                "tipo_pessoa": "F",
+                "nome": "Joao Avelar",
+                "numero_documento": "033987233222"
+            }
+        }],
+        "debto": [{
+            "meio_pagamento": {
+                "tipo": "conta_corrente",
+                "dados": {
+                    "dados_conta": {
+                        "agencia": "1200",
+                        "conta": "00229399"
+                    }
+                }
+            },
+            "identificcao": {
+                "tipo_pessoa": "F",
+                "nome": "Marina Barbosa",
+                "numero_documento": "033987233222"
+            }
+        }],
+        "informacoes": "Pix entre contas",
+        "id_transferencia": "ba2691bd-d46c-4ed9-a20e-32cd94fb7e9e",
+        "status": "EFETIVACAO_CONCLUIDA"
+    }]
+}
