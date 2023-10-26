@@ -45,3 +45,32 @@ if (cpfCnpj != null) {
         }
     }
 }
+
+
+
+String pessoas = vars.get("pessoas");
+String[] pessoasArray = pessoas.split("\\},\\{"); // Divide as pessoas em um array
+
+String scriptHome = FileServer.getFileServer().getBaseDir();
+String csvFileName = scriptHome + "\\massa.csv";
+
+// Cabeçalho do CSV
+String header = "nome,sobrenome,rua,numero";
+
+// Escreva o cabeçalho no arquivo CSV
+FileOutputStream f = new FileOutputStream(csvFileName, true);
+PrintStream p = new PrintStream(f);
+p.println(header);
+
+// Percorra as pessoas e escreva os dados no arquivo CSV
+for (String pessoa : pessoasArray) {
+    pessoa = pessoa.replaceAll("[{}\"]", ""); // Remova chaves e aspas
+    String[] dados = pessoa.split(","); // Divida os dados em um array
+    String linha = String.join(",", dados); // Crie a linha do CSV
+    p.println(linha);
+}
+
+// Feche o arquivo
+p.close();
+f.close();
+
