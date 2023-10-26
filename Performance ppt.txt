@@ -77,3 +77,37 @@ f.close();
 
 
 {"nome":"(.*?)","sobrenome":"(.*?)","rua":(.*?),"numero":(\d+)}
+
+
+String jsonResponse = vars.get("jsonResponse");
+JSONArray jsonArray = new JSONArray(jsonResponse);
+
+String scriptHome = FileServer.getFileServer().getBaseDir();
+String csvFileName = scriptHome + "\\massa.csv";
+
+// Cabeçalho do CSV
+String header = "num_cpf_cnpj,agencia,conta,dac";
+
+// Escreva o cabeçalho no arquivo CSV
+FileOutputStream f = new FileOutputStream(csvFileName, true);
+PrintStream p = new PrintStream(f);
+p.println(header);
+
+// Percorra os objetos JSON e escreva os dados no arquivo CSV
+for (int i = 0; i < jsonArray.length(); i++) {
+    JSONObject jsonObject = jsonArray.getJSONObject(i);
+    String numCpfCnpj = jsonObject.getString("num_cpf_cnpj");
+    String agencia = jsonObject.getString("agencia");
+    String conta = jsonObject.getString("conta");
+    String dac = jsonObject.getString("dac");
+
+    // Construa a linha do CSV
+    String linha = numCpfCnpj + "," + agencia + "," + conta + "," + dac;
+
+    // Escreva a linha no arquivo CSV
+    p.println(linha);
+}
+
+// Feche o arquivo
+p.close();
+f.close();
