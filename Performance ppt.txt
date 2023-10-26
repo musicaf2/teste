@@ -74,3 +74,6 @@ for (String pessoa : pessoasArray) {
 p.close();
 f.close();
 
+
+
+{"nome":"(.*?)","sobrenome":"(.*?)","rua":(.*?),"numero":(\d+)}
