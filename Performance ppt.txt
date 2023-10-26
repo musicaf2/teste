@@ -1,66 +1,21 @@
-Slide 1: Título
+String cpfCnpj = vars.get("cpf_cnpj"); // Obter o valor da variável "cpf_cnpj"
 
-Título: "Testes de Performance: A Jornada da Otimização"
-Slide 2: Introdução
+if (cpfCnpj != null) {
+    int length = cpfCnpj.length();
+    if (length < 15) {
+        // Calcule o número de zeros que precisam ser adicionados
+        int zerosToAdd = 15 - length;
 
-Introdução: "Bem-vindos à apresentação sobre Testes de Performance. Hoje, exploraremos por que os testes de desempenho são cruciais no mundo da tecnologia."
-Slide 3: Roadmap de Testes de Performance
+        // Crie uma string com zeros à esquerda
+        StringBuilder zeros = new StringBuilder();
+        for (int i = 0; i < zerosToAdd; i++) {
+            zeros.append("0");
+        }
 
-Título: "Roadmap de Testes de Performance: Ponta a Ponta"
-Conteúdo:
-Analisar arquitetura
-Definir fluxo e objetivo do teste
-Entender o negócio do fluxo
-Mockar, se necessário
-Revisar observabilidade (regra mínima)
-Definir massa
-Criar script
-Validar com teste de fumaça
-Execuções finais
-Criar relatório dos testes executados com pontos de atenção e melhorias, se encontrados
-Ajustar e retestar para melhoria contínua até atingir os objetivos.
-Slide 4: Abordagens para Testes de Performance
+        // Concatene os zeros à esquerda com o valor original
+        String formattedCpfCnpj = zeros.toString() + cpfCnpj;
 
-Título: "Camadas de Otimização: Como uma Cebola"
-Conteúdo: "Os testes de performance têm camadas de otimização, como as camadas de uma cebola. Vamos explorar três camadas principais."
-Slide 5: Carga Externa (Camada Externa)
-
-Título: "Carga Externa (Camada Externa)"
-Conteúdo: "Nesta camada, coletamos números de carga externa e os comparamos com as expectativas do time. Isso nos ajuda a entender o comportamento inicial do sistema."
-Slide 6: Máximo de Carga por Instância (Camada Intermediária)
-
-Título: "Máximo de Carga por Instância (Camada Intermediária)"
-Conteúdo: "Aqui, determinamos a carga máxima suportada por uma instância, superdimensionando as outras peças para evitar influências externas."
-Slide 7: Otimização de Aplicação (Camada Interna)
-
-Título: "Otimização de Aplicação (Camada Interna)"
-Conteúdo: "Nesta camada, otimizamos o código, consultas a banco de dados e ajustamos recursos da aplicação, alcançando uma otimização mais profunda."
-Slide 8: Observabilidade
-
-Título: "Observabilidade"
-Conteúdo: "A observabilidade é fundamental em todos os níveis de teste de performance, fornecendo visões detalhadas para troubleshooting."
-Slide 9: Tuning e FinOps
-
-Título: "Tuning e FinOps"
-Conteúdo: "Os testes de performance podem ser usados tanto para otimizar a infraestrutura (Tuning) quanto para economizar recursos (FinOps)."
-Slide 10: Tipos de Fluxos Testados
-
-Título: "Tipos de Fluxos Testados"
-Conteúdo: "Podemos testar performance em fluxos síncronos e assíncronos, incluindo cenários com tecnologias como Kafka."
-
-Slide 11
-Titulo: Performance na PipeLine
-Conteúdo: "É possivel automatizar testes de performance? PROS vs Contras"
-
-Slide 12
-Titulo: Hands ON
-Conteúdo: "Mostrar exemplos de script para tipos de teste de performance, endpoint unico, varios endpoints, com peso de % para testar infra com todos os fluxos, teste com kafka, webhok.
-mostrar exemplos de observabilidade e como analizar, enfim mostrar na pratica um cenario real como foi mapeado e testado.
-
-Slide 11: Conclusão
-Título: "Conclusão"
-Conteúdo: "Testes de performance são essenciais para garantir o desempenho eficaz de sistemas. Lembre-se da abordagem em camadas e da busca contínua por melhorias."
-Slide 12: Perguntas
-
-Título: "Perguntas"
-Conteúdo: "Estamos prontos para responder às suas perguntas e discutir mais sobre testes de performance. Por favor, levante suas dúvidas e tópicos para discussão."
+        // Defina a variável "cpf_cnpj" para o valor formatado
+        vars.put("cpf_cnpj", formattedCpfCnpj);
+    }
+}
