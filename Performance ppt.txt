@@ -19,3 +19,29 @@ if (cpfCnpj != null) {
         vars.put("cpf_cnpj", formattedCpfCnpj);
     }
 }
+
+
+String cpfCnpj = vars.get("cpf_cnpj"); // Obter o valor da variável "cpf_cnpj"
+
+if (cpfCnpj != null) {
+    int length = cpfCnpj.length();
+    if (length < 15) {
+        // Calcule o número de zeros que precisam ser adicionados
+        int zerosToAdd = 15 - length;
+
+        // Verifique se o valor original já contém 15 dígitos
+        if (zerosToAdd > 0) {
+            // Crie uma string com zeros à esquerda
+            StringBuilder zeros = new StringBuilder();
+            for (int i = 0; i < zerosToAdd; i++) {
+                zeros.append("0");
+            }
+
+            // Concatene os zeros à esquerda com o valor original
+            String formattedCpfCnpj = zeros.toString() + cpfCnpj;
+
+            // Defina a variável "cpf_cnpj" para o valor formatado
+            vars.put("cpf_cnpj", formattedCpfCnpj);
+        }
+    }
+}
