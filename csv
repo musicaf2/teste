@@ -1,0 +1,34 @@
+import org.apache.jmeter.services.FileServer;
+
+String scriptHome = FileServer.getFileServer().getBaseDir();
+String header = "cpf;agencia;conta;dac"; // Cabeçalho do CSV
+
+// Verifique se os valores são nulos ou em branco
+String cpf = vars.get("cpf");
+String agencia = vars.get("agencia");
+String conta = vars.get("conta");
+String dac = vars.get("dac");
+
+if (cpf != null && !cpf.isEmpty() && agencia != null && !agencia.isEmpty() &&
+    conta != null && !conta.isEmpty() && dac != null && !dac.isEmpty()) {
+    String linha = cpf + ";" + agencia + ";" + conta + ";" + dac;
+
+    // Abra ou crie o arquivo CSV. O segundo parâmetro (true) permite adicionar dados nas linhas.
+    f = new FileOutputStream(scriptHome + "\\MassaCalculadora.csv", true);
+    p = new PrintStream(f);
+
+    // Se o arquivo está vazio, insira o cabeçalho primeiro
+    if (f.length() == 0) {
+        p.println(header);
+    }
+
+    // Insira o valor das variáveis na próxima linha
+    p.println(linha);
+
+    // Feche o arquivo
+    p.close();
+    f.close();
+}
+
+// O retorno pode ser personalizado conforme necessário
+return "Valores salvos no CSV";
