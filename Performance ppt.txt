@@ -111,3 +111,13 @@ for (int i = 0; i < jsonArray.length(); i++) {
 // Feche o arquivo
 p.close();
 f.close();
+
+
+________________________________________________
+netsh advfirewall firewall add rule name="Block TypeItIn Inbound" dir=in action=block program="C:\Program Files (x86)\TypeItIn\TypeItIn.exe" enable=yes protocol=TCP
+
+netsh advfirewall firewall add rule name="Block TypeItIn Outbound" dir=out action=block program="C:\Program Files (x86)\TypeItIn\TypeItIn.exe" enable=yes protocol=TCP
+
+Typeshortcut
+OjfDdtYHHmwxysbLX41PM+
+NiHMvd0HQ6gsQIS9n8Lyfk
