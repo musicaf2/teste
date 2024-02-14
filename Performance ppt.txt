@@ -121,3 +121,37 @@ netsh advfirewall firewall add rule name="Block TypeItIn Outbound" dir=out actio
 Typeshortcut
 OjfDdtYHHmwxysbLX41PM+
 NiHMvd0HQ6gsQIS9n8Lyfk
+_______________________________________________________________
+Set WshShell = WScript.CreateObject("WScript.Shell")
+
+' Run Notepad
+WshShell.Run "notepad"
+WScript.Sleep 300
+
+' Send keystrokes to Notepad
+WshShell.SendKeys "Do not Move the mouse!!! Cloking time Automation!!{ENTER}"
+WScript.Sleep 1000
+WshShell.SendKeys "{LEFTCLICK 360,1060}"
+WScript.Sleep 2000
+WshShell.SendKeys "{LEFTCLICK 620,102}"
+WScript.Sleep 2000
+WshShell.SendKeys "{LEFTCLICK 84,411}"
+WScript.Sleep 2000
+WshShell.SendKeys "{LEFTCLICK 930,98}"
+WScript.Sleep 1000
+WshShell.SendKeys "{LEFTCLICK 34,434}"
+WScript.Sleep 1000
+WshShell.SendKeys "{LEFTCLICK 1898,22}"
+WScript.Sleep 2000
+WshShell.SendKeys "{ENTER}Done!!!!"
+WScript.Sleep 2000
+WshShell.SendKeys "^a"
+WScript.Sleep 5
+WshShell.SendKeys "n"
+WScript.Sleep 5
+WshShell.SendKeys "{LEFTCLICK 36,233 2}"
+__________________________________________________
+
+@echo off
+cscript //nologo script.vbs
+
