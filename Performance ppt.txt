@@ -154,6 +154,11 @@ __________________________________________________
 
 {Run Notepad}{Delay 300}Do not Move the mouse!!! Cloking time Automation!!{Enter}{Delay 1000}{MouseLeftClick 360,1060}{Delay 2000}{MouseLeftClick 620,102}{Delay 2000}{MouseLeftClick 84,411}{Delay 2000}{MouseLeftClick 930,98}{Delay 1000}{MouseLeftClick 34,434}{Delay 1000}{MouseLeftClick 1898,22}{Activate *Sem título - Bloco de Notas}{Enter}{Speed 5}Done!!!!{Delay 2000}{Alt a}s{Delay 5}n
 
+
+
+@echo off
+powershell -command "[void] [System.Reflection.Assembly]::LoadWithPartialName('System.Windows.Forms'); [System.Windows.Forms.SendKeys]::SendWait('^+a')"
+
 @echo off
 cscript //nologo script.vbs
 
