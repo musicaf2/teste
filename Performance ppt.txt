@@ -161,4 +161,56 @@ powershell -command "[void] [System.Reflection.Assembly]::LoadWithPartialName('S
 
 @echo off
 cscript //nologo script.vbs
+----------------------------------------------------------
+
+// Initialize an array to store names
+var namesArray = [];
+var name;
+
+// Iterate through each row until no more names are found
+while ((name = context.variableManager.getValue("Names.name")) !== "<NO VALUE>") {
+    // Add the name to the array
+    namesArray.push(name);
+}
+
+// Convert the array to a single string, if needed
+var namesString = namesArray.join(";");
+
+// Log the result (for debugging purposes)
+logger.info("Names: " + namesString);
+
+// Store the result in a Neoload variable if needed
+context.variableManager.setValue("AllNamesString", namesString);
+
+// Get the value of WinUser
+var winUser = context.variableManager.getValue("WinUser");
+
+// Log the value of WinUser for debugging purposes
+logger.info("WinUser: " + winUser);
+
+// Split the namesString into an array of lines
+var lines = namesString.split(";");
+
+// Iterate through each line
+for (var i = 0; i < lines.length; i++) {
+    // Split each line into its components
+    var components = lines[i].split(",");
+    var user = components[0];
+    var email = components[1];
+    var name = components[2];
+    
+    // Compare the user value with WinUser
+    if (user === winUser) {
+        // Store the matched values as separate variables
+        context.variableManager.setValue("MatchedUser", user);
+        context.variableManager.setValue("MatchedEmail", email);
+        context.variableManager.setValue("MatchedName", name);
+        
+        // Log the matched values for debugging purposes
+        logger.info("Matched User: " + user + ", Email: " + email + ", Name: " + name);
+        
+        // Break the loop since we found the match
+        break;
+    }
+}
 
