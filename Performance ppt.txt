@@ -1,216 +1,264 @@
-String cpfCnpj = vars.get("cpf_cnpj"); // Obter o valor da variável "cpf_cnpj"
+// Get user-defined variables
+def disableTransactions = vars.get("disableTransactions") ?: ""
+String[] disableTransactionsArray = disableTransactions.split(";")
+List<String> disableTransactionsList = Arrays.asList(disableTransactionsArray)
 
-if (cpfCnpj != null) {
-    int length = cpfCnpj.length();
-    if (length < 15) {
-        // Calcule o número de zeros que precisam ser adicionados
-        int zerosToAdd = 15 - length;
+def maxSteps = 40 // Same as the total number of steps set in Throughput Shaping Timer
 
-        // Crie uma string com zeros à esquerda
-        StringBuilder zeros = new StringBuilder();
-        for (int i = 0; i < zerosToAdd; i++) {
-            zeros.append("0");
-        }
+// Define weight mappings
+def weightMappings = [
+    '1transaction_weight': 100,
+    '2transaction_weight': 100,
+    '3transaction_weight': 30,
+    '4transaction_weight': 100, // Keep this fixed even if disabled
+    '5transaction_weight': 10,
+    '6transaction_weight': 10,
+    '7transaction_weight': 10,
+    '8transaction_weight': 30,
+    '9transaction_weight': 10,
+    '10transaction_weight': 30,
+    '11transaction_weight': 100,
+    '12transaction_weight': 15,
+    '13transaction_weight': 40,
+    '14transaction_weight': 40,
+]
 
-        // Concatene os zeros à esquerda com o valor original
-        String formattedCpfCnpj = zeros.toString() + cpfCnpj;
+// Define request mappings
+def requestMappings = [
+    '1transaction_weight': 11,
+    '2transaction_weight': 12,
+    '3transaction_weight': 1.3,
+    '4transaction_weight': 8,
+    '5transaction_weight': 2,
+    '6transaction_weight': 5,
+    '7transaction_weight': 4,
+    '8transaction_weight': 3,
+    '9transaction_weight': 3,
+    '10transaction_weight': 1,
+    '11transaction_weight': 4,
+    '12transaction_weight': 2,
+    '13transaction_weight': 7,
+    '14transaction_weight': 1
+]
 
-        // Defina a variável "cpf_cnpj" para o valor formatado
-        vars.put("cpf_cnpj", formattedCpfCnpj);
+def weightRequest = 0
+def weightSum = 0
+
+// Adjust weights dynamically based on `disableTransactions`
+weightMappings.each { key, value ->
+    def transactionId = key.replace("transaction_weight", "")
+    if (!disableTransactionsList.contains(transactionId)) {
+        weightRequest += value * requestMappings[key]
+        weightSum += value
+    } else {
+        weightMappings[key] = 0 // Set weight to 0 for disabled transactions
     }
 }
 
+// Expected number of bookings per hour
+def SLATargetPerHour = Integer.parseInt(vars.get("SLATargetPerHour"))
 
-String cpfCnpj = vars.get("cpf_cnpj"); // Obter o valor da variável "cpf_cnpj"
+// Calculate booking-to-overall ratio, adjusting for whether SLA (4transaction_weight) is disabled
+def SLATargetWeight = weightMappings['4transaction_weight'] // This will be the Main Transaction for SLA reference
+def SLATargetRequest = requestMappings['4transaction_weight'] // This will be the Main Transaction for SLA reference
 
-if (cpfCnpj != null) {
-    int length = cpfCnpj.length();
-    if (length < 15) {
-        // Calcule o número de zeros que precisam ser adicionados
-        int zerosToAdd = 15 - length;
+// If SLA (4transaction_weight) is not disabled, calculate its influence on the load, else ignore it in SLATargetToOverall
+def SLATargetToOverall = 1
+if (SLATargetWeight > 0 && SLATargetRequest > 0) {
+    SLATargetToOverall = weightRequest / (SLATargetWeight * SLATargetRequest) // Ensure no division by zero
+}
 
-        // Verifique se o valor original já contém 15 dígitos
-        if (zerosToAdd > 0) {
-            // Crie uma string com zeros à esquerda
-            StringBuilder zeros = new StringBuilder();
-            for (int i = 0; i < zerosToAdd; i++) {
-                zeros.append("0");
-            }
-
-            // Concatene os zeros à esquerda com o valor original
-            String formattedCpfCnpj = zeros.toString() + cpfCnpj;
-
-            // Defina a variável "cpf_cnpj" para o valor formatado
-            vars.put("cpf_cnpj", formattedCpfCnpj);
-        }
+// Calculate `normalLoad` based on the remaining weight (after disabling transactions)
+def normalLoad = 0
+if (weightSum > 0) {
+    // Calculate the normal load, considering whether SLA (4transaction_weight) is disabled or not
+    if (SLATargetWeight > 0 && SLATargetRequest > 0) {
+        normalLoad = (((SLATargetPerHour / 3600) * weightRequest / weightSum) * SLATargetToOverall * 1.15) // the * 1.15 is a extra to reach target
+    } else {
+        // When SLA is disabled, calculate based only on the remaining weights
+        normalLoad = (((SLATargetPerHour / 3600) * weightRequest / weightSum) * 1.15) // the * 1.15 is a extra to reach target
     }
 }
 
-
-
-String pessoas = vars.get("pessoas");
-String[] pessoasArray = pessoas.split("\\},\\{"); // Divide as pessoas em um array
-
-String scriptHome = FileServer.getFileServer().getBaseDir();
-String csvFileName = scriptHome + "\\massa.csv";
-
-// Cabeçalho do CSV
-String header = "nome,sobrenome,rua,numero";
-
-// Escreva o cabeçalho no arquivo CSV
-FileOutputStream f = new FileOutputStream(csvFileName, true);
-PrintStream p = new PrintStream(f);
-p.println(header);
-
-// Percorra as pessoas e escreva os dados no arquivo CSV
-for (String pessoa : pessoasArray) {
-    pessoa = pessoa.replaceAll("[{}\"]", ""); // Remova chaves e aspas
-    String[] dados = pessoa.split(","); // Divida os dados em um array
-    String linha = String.join(",", dados); // Crie a linha do CSV
-    p.println(linha);
+// Update weight mappings in JMeter context
+weightMappings.each { key, value ->
+    props.setProperty(key, value.toString())
 }
 
-// Feche o arquivo
-p.close();
-f.close();
+log.info("disableTransactions: {}", disableTransactionsList)
+log.info("normalLoad: {}", normalLoad)
+log.info("SLATargetPerHour: {}", SLATargetPerHour)
+log.info("weightRequest: {}", weightRequest)
+log.info("weightSum: {}", weightSum)
+log.info("requestMappings['4transaction_weight']: {}", requestMappings['4transaction_weight'])
+log.info("weightMappings: {}", weightMappings)
 
+def profile
+def duration
+def typeTest = vars.get("typeTest")
 
+// 4000/3600 * 3390 / 420 * 8 = 71.74
+// def normalLoad = ((bookingsPerHour/3600) * weightRequest / weightSum) * requestMappings['4targetTab_weight'] * dashboardWeight
 
-{"nome":"(.*?)","sobrenome":"(.*?)","rua":(.*?),"numero":(\d+)}
+switch (typeTest) {
+	case "performance":
+		def numOfRamps = 1
+		def rampUp = 300
+		duration = 60 * 60 * 1 // sec * min * hour
+		def stepDuration = Math.round(duration - rampUp)/ numOfRamps
 
+		profile = [
+			//start_rps		end_rps			duration
+			[1,				normalLoad,		rampUp],
+			[normalLoad,   	normalLoad,		stepDuration]
+		  ]
+		break
 
-String jsonResponse = vars.get("jsonResponse");
-JSONArray jsonArray = new JSONArray(jsonResponse);
+	case "load":
+		def numOfRamps = 4
+		def rampUp = 60
+		duration = 60 * 60 * 1 // sec * min * hour
+		def stepDuration = Math.round(duration/numOfRamps - rampUp)
 
-String scriptHome = FileServer.getFileServer().getBaseDir();
-String csvFileName = scriptHome + "\\massa.csv";
+		profile = [
+			//start_rps		end_rps			duration
+			[1,				normalLoad * 0.25,	rampUp],
+			[normalLoad * 0.25,	normalLoad * 0.25,	stepDuration],
+			[normalLoad * 0.25,	normalLoad * 0.5,	rampUp],
+			[normalLoad * 0.5,	normalLoad * 0.5,	stepDuration],
+			[normalLoad * 0.5,	normalLoad * 0.75,  rampUp],
+			[normalLoad * 0.75,	normalLoad * 0.75,	stepDuration],
+			[normalLoad * 0.75,	normalLoad * 1,	rampUp],
+			[normalLoad * 1,	normalLoad * 1,	stepDuration]
+		  ]
+		break
 
-// Cabeçalho do CSV
-String header = "num_cpf_cnpj,agencia,conta,dac";
+	case "stress":
+		def numOfRamps = 20
+		def rampUp = 60		
+		def stepDuration = 180
+		duration = 60 * 60 * 1.5 // last step duration
+		def finalDuration = 60 * 13
 
-// Escreva o cabeçalho no arquivo CSV
-FileOutputStream f = new FileOutputStream(csvFileName, true);
-PrintStream p = new PrintStream(f);
-p.println(header);
+		profile = [
+			//start_rps		end_rps			duration
+			[1,				normalLoad * 1,  	rampUp],
+			[normalLoad * 1,	normalLoad * 1,  	stepDuration],
+			[normalLoad * 1,	normalLoad * 2,  	rampUp],
+			[normalLoad * 2,	normalLoad * 2,  	stepDuration],
+			[normalLoad * 2,	normalLoad * 3,  	rampUp],
+			[normalLoad * 3,	normalLoad * 3,  	stepDuration],
+			[normalLoad * 3,	normalLoad * 4,  	rampUp],
+			[normalLoad * 4,	normalLoad * 4,  	stepDuration],
+			[normalLoad * 4,	normalLoad * 5,  	rampUp],
+			[normalLoad * 5,	normalLoad * 5,  	stepDuration],
+			[normalLoad * 5,	normalLoad * 6,  	rampUp],
+			[normalLoad * 6,	normalLoad * 6,  	stepDuration],
+			[normalLoad * 6,	normalLoad * 7,  	rampUp],
+			[normalLoad * 7,	normalLoad * 7,  	stepDuration],
+			[normalLoad * 7,	normalLoad * 8,  	rampUp],
+			[normalLoad * 8,	normalLoad * 8,  	stepDuration],
+			[normalLoad * 8,	normalLoad * 9,  	rampUp],
+			[normalLoad * 9,	normalLoad * 9,  	stepDuration],
+			[normalLoad * 9,	normalLoad * 10,  	rampUp],
+			[normalLoad * 10,	normalLoad * 10,  	stepDuration],
+			[normalLoad * 10,	normalLoad * 11,  	rampUp],
+			[normalLoad * 11,	normalLoad * 11,  	stepDuration],
+			[normalLoad * 11,	normalLoad * 12,  	rampUp],
+			[normalLoad * 12,	normalLoad * 12,  	stepDuration],
+			[normalLoad * 12,	normalLoad * 13,  	rampUp],
+			[normalLoad * 13,	normalLoad * 13,  	stepDuration],
+			[normalLoad * 13,	normalLoad * 14,  	rampUp],
+			[normalLoad * 14,	normalLoad * 14,  	stepDuration],
+			[normalLoad * 14,	normalLoad * 15,  	rampUp],
+			[normalLoad * 15,	normalLoad * 15,  	stepDuration],
+			[normalLoad * 15,	normalLoad * 16,  	rampUp],
+			[normalLoad * 16,	normalLoad * 16,  	stepDuration],
+			[normalLoad * 16,	normalLoad * 17,  	rampUp],
+			[normalLoad * 17,	normalLoad * 17,  	stepDuration],
+			[normalLoad * 17,	normalLoad * 18,  	rampUp],
+			[normalLoad * 18,	normalLoad * 18,  	stepDuration],
+			[normalLoad * 18,	normalLoad * 19,  	rampUp],
+			[normalLoad * 19,	normalLoad * 19,  	stepDuration],
+			[normalLoad * 19,	normalLoad * 20,  	rampUp],
+			[normalLoad * 20,	normalLoad * 20,  	finalDuration]
+		  ]
+		break
 
-// Percorra os objetos JSON e escreva os dados no arquivo CSV
-for (int i = 0; i < jsonArray.length(); i++) {
-    JSONObject jsonObject = jsonArray.getJSONObject(i);
-    String numCpfCnpj = jsonObject.getString("num_cpf_cnpj");
-    String agencia = jsonObject.getString("agencia");
-    String conta = jsonObject.getString("conta");
-    String dac = jsonObject.getString("dac");
+	case "spike":
+		def numOfRamps = 4
+		def rampUp = 60 //sec
+		duration = 60 * 60 * 1.5 // sec * min * hour
+		def postMonitoringDuration = 60 * 30 //sec * min
+		def stepDuration = Math.round((duration - postMonitoringDuration)/numOfRamps - rampUp)
+		  // 5 minutes or whatever you intend
 
-    // Construa a linha do CSV
-    String linha = numCpfCnpj + "," + agencia + "," + conta + "," + dac;
+		profile = [
+			//start_rps		end_rps			duration
+			[1,				normalLoad * 1,  	rampUp],
+			[normalLoad * 1,	normalLoad * 1,  	stepDuration],
+			[normalLoad * 1,	normalLoad * 3,  	rampUp],
+			[normalLoad * 3,	normalLoad * 3,  	stepDuration],
+			[normalLoad * 3,	normalLoad * 1,  	rampUp],
+			[normalLoad * 1,	normalLoad * 1,  	stepDuration],
+			[normalLoad * 1,	normalLoad * 6,  	rampUp],
+			[normalLoad * 6,	normalLoad * 6,  	stepDuration],
+			[1,				1,				postMonitoringDuration]
+		  ]
+		break
 
-    // Escreva a linha no arquivo CSV
-    p.println(linha);
+	case "endurance":
+		def numOfRamps = 1
+		def rampUp = 300
+		duration = 60 * 60 * 8 // sec * min * hour
+		def stepDuration = Math.round(duration - rampUp)/numOfRamps
+
+		profile = [
+			//start_rps			end_rps				duration
+			[1,					normalLoad * 1,	  	rampUp],
+			[normalLoad * 1,		normalLoad * 1,	  	stepDuration]
+		  ]
+		break
 }
 
-// Feche o arquivo
-p.close();
-f.close();
+def nLines = profile.size()
 
+for (int i=0; i< nLines ; i++){
+	props.put("start_rps" + String.valueOf(i+1), String.valueOf(profile[i][0]))
+	props.put("end_rps"   + String.valueOf(i+1), String.valueOf(profile[i][1]))
+	props.put("duration"  + String.valueOf(i+1), String.valueOf(profile[i][2]))
 
-________________________________________________
-netsh advfirewall firewall add rule name="Block TypeItIn Inbound" dir=in action=block program="C:\Program Files (x86)\TypeItIn\TypeItIn.exe" enable=yes protocol=TCP
-
-netsh advfirewall firewall add rule name="Block TypeItIn Outbound" dir=out action=block program="C:\Program Files (x86)\TypeItIn\TypeItIn.exe" enable=yes protocol=TCP
-
-Typeshortcut
-OjfDdtYHHmwxysbLX41PM+
-NiHMvd0HQ6gsQIS9n8Lyfk
-_______________________________________________________________
-Set WshShell = WScript.CreateObject("WScript.Shell")
-
-' Run Notepad
-WshShell.Run "notepad"
-WScript.Sleep 300
-
-' Send keystrokes to Notepad
-WshShell.SendKeys "Do not Move the mouse!!! Cloking time Automation!!{ENTER}"
-WScript.Sleep 1000
-WshShell.SendKeys "{LEFTCLICK 360,1060}"
-WScript.Sleep 2000
-WshShell.SendKeys "{LEFTCLICK 620,102}"
-WScript.Sleep 2000
-WshShell.SendKeys "{LEFTCLICK 84,411}"
-WScript.Sleep 2000
-WshShell.SendKeys "{LEFTCLICK 930,98}"
-WScript.Sleep 1000
-WshShell.SendKeys "{LEFTCLICK 34,434}"
-WScript.Sleep 1000
-WshShell.SendKeys "{LEFTCLICK 1898,22}"
-WScript.Sleep 2000
-WshShell.SendKeys "{ENTER}Done!!!!"
-WScript.Sleep 2000
-WshShell.SendKeys "^a"
-WScript.Sleep 5
-WshShell.SendKeys "n"
-WScript.Sleep 5
-WshShell.SendKeys "{LEFTCLICK 36,233 2}"
-__________________________________________________
-
-{Run Notepad}{Delay 300}Do not Move the mouse!!! Cloking time Automation!!{Enter}{Delay 1000}{MouseLeftClick 360,1060}{Delay 2000}{MouseLeftClick 620,102}{Delay 2000}{MouseLeftClick 84,411}{Delay 2000}{MouseLeftClick 930,98}{Delay 1000}{MouseLeftClick 34,434}{Delay 1000}{MouseLeftClick 1898,22}{Activate *Sem título - Bloco de Notas}{Enter}{Speed 5}Done!!!!{Delay 2000}{Alt a}s{Delay 5}n
-
-
-
-@echo off
-powershell -command "[void] [System.Reflection.Assembly]::LoadWithPartialName('System.Windows.Forms'); [System.Windows.Forms.SendKeys]::SendWait('^+a')"
-
-@echo off
-cscript //nologo script.vbs
-----------------------------------------------------------
-
-// Initialize an array to store names
-var namesArray = [];
-var name;
-
-// Iterate through each row until no more names are found
-while ((name = context.variableManager.getValue("Names.name")) !== "<NO VALUE>") {
-    // Add the name to the array
-    namesArray.push(name);
+	log.info("start_rps{}: {}\t\tend_rps{}: {}\t\tduration{}: {}",
+	String.valueOf(i+1), String.valueOf(profile[i][0]),
+	String.valueOf(i+1), String.valueOf(profile[i][1]),
+	String.valueOf(i+1), String.valueOf(profile[i][2])
+	)
 }
 
-// Convert the array to a single string, if needed
-var namesString = namesArray.join(";");
+for (int i=nLines; i< maxSteps ; i++){
+	props.put("start_rps" + String.valueOf(i+1), "0")
+	props.put("end_rps"   + String.valueOf(i+1), "0")
+	props.put("duration"  + String.valueOf(i+1), "0")
 
-// Log the result (for debugging purposes)
-logger.info("Names: " + namesString);
-
-// Store the result in a Neoload variable if needed
-context.variableManager.setValue("AllNamesString", namesString);
-
-// Get the value of WinUser
-var winUser = context.variableManager.getValue("WinUser");
-
-// Log the value of WinUser for debugging purposes
-logger.info("WinUser: " + winUser);
-
-// Split the namesString into an array of lines
-var lines = namesString.split(";");
-
-// Iterate through each line
-for (var i = 0; i < lines.length; i++) {
-    // Split each line into its components
-    var components = lines[i].split(",");
-    var user = components[0];
-    var email = components[1];
-    var name = components[2];
-    
-    // Compare the user value with WinUser
-    if (user === winUser) {
-        // Store the matched values as separate variables
-        context.variableManager.setValue("MatchedUser", user);
-        context.variableManager.setValue("MatchedEmail", email);
-        context.variableManager.setValue("MatchedName", name);
-        
-        // Log the matched values for debugging purposes
-        logger.info("Matched User: " + user + ", Email: " + email + ", Name: " + name);
-        
-        // Break the loop since we found the match
-        break;
-    }
+	log.info("start_rps{}: {}\t\tend_rps{}: {}\t\tduration{}: {}",
+	String.valueOf(i+1), props.get("start_rps" + String.valueOf(i+1)),
+	String.valueOf(i+1), props.get("end_rps" + String.valueOf(i+1)),
+	String.valueOf(i+1), props.get("duration" + String.valueOf(i+1))
+	)
 }
+props.put("total_test_duration",String.valueOf(Math.round(duration)))	
 
+log.info("test type: {}", typeTest)
+log.info("total_test_duration: {}", props.get("total_test_duration"))
+
+SampleResult.setIgnore();
+--------
+typeTest	${__P(typeTest,performance)}	performance,load,stress,spike,endurance this are the type available
+SLATargetPerHour	${__P(SLATargetPerHour,4000)}	
+disableTransactions	${__P(disableTransactions,)}	place the transaction number you want to disble separated by ";" Ex.: 2;3;4
+BASE_URL_1	${__P(BASE_URL,token.preprod.net)}	
+BASE_URL_2	${__P(BASE_URL,test.preprod.net)}	
+counter	0	
+currentDate	${__time(YYYY-MM-dd,)}	
+territory	${__P(territory,CA\,US)}	when has "," it has to put  a "\" the original should be CA,US
+renewSessionTime	300	
